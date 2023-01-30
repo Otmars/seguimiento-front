@@ -1,0 +1,113 @@
+
+<p-toast></p-toast>
+
+<div class="card">
+    <h1 class="text-5xl">Seguimiento Estudiante</h1>
+    <p-toolbar styleClass="p-mb-4">
+        <div class="flex justify-content-center"> 
+            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="openNew()"></button>
+            <button pButton pRipple [label]="'Delete'" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedProducts()" [disabled]="!selectedProducts || !selectedProducts.length"></button>
+        </div>
+           
+        <div class="flex justify-content-center">
+            <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="p-mr-2 p-d-inline-block"></p-fileUpload>
+            <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button>
+        </div>
+        
+    </p-toolbar>
+    <br>
+    <p-table #dt [value]="products" [rows]="10" [paginator]="true" [globalFilterFields]="['name','country.name','representative.name','status']"
+        [(selection)]="selectedProducts" [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+            <div class="p-d-flex p-ai-center p-jc-between">
+                <h5 class="p-m-0">Manage Products</h5>
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt.filterGlobal(getEventValue($event), 'contains')" placeholder="Search..." />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 3rem">
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th pSortableColumn="name">Nombre <p-sortIcon field="name"></p-sortIcon></th>
+                <th pSortableColumn="price">Codigo-Materia<p-sortIcon field="price"></p-sortIcon></th>
+                <th pSortableColumn="category">Año<p-sortIcon field="category"></p-sortIcon></th>
+                <th pSortableColumn="rating">Reviews <p-sortIcon field="rating"></p-sortIcon></th>
+                <th pSortableColumn="inventoryStatus">Status <p-sortIcon field="inventoryStatus"></p-sortIcon></th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product>
+            <tr (click)="showDialog()">
+                <td>
+                    <p-tableCheckbox [value]="product"></p-tableCheckbox>
+                </td>
+                <td>{{product.name}}</td>
+                <td>{{product.price | currency:'USD'}}</td>
+                <td>{{product.category}}</td>
+                <td><p-rating [ngModel]="product.rating" [readonly]="true" [cancel]="false"></p-rating></td>
+                <td><span [class]="'product-badge status-' + product.inventoryStatus.toLowerCase()">{{product.inventoryStatus}}</span></td>
+                <td>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="editProduct(product)"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(product)"></button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="p-d-flex p-ai-center p-jc-between">
+                In total there are {{products ? products.length : 0 }} products.
+            </div>
+        </ng-template>
+    </p-table>
+</div>
+
+<p-dialog [(visible)]="productDialog" [style]="{width: '1300px'}" header="Progreso estudiante" [modal]="true" styleClass="p-fluid" [dismissableMask]="true">
+        
+<div class="surface-section">
+    <div class="font-medium text-3xl text-900 mb-3">Informacion estudiante</div>
+    <ul class="list-none p-0 m-0">
+        <li class="flex align-items-center px-2 border-top-1 surface-border flex-wrap">
+            <div class="text-500 w-6 md:w-2 font-medium">Nombre</div>
+            <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">Juan Perez</div>
+            <div class="w-6 md:w-2 flex justify-content-end">
+                <button pButton pRipple label="Edit" icon="pi pi-pencil" class="p-button-text"></button>
+            </div>
+        </li>
+        <li class="flex align-items-center px-2 pb-3  surface-border flex-wrap">
+            <div class="text-500 w-6 md:w-2 font-medium">Registro Universitario</div>
+            <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">200001234</div>
+        </li>
+        
+        <li class="flex align-items-center pb-8 px-2 border-top-1 surface-border flex-wrap">
+            <div class="text-500 w-6 md:w-2 font-medium">Competencias de materia</div>
+            <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">Anatomia 1</div>
+            <div class="w-6 md:w-2 flex justify-content-end">
+                <button pButton pRipple label="Edit" icon="pi pi-pencil" class="p-button-text"></button>
+            </div>
+        </li>
+        
+        <!-- <li class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap">
+            <div class="text-500 w-6 md:w-2 font-medium">Actors</div>
+            <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">Robert De Niro, Al Pacino</div>
+            <div class="w-6 md:w-2 flex justify-content-end">
+                <button pButton pRipple label="Edit" icon="pi pi-pencil" class="p-button-text"></button>
+            </div>
+        </li>
+        <li class="flex align-items-center py-3 px-2 border-top-1 border-bottom-1 surface-border flex-wrap">
+            <div class="text-500 w-6 md:w-2 font-medium">Plot</div>
+            <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1 line-height-3">
+                A group of professional bank robbers start to feel the heat from police
+                 when they unknowingly leave a clue at their latest heist.</div>
+            <div class="w-6 md:w-2 flex justify-content-end">
+                <button pButton pRipple label="Edit" icon="pi pi-pencil" class="p-button-text"></button>
+            </div>
+        </li> -->
+    </ul>
+</div>
+    </p-dialog>
+
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>

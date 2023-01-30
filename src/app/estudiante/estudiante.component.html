@@ -1,0 +1,172 @@
+
+
+<p-dialog header="Title" [(visible)]="display">
+  
+<div class="card">
+    <div class="surface-section">
+        <div class="font-medium text-3xl text-900 mb-3">Informacion del Estudiante</div>
+        <div class="text-500 mb-5">Morbi tristique blandit turpis. In viverra ligula id nulla hendrerit rutrum.</div>
+        <ul class="list-none p-0 m-0">
+            <li class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap">
+                <div class="text-500 w-6 md:w-2 font-medium">Nombre</div>
+                <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">Juan Perez</div>
+                <div class="w-6 md:w-2 flex justify-content-end">
+                    <button pButton pRipple label="Edit" icon="pi pi-pencil" class="p-button-text"></button>
+                </div>
+            </li>
+            <li class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap">
+                <div class="text-500 w-6 md:w-2 font-medium">Genre</div>
+                <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">Male</div>
+
+                <div class="w-6 md:w-2 flex justify-content-end">
+                    <button pButton pRipple label="Edit" icon="pi pi-pencil" class="p-button-text"></button>
+                </div>
+            </li>
+            <li class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap">
+                <div class="text-500 w-6 md:w-2 font-medium">Materias en curso</div>
+                <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">Anatomia,Embriologia,Histologia,Integracion,Clinica,Investigacion I, Salud Publica I</div>
+                <div class="w-6 md:w-2 flex justify-content-end">
+                    <button pButton pRipple label="Edit" icon="pi pi-pencil" class="p-button-text"></button>
+                </div>
+            </li>
+            <li class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap">
+                <div class="text-500 w-6 md:w-2 font-medium">Fecha de Nacimiento</div>
+                <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">10,Febrero 1998</div>
+                <div class="w-6 md:w-2 flex justify-content-end">
+                    <button pButton pRipple label="Edit" icon="pi pi-pencil" class="p-button-text"></button>
+                </div>
+            </li>
+            <li class="flex align-items-center py-3 px-2 border-top-1 border-bottom-1 surface-border flex-wrap">
+                <div class="text-500 w-6 md:w-2 font-medium">Telefono</div>
+                <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1 line-height-3">
+                    +591-65516515</div>
+                <div class="w-6 md:w-2 flex justify-content-end">
+                    <button pButton pRipple label="Edit" icon="pi pi-pencil" class="p-button-text"></button>
+                </div>
+            </li>
+            <li class="flex align-items-center py-3 px-2 border-top-1 border-bottom-1 surface-border flex-wrap">
+                <div class="text-500 w-6 md:w-2 font-medium">Correo</div>
+                <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1 line-height-3">
+                    JuanPerez@mail.com</div>
+                <div class="w-6 md:w-2 flex justify-content-end">
+                    <button pButton pRipple label="Edit" icon="pi pi-pencil" class="p-button-text"></button>
+                </div>
+            </li>
+            <li class="flex align-items-center py-3 px-2 border-top-1 border-bottom-1 surface-border flex-wrap">
+                <div class="text-500 w-6 md:w-2 font-medium">Direccion</div>
+                <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1 line-height-3">
+                    Miraflores, Calle 1 #1234</div>
+                <div class="w-6 md:w-2 flex justify-content-end">
+                    <button pButton pRipple label="Edit" icon="pi pi-pencil" class="p-button-text"></button>
+                </div>
+            </li>
+        </ul>
+    </div>
+    </div>
+
+</p-dialog>
+<!-- <p-button type="button" (click)="showDialog()" icon="pi pi-info-circle" label="Show"></p-button>  
+<p-button (click)="showDialog()" icon="pi pi-external-link" label="Long Content"></p-button> -->
+<!-- <input type="button" value="asdasd"> -->
+
+<div class="card card2" >
+    <p-table #dt [value]="customers" [(selection)]="selectedCustomers" dataKey="id" styleClass="p-datatable-customers p-datatable-sm " [rowHover]="true"
+            [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading"
+            [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [filterDelay]="0" [globalFilterFields]="['name','country.name','representative.name','status']">
+            <ng-template pTemplate="caption" >
+                <div class="table-header" >
+                    Lista de estudiantes
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" (input)="dt.filterGlobal(getEventValue($event), 'contains')" placeholder="Global Search" />
+                    </span>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="width: 3rem"></th>
+                    <th pSortableColumn="name">Nombre <p-sortIcon field="name"></p-sortIcon></th>
+                    <th pSortableColumn="country.name">Country <p-sortIcon field="country.name"></p-sortIcon></th>
+                    <th pSortableColumn="representative.name">Representative <p-sortIcon field="representative.name"></p-sortIcon></th>
+                    <th pSortableColumn="date">Date <p-sortIcon field="date"></p-sortIcon></th>
+                    <th pSortableColumn="status">Status <p-sortIcon field="status"></p-sortIcon></th>
+                    <th pSortableColumn="activity">Activity <p-sortIcon field="activity"></p-sortIcon></th>
+                    <th style="width: 8rem"></th>
+                </tr>
+                <tr>
+                    <th>
+                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                    </th>
+                    <th>
+                        <input pInputText type="text" (input)="dt.filter(getEventValue($event), 'name', 'startsWith')" placeholder="Search by Name" class="p-column-filter ">
+                    </th>
+                    <th>
+                        <input pInputText [style]="{width: '150 px'}" type="text"  (input)="dt.filter(getEventValue($event), 'country.name', 'contains')" placeholder="Search by Country" class="p-column-filter">
+                    </th>
+                    <th>
+                        <p-multiSelect  [style]="{width: '100px'}" [options]="representatives" placeholder="All" (onChange)="onRepresentativeChange($event)" styleClass="p-column-filter" optionLabel="name">
+                            <ng-template let-option pTemplate="item">
+                                <div class="p-multiselect-representative-option">
+                                    <span class="p-ml-1">{{option.label}}</span>
+                                </div>
+                            </ng-template>
+                        </p-multiSelect>
+                    </th>
+                    <th >
+                        <p-calendar [style]="{width: '200px'}" (onSelect)="onDateSelect($event)" (onClearClick)="dt.filter('', 'date', 'equals')" [showButtonBar]="true" styleClass="p-column-filter " [touchUI]="true" placeholder="Registration Date" [readonlyInput]="true" dateFormat="yy-mm-dd"></p-calendar>
+                    </th>
+                    <th>
+                        <p-dropdown [options]="statuses" (onChange)="dt.filter($event.value, 'status', 'equals')" styleClass="p-column-filter" placeholder="Select a Status" [showClear]="true">
+                            <ng-template let-option pTemplate="item">
+                                <span [class]="'customer-badge status-' + option.value">&#123;&#123;option.label&#125;&#125;</span>
+                            </ng-template>
+                        </p-dropdown>
+                    </th>
+                    <th>
+                        <input pInputText type="text" (input)="onActivityChange($event)" placeholder="Minimum" class="p-column-filter" >
+                    </th>
+                    <th></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-customer >
+                <tr class="p-selectable-row " (click)="estudiante_select(customer)"  >
+                    <td >
+                        <p-tableCheckbox [value]="customer"></p-tableCheckbox>
+                    </td>
+                    <td>
+                        <span class="p-column-title">Name</span>
+                        {{customer.name}}
+                    </td>
+                    <td>
+                        <span class="p-column-title">Country</span>
+                        <span class="image-text">{{customer.country.name}}</span>
+                    </td>
+                    <td>
+                        <span class="p-column-title">Representative</span>
+                        <span class="image-text">{{customer.representative.name}}</span>
+                    </td>
+                    <td>
+                        <span class="p-column-title">Date</span>
+                        {{customer.date}}
+                    </td>
+                    <td>
+                        <span class="p-column-title">Status</span>
+                        <span [class]="'customer-badge status-' + customer.status">{{customer.status}}</span>
+                    </td>
+                    <td>
+                        <span class="p-column-title">Activity</span>
+                        <p-progressBar [value]="customer.activity" [showValue]="false"></p-progressBar>
+                    </td>
+                    <td style="text-align: center">
+                        <button pButton type="button" class="p-button-secondary" icon="pi pi-cog"></button>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="8">No customers found.</td>
+                </tr>
+            </ng-template>
+        </p-table>
+</div>
