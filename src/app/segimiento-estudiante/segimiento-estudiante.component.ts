@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { Product } from '../materia/Product';
 import { ProductService } from '../service/product.service';
 
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, PrimeIcons } from 'primeng/api';
 import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-segimiento-estudiante',
   templateUrl: './segimiento-estudiante.component.html',
-  styleUrls: ['./segimiento-estudiante.component.css'],
+  styleUrls: ['./segimiento-estudiante.component.scss'],
   styles: [
       `
           :host ::ng-deep .p-dialog .product-image {
@@ -36,6 +36,9 @@ export class SegimientoEstudianteComponent implements OnInit {
 
   inventoryStatus!: any;
   display!: boolean;
+    stackedData!: { labels: string[]; datasets: { type: string; label: string; backgroundColor: string; data: number[]; }[]; };
+    stackedOptions!: { tooltips: { mode: string; intersect: boolean; }; responsive: boolean; scales: { xAxes: { stacked: boolean; }[]; yAxes: { stacked: boolean; }[]; }; };
+    events!: ({ status: string; date: string; icon: any; color: string; image: string; } | { status: string; date: string; icon: any; color: string; image?: undefined; })[];
 
   showDialog() {
     this.productDialog = true;
@@ -45,6 +48,73 @@ export class SegimientoEstudianteComponent implements OnInit {
   constructor(private productService: ProductService, private messageService: MessageService, private confirmationService: ConfirmationService) {}
 
   ngOnInit() {
+    this.events = [
+        {status: 'Ordered', date: '15/10/2020 10:30', icon: PrimeIcons.THUMBS_UP, color: '#3b82f6', image: 'game-controller.jpg'},
+        {status: 'Processing', date: '15/10/2020 14:00', icon: PrimeIcons.THUMBS_UP, color: '#3b82f6'},
+        {status: 'Shipped', date: '15/10/2020 16:15', icon: PrimeIcons.THUMBS_UP, color: '#3b82f6'},
+        {status: 'Delivered', date: '16/10/2020 10:00', icon: PrimeIcons.THUMBS_DOWN_FILL, color: '#607D8B'}
+    ];
+    
+    this.stackedData = {
+        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        datasets: [{
+            type: 'bar',
+            label: 'Dataset 1',
+            backgroundColor: '#42A5F5',
+            data: [
+                50,
+                25,
+                12,
+                48,
+                90,
+                76,
+                42
+            ]
+        }, {
+            type: 'bar',
+            label: 'Dataset 2',
+            backgroundColor: '#66BB6A',
+            data: [
+                21,
+                84,
+                24,
+                75,
+                37,
+                65,
+                34
+            ]
+        }, {
+            type: 'bar',
+            label: 'Dataset 3',
+            backgroundColor: '#FFA726',
+            data: [
+                41,
+                52,
+                24,
+                74,
+                23,
+                21,
+                32
+            ]
+        }]
+    };
+
+    this.stackedOptions = {
+        tooltips: {
+            mode: 'index',
+            intersect: false
+        },
+        responsive: true,
+        scales: {
+            xAxes: [{
+                stacked: true,
+            }],
+            yAxes: [{
+                stacked: true
+            }]
+        }
+    };
+
       this.productService.getProducts().then((data) => (this.products = data));
 
       this.statuses = [

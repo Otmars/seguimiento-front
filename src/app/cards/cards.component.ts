@@ -6,5 +6,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./cards.component.css']
 })
 export class CardsComponent {
-
+  displayBasic2!: boolean;
+  showBasicDialog2() {
+    this.displayBasic2 = true;
+}
 }

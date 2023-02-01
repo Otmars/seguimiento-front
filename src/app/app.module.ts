@@ -47,7 +47,7 @@ import { SharedModule } from 'primeng/api';
 import { SegimientoEstudianteComponent } from './segimiento-estudiante/segimiento-estudiante.component';
 import {AnimateModule} from 'primeng/animate';
 import {TimelineModule} from 'primeng/timeline';
-
+import {ChartModule} from 'primeng/chart';
 @NgModule({
   declarations: [
     AppComponent,
@@ -90,7 +90,8 @@ import {TimelineModule} from 'primeng/timeline';
     RadioButtonModule,
     SharedModule,
     AnimateModule,
-    TimelineModule
+    TimelineModule,
+    ChartModule
     
   ],
   providers: [CustomerService,ProductService, MessageService, ConfirmationService],
