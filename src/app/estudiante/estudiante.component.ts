@@ -3,7 +3,7 @@ import { Customer, Representative } from './customer';
 import { CustomerService } from '../service/customer.service'
 import { Table } from 'primeng/table';
 import { PrimeNGConfig } from 'primeng/api';
-
+import { UsersService } from '../service/users.service';
 @Component({
   selector: 'app-estudiante',
   templateUrl: './estudiante.component.html',
@@ -41,7 +41,7 @@ export class EstudianteComponent {
   }
 
 
-  constructor(private customerService: CustomerService, private primengConfig: PrimeNGConfig) { }
+  constructor(private customerService: CustomerService, private primengConfig: PrimeNGConfig,private ser:UsersService) { }
 
   ngOnInit() {
       this.customerService.getCustomersLarge().then(customers => {
@@ -109,5 +109,7 @@ export class EstudianteComponent {
   getEventValue($event:any) :string {
     return $event.target.value;
   } 
-  
+  public cargar (){
+    this.ser
+  }
 }

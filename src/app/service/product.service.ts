@@ -48,6 +48,7 @@ export class ProductService {
   }
 
   getProducts() {
+        
       return this.http.get<any>('assets/products.json')
       .toPromise()
       .then(res => <Product[]>res.data)

@@ -5,6 +5,8 @@ import { HomeComponent } from "./home/home.component";
 import { MateriaComponent } from "./materia/materia.component";
 import { CompetenciasComponent } from "./competencias/competencias.component";
 import { SegimientoEstudianteComponent } from "./segimiento-estudiante/segimiento-estudiante.component";
+import { LoginComponent } from "./login/login.component";
+import { DocenteComponent } from "./docente/docente.component";
 const routes: Routes=[
     { path:'', redirectTo: '/home', pathMatch:'full'},
     {path:'home', component:HomeComponent},
@@ -12,6 +14,8 @@ const routes: Routes=[
     {path:'materia', component:MateriaComponent},
     {path:'competencias', component:CompetenciasComponent},
     {path:'seguimiento', component:SegimientoEstudianteComponent},
+    {path:'login', component:LoginComponent},
+    {path:'docentes', component:DocenteComponent}
 ]
 
 @NgModule({

@@ -21,8 +21,9 @@ import { MessageService } from 'primeng/api';
   providers: [MessageService, ConfirmationService]
 })
 export class SegimientoEstudianteComponent implements OnInit {
-
+    stateOptions: any[];
   productDialog!: boolean;
+  chartOptions: any;
 
   products!: Product[];
 
@@ -33,26 +34,52 @@ export class SegimientoEstudianteComponent implements OnInit {
   submitted!: boolean;
 
   statuses!: any[];
-
+  value1: string = "off";
+  value10!: string ;
   inventoryStatus!: any;
   display!: boolean;
     stackedData!: { labels: string[]; datasets: { type: string; label: string; backgroundColor: string; data: number[]; }[]; };
     stackedOptions!: { tooltips: { mode: string; intersect: boolean; }; responsive: boolean; scales: { xAxes: { stacked: boolean; }[]; yAxes: { stacked: boolean; }[]; }; };
     events!: ({ status: string; date: string; icon: any; color: string; image: string; } | { status: string; date: string; icon: any; color: string; image?: undefined; })[];
+    data!: { labels: string[]; datasets: { data: number[]; backgroundColor: string[]; hoverBackgroundColor: string[]; }[]; };
 
   showDialog() {
     this.productDialog = true;
 }
+checked: boolean = true;
 
-
-  constructor(private productService: ProductService, private messageService: MessageService, private confirmationService: ConfirmationService) {}
+  constructor(private productService: ProductService, private messageService: MessageService, private confirmationService: ConfirmationService) 
+  {
+    this.stateOptions = [{label: 'Off', value: 'off'}, {label: 'On', value: 'on'}];
+  }
 
   ngOnInit() {
+    this.data = {
+        labels: ['A','B','C'],
+        datasets: [
+            {
+                data: [300, 50, 100],
+                backgroundColor: [
+                    "#FF6384",
+                    "#36A2EB",
+                    "#FFCE56"
+                ],
+                hoverBackgroundColor: [
+                    "#FF6384",
+                    "#36A2EB",
+                    "#FFCE56"
+                ]
+            }
+        ]
+    };
+
     this.events = [
-        {status: 'Ordered', date: '15/10/2020 10:30', icon: PrimeIcons.THUMBS_UP, color: '#3b82f6', image: 'game-controller.jpg'},
-        {status: 'Processing', date: '15/10/2020 14:00', icon: PrimeIcons.THUMBS_UP, color: '#3b82f6'},
-        {status: 'Shipped', date: '15/10/2020 16:15', icon: PrimeIcons.THUMBS_UP, color: '#3b82f6'},
-        {status: 'Delivered', date: '16/10/2020 10:00', icon: PrimeIcons.THUMBS_DOWN_FILL, color: '#607D8B'}
+        {status: 'Comptencia 1', date: '15/10/2020 10:30', icon: PrimeIcons.THUMBS_UP, color: '#3b82f6', image: 'game-controller.jpg'},
+        {status: 'Competencia 2', date: '15/10/2020 14:00', icon: PrimeIcons.THUMBS_UP, color: '#3b82f6'},
+        {status: 'Competencia 3', date: '15/10/2020 16:15', icon: PrimeIcons.THUMBS_UP, color: '#3b82f6'},
+        {status: 'Competencia 4', date: '15/10/2020 14:00', icon: PrimeIcons.THUMBS_UP, color: '#3b82f6'},
+        {status: 'Competencia 5', date: '15/10/2020 16:15', icon: PrimeIcons.THUMBS_UP, color: '#3b82f6'},
+        {status: 'competencia 6', date: '16/10/2020 10:00', icon: PrimeIcons.THUMBS_DOWN_FILL, color: '#607D8B'}
     ];
     
     this.stackedData = {

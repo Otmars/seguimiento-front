@@ -14,9 +14,6 @@
 }
 
 body{
-    margin-left: 100px;
-    margin-top: 100px;
-    margin-right: 30px;
     
     transition: margin-left 300ms cubic-bezier(0.785, 0.135, 0.15, 0.86);
     background-color: #eff3f8;
@@ -182,7 +179,7 @@ a.selected{
 /*Clases para usar en JavaScript*/
 
 .body_move{
-    margin-left: 250px;
+    margin-left: 150px;
 }
 
 .menu__side_move{

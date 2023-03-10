@@ -48,6 +48,14 @@ import { SegimientoEstudianteComponent } from './segimiento-estudiante/segimient
 import {AnimateModule} from 'primeng/animate';
 import {TimelineModule} from 'primeng/timeline';
 import {ChartModule} from 'primeng/chart';
+import {SplitButtonModule} from 'primeng/splitbutton';
+import {OverlayPanelModule} from 'primeng/overlaypanel';
+import {SelectButtonModule} from 'primeng/selectbutton';
+import {InputSwitchModule} from 'primeng/inputswitch';
+import { LoginComponent } from './login/login.component';
+
+import {CheckboxModule} from 'primeng/checkbox';
+import { DocenteComponent } from './docente/docente.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -59,6 +67,8 @@ import {ChartModule} from 'primeng/chart';
     MateriaComponent,
     CompetenciasComponent,
     SegimientoEstudianteComponent,
+    LoginComponent,
+    DocenteComponent,
     
   ],
   imports: [
@@ -91,7 +101,12 @@ import {ChartModule} from 'primeng/chart';
     SharedModule,
     AnimateModule,
     TimelineModule,
-    ChartModule
+    ChartModule,
+    SplitButtonModule,
+    OverlayPanelModule,
+    SelectButtonModule,
+    InputSwitchModule,
+    CheckboxModule
     
   ],
   providers: [CustomerService,ProductService, MessageService, ConfirmationService],

@@ -1,30 +1,43 @@
 
-<p-toast></p-toast>
+<div>
+    <app-menu></app-menu>
+</div>
+<div class="bloque">
+    <p-toast></p-toast>
 
 <div class="card">
     <h1 class="text-5xl">Seguimiento Estudiante</h1>
     <p-toolbar styleClass="p-mb-4">
-        <div class="flex justify-content-center"> 
-            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="openNew()"></button>
-            <button pButton pRipple [label]="'Delete'" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedProducts()" [disabled]="!selectedProducts || !selectedProducts.length"></button>
+        <div class="flex justify-content-center align-content-center">
+            <button pButton pRipple type="button" label="Primary" class="p-button-raised"></button>
+            <button pButton pRipple type="button" label="Secondary"
+                class="p-button-raised p-button-secondary mx-2"></button>
+            <button pButton pRipple type="button" label="Success" class="p-button-raised p-button-success"></button>
+            <button pButton pRipple type="button" label="Info" class="p-button-raised p-button-info mx-2"></button>
+            <button pButton pRipple type="button" label="Warning" class="p-button-raised p-button-warning"></button>
+            <button pButton pRipple type="button" label="Help" class="p-button-raised p-button-help mx-2"></button>
+            <button pButton pRipple type="button" label="Danger" class="p-button-raised p-button-danger"></button>
         </div>
-           
+
         <div class="flex justify-content-center">
-            <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="p-mr-2 p-d-inline-block"></p-fileUpload>
-            <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button>
+            <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import"
+                class="p-mr-2 p-d-inline-block"></p-fileUpload>
+            <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help mx-2"></button>
         </div>
-        
+
     </p-toolbar>
     <br>
-    <p-table #dt [value]="products" [rows]="10" [paginator]="true" [globalFilterFields]="['name','country.name','representative.name','status']"
-        [(selection)]="selectedProducts" [rowHover]="true" dataKey="id"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+    <p-table #dt [value]="products" [rows]="10" [paginator]="true"
+        [globalFilterFields]="['name','country.name','representative.name','status']" [(selection)]="selectedProducts"
+        [rowHover]="true" dataKey="id" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [showCurrentPageReport]="true">
         <ng-template pTemplate="caption">
             <div class="p-d-flex p-ai-center p-jc-between">
                 <h5 class="p-m-0">Manage Products</h5>
                 <span class="p-input-icon-left">
                     <i class="pi pi-search"></i>
-                    <input pInputText type="text" (input)="dt.filterGlobal(getEventValue($event), 'contains')" placeholder="Search..." />
+                    <input pInputText type="text" (input)="dt.filterGlobal(getEventValue($event), 'contains')"
+                        placeholder="Search..." />
                 </span>
             </div>
         </ng-template>
@@ -47,13 +60,17 @@
                     <p-tableCheckbox [value]="product"></p-tableCheckbox>
                 </td>
                 <td>{{product.name}}</td>
-                <td>{{product.price | currency:'USD'}}</td>
-                <td>{{product.category}}</td>
+                <td>{{product.price }}</td>
+                <td>{{product.quantity}}</td>
                 <td><p-rating [ngModel]="product.rating" [readonly]="true" [cancel]="false"></p-rating></td>
-                <td><span [class]="'product-badge status-' + product.inventoryStatus.toLowerCase()">{{product.inventoryStatus}}</span></td>
+                <td><span
+                        [class]="'product-badge status-' + product.inventoryStatus.toLowerCase()">{{product.inventoryStatus}}</span>
+                </td>
                 <td>
-                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="editProduct(product)"></button>
-                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(product)"></button>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2"
+                        (click)="editProduct(product)"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning mx-2"
+                        (click)="deleteProduct(product)"></button>
                 </td>
             </tr>
         </ng-template>
@@ -65,46 +82,108 @@
     </p-table>
 </div>
 
-<p-dialog [(visible)]="productDialog" [style]="{width: '1300px'}" header="Progreso estudiante" [modal]="true" styleClass="p-fluid" [dismissableMask]="true">
-        
-<div class="surface-section">
-    <div class="font-medium text-3xl text-900 mb-3">Informacion estudiante</div>
-    <ul class="list-none p-0 m-0">
-        <li class="flex align-items-center px-2 border-top-1 surface-border flex-wrap">
-            <div class="text-500 w-6 md:w-2 font-medium">Nombre</div>
-            <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">Juan Perez</div>
-            <div class="w-6 md:w-2 flex justify-content-end">
-                <button pButton pRipple label="Edit" icon="pi pi-pencil" class="p-button-text"></button>
+<p-dialog [(visible)]="productDialog" [style]="{width: '1300px'}" header="Progreso estudiante" [modal]="true"
+    styleClass="p-fluid" [dismissableMask]="true">
+
+    <div class="surface-section">
+        <div class="font-medium text-3xl text-900 mb-3">Informacion estudiante</div>
+        <ul class="list-none p-0 m-0">
+            <li class="flex align-items-center px-2 border-top-1 surface-border flex-wrap">
+                <div class="text-500 w-6 md:w-2 font-medium">Nombre</div>
+                <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">Juan Perez</div>
+                <div class="w-6 md:w-2 flex justify-content-end">
+                    <button pButton pRipple label="Edit" icon="pi pi-pencil" class="p-button-text"></button>
+                </div>
+            </li>
+            <li class="flex align-items-center px-2 pb-3  surface-border flex-wrap">
+                <div class="text-500 w-6 md:w-2 font-medium">Registro Universitario</div>
+                <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">200001234</div>
+            </li>
+
+            <li class="flex align-items-center pb-8 px-2 border-top-1 surface-border flex-wrap">
+                <div class="text-500 w-6 md:w-2 font-medium">Materias inscrita</div>
+                <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">Anatomia 1, Embriologia, Histologia,
+                    Integracion Clinica, Investigacion, Salud Publica</div>
+                <div class="w-6 md:w-2 flex justify-content-end">
+                    <button pButton pRipple label="Edit" icon="pi pi-pencil" class="p-button-text"></button>
+                </div>
+            </li>
+            <p-timeline [value]="events" layout="horizontal">
+                <ng-template pTemplate="marker" let-event>
+                    <span class="custom-marker shadow-2" [style.backgroundColor]="event.color"
+                        (click)="op.toggle($event)" style="cursor: pointer;">
+                        <i [ngClass]="event.icon"></i>
+                    </span>
+                </ng-template>
+                <ng-template pTemplate="content" let-event>
+                    {{event.status}}
+                </ng-template>
+            </p-timeline>
+            <div>
+                <h1 class="flex mr-2">Practicas</h1>
             </div>
-        </li>
-        <li class="flex align-items-center px-2 pb-3  surface-border flex-wrap">
-            <div class="text-500 w-6 md:w-2 font-medium">Registro Universitario</div>
-            <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">200001234</div>
-        </li>
-        
-        <li class="flex align-items-center pb-8 px-2 border-top-1 surface-border flex-wrap">
-            <div class="text-500 w-6 md:w-2 font-medium">Competencias de materia</div>
-            <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">Anatomia 1</div>
-            <div class="w-6 md:w-2 flex justify-content-end">
-                <button pButton pRipple label="Edit" icon="pi pi-pencil" class="p-button-text"></button>
+            <div class="flex flex-row">
+                <div class="flex flex-column align-content-center align-items-center mx-5">
+                    <p class="my-4">Practica 1 "Titulo de Practicas"</p>
+                    <p-selectButton [options]="stateOptions" [(ngModel)]="value1" optionLabel="label"
+                        optionValue="value"></p-selectButton>
+                </div>
+                <div class="flex flex-column align-content-center align-items-center mx-5">
+                    <p class="my-4">Practica 2 "Titulo de Practicas"</p>
+                    <p-selectButton [options]="stateOptions" [(ngModel)]="value1" optionLabel="label"
+                        optionValue="value"></p-selectButton>
+                </div>
+                <div class="flex flex-column align-content-center align-items-center mx-5">
+                    <p class="my-4">Practica 3 "Titulo de Practicas"</p>
+                    <p-selectButton [options]="stateOptions" [(ngModel)]="value1" optionLabel="label"
+                        optionValue="value"></p-selectButton>
+                </div>
+                <div class="flex flex-column align-content-center align-items-center mx-5">
+                    <p class="my-4">Practica 4 "Titulo de Practicas"</p>
+                    <p-selectButton [options]="stateOptions" [(ngModel)]="value1" optionLabel="label"
+                        optionValue="value"></p-selectButton>
+                </div>
+                <button  pButton pRipple type="button" icon="pi pi-plus-circle" class=" md:col-3 p-button-rounded"></button>
+                
             </div>
-        </li>
-        <p-timeline [value]="events" layout="horizontal">
-            <ng-template pTemplate="marker" let-event>
-                <span class="custom-marker shadow-2" [style.backgroundColor]="event.color">
-                    <i [ngClass]="event.icon"></i>
-                </span>
-            </ng-template>
-            <ng-template pTemplate="content" let-event>
-                {{event.status}}
-            </ng-template>
-        </p-timeline>
-        <div class="card w-5" >
-            <h5>Stacked</h5>
-            <p-chart type="bar" [data]="stackedData" [options]="stackedOptions"></p-chart>
-        </div>
-        
-        <!-- <li class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap">
+            <br>
+            <div class="flex flex row">
+                <div class="col-12 md:col-3">
+                    <h5>Primer Parcial</h5>
+                    <div class="p-inputgroup">
+                        <input type="text" pInputText placeholder="Inserte Calificacion">   
+                        <button type="button" pButton pRipple icon="pi pi-check" styleClass="p-button-warn"></button>      
+                    </div>
+                </div>
+                <div class="col-12 md:col-3">
+                    <h5>Segundo Parcial</h5>
+                    <div class="p-inputgroup">
+                        <input type="text" pInputText placeholder="Inserte Calificacion">   
+                        <button type="button" pButton pRipple icon="pi pi-check" styleClass="p-button-warn"></button>      
+                    </div>
+                </div><div class="col-12 md:col-3">
+                    <h5>Final </h5>
+                    <div class="p-inputgroup">
+                        <input type="text" pInputText placeholder="Inserte Calificacion">   
+                        <button type="button" pButton pRipple icon="pi pi-check" styleClass="p-button-warn"></button>      
+                    </div>
+                </div>
+                <button  pButton pRipple type="button" icon="pi pi-plus-circle" class=" md:col-3 p-button-rounded"></button>
+            </div>
+
+            <div class="card w-4 flex">
+                <h5>Grafico 1</h5>
+                <p-chart type="bar" [data]="stackedData" [options]="stackedOptions"></p-chart>
+                <h5 class="">Grafico 2</h5>
+                <p-chart type="bar" [data]="stackedData" [options]="stackedOptions"></p-chart>
+            </div>
+            <div class="grid ">
+                <div class="col w-4"><p-chart type="bar" [data]="stackedData" [options]="stackedOptions"></p-chart>
+                </div>
+                <p-chart type="doughnut" [data]="data" [options]="chartOptions" [style]="{'width': '30%'}"></p-chart>
+            </div>
+
+            <!-- <li class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap">
             <div class="text-500 w-6 md:w-2 font-medium">Actors</div>
             <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">Robert De Niro, Al Pacino</div>
             <div class="w-6 md:w-2 flex justify-content-end">
@@ -120,8 +199,20 @@
                 <button pButton pRipple label="Edit" icon="pi pi-pencil" class="p-button-text"></button>
             </div>
         </li> -->
-    </ul>
-</div>
-    </p-dialog>
+        </ul>
+    </div>
+</p-dialog>
 
 <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+
+
+<p-overlayPanel #op [showCloseIcon]="true" [style]="{width: '300px'}">
+    <ng-template pTemplate>
+        <h5>Detalles de compentencias</h5>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing</p>
+        <p>Competencia Adquirida</p>
+        <p-inputSwitch [(ngModel)]="checked"></p-inputSwitch>
+    </ng-template>
+</p-overlayPanel>
+</div>
+
