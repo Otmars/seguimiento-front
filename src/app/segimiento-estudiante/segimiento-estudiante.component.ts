@@ -32,7 +32,7 @@ export class SegimientoEstudianteComponent implements OnInit {
   selectedProducts!: Product[];
 
   submitted!: boolean;
-
+  displayResponsive!:boolean;
   statuses!: any[];
   value1: string = "off";
   value10!: string ;
@@ -236,4 +236,7 @@ checked: boolean = true;
   getEventValue($event:any) :string {
     return $event.target.value;
   } 
+  showResponsiveDialog() {
+    this.displayResponsive = true;
+}
 }
