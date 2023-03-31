@@ -1,6 +1,6 @@
 import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -56,6 +56,9 @@ import { LoginComponent } from './login/login.component';
 
 import {CheckboxModule} from 'primeng/checkbox';
 import { DocenteComponent } from './docente/docente.component';
+import { MessagesModule } from 'primeng/messages';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { JWT_OPTIONS } from '@auth0/angular-jwt';
 @NgModule({
   declarations: [
     AppComponent,
@@ -72,6 +75,8 @@ import { DocenteComponent } from './docente/docente.component';
     
   ],
   imports: [
+    MessagesModule,
+    HttpClientModule,
     BrowserModule,
     ButtonModule,
     MenubarModule,
@@ -106,10 +111,12 @@ import { DocenteComponent } from './docente/docente.component';
     OverlayPanelModule,
     SelectButtonModule,
     InputSwitchModule,
-    CheckboxModule
+    CheckboxModule,
+    ReactiveFormsModule,
+    
     
   ],
-  providers: [CustomerService,ProductService, MessageService, ConfirmationService],
+  providers: [{provide:JWT_OPTIONS, useValue:JWT_OPTIONS},CustomerService,ProductService, MessageService, ConfirmationService,JwtHelperService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
