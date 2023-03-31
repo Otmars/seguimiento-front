@@ -189,7 +189,7 @@ a.selected{
 
 @media screen and (max-width: 760px){
     .body_move{
-        margin-left: 0px;
+        margin-left: -80px;
     }
 
     .menu__side_move{

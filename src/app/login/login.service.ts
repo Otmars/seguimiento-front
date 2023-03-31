@@ -1,15 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
-
+import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
-  url = 'http://localhost:3000/user/login';
+
+  
+  url = environment.url;
   constructor(private http: HttpClient, private jwthelper: JwtHelperService) {}
   public login(body: any) {
-    return this.http.post(this.url, body);
+    return this.http.post(this.url+'user/login', body);
   }
 
   isauth(): boolean {

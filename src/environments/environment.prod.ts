@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+  production: true,
+  url:"https://seguimiento-back-production.up.railway.app/"
+
 };
