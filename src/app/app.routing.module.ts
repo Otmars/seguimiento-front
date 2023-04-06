@@ -9,6 +9,7 @@ import { LoginComponent } from "./login/login.component";
 import { DocenteComponent } from "./docente/docente.component";
 import { AuthGuard } from "./guards/auth.guard";
 import { RoleGuard } from "./guards/role.guard";
+import { MenuLateralComponent } from "./menu-lateral/menu-lateral.component";
 const routes: Routes=[
     { path:'', redirectTo: '/login', pathMatch:'full'},
     {path:'home', component:HomeComponent,canActivate:[AuthGuard]},
@@ -17,7 +18,8 @@ const routes: Routes=[
     {path:'competencias', component:CompetenciasComponent},
     {path:'seguimiento', component:SegimientoEstudianteComponent,canActivate:[RoleGuard], data:{expectedRole:'docente'}},
     {path:'login', component:LoginComponent},
-    {path:'docentes', component:DocenteComponent}
+    {path:'docentes', component:DocenteComponent},
+    {path:'menu',component:MenuLateralComponent}
 ]
 
 @NgModule({
