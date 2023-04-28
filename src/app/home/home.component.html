@@ -1,7 +1,7 @@
 <!-- <div>
     <app-menu></app-menu>
 </div> -->
-<div><app-menu-lateral [ngClass]="{'hidden': menuLateral}" ></app-menu-lateral></div>
+<div><app-menu-lateral (newItemEvent)="nuevo($event)" [ngClass]="{'hidden': menuLateral}" ></app-menu-lateral></div>
 <!-- <div class="bloque">
     <div class="flex flex-row align-content-around justify-content-center w-full mb-2">
         <p class="text-center text-6xl font-semibold">Bienvenido al sistema de Control</p>
@@ -16,7 +16,7 @@
 <div class="fondo1">
   <div class="flex justify-content-between flex-wrap text-xl p-4">
     <div class="flex align-items-center m-2">
-      <i class="pi pi-bars text-xl button-menu" (click)="clickMenu()" ></i>
+      <i class="pi pi-bars text-xl button-menu cursor-pointer" (click)="clickMenu()"  ></i>
     </div>
     <div class="flex align-items-center font-bold text-xl">
       <span class="">{{ this.saludo }} </span>
@@ -75,7 +75,7 @@
       >
         <i class="pi pi-calendar text-4xl text-blue-500"></i>
       </span>
-      <div class="text-900 text-xl mb-3 font-medium">Materias</div>
+      <div class="text-900 text-xl mb-3 font-medium">Horario</div>
       <span class="text-700 line-height-3"
         >Mira tus materias y horario</span
       >

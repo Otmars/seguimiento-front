@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, Input, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-menu-lateral',
@@ -12,6 +12,7 @@ export class MenuLateralComponent implements OnInit{
 getScreenWidth: any;
 getScreenHeight: any;
 @Input() menu :boolean;
+@Output() newItemEvent = new EventEmitter<string>();
 constructor(private renderer2 : Renderer2){
   
 
@@ -29,15 +30,13 @@ ngOnInit(){
   }
 @HostListener('window:resize', ['$event'])
 button(){
-  console.log(this.btn_open.nativeElement);
+  // console.log(this.btn_open.nativeElement);
   const button= this.btn_open.nativeElement
-  const menu = this.menu_side.nativeElement
-  this.renderer2.addClass(menu,'menu__side_move')
-  console.log(window.innerWidth);
-  if (window.innerWidth) {
-    
-  }
-  
+  this.renderer2.addClass(this.menu_side.nativeElement,'menu__side_move')
+  // console.log(this.newItemEvent);
+}
+clickbutton(){
+  this.newItemEvent.emit("click");
 }
 }
 

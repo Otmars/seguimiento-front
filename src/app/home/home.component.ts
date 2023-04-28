@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import decode from 'jwt-decode';
 @Component({
   selector: 'app-home',
@@ -10,13 +10,17 @@ export class HomeComponent implements OnInit {
   nombreusuario!: string;
   estadomenu!:boolean;
   menuLateral:boolean= true;
+ 
   ngOnInit() {
     this.mostrarSaludo();
   }
 
   
 
-
+  nuevo(event : any){
+    this.menuLateral= true;
+    
+  }
   mostrarSaludo() {
     var texto = '';
     var ahora = new Date();

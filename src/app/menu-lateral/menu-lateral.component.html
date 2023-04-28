@@ -1,62 +1,62 @@
-<div></div>
-<div class="icon__menu p-8">
-    <i  class="pi pi-bars" #btn_open id="btn_open" (click)="button()"></i>
-</div>
-<div class="container text-center mt-5">
-    <p>Window width: <strong>{{ getScreenWidth }}</strong></p>
-    <p>Window height: <strong>{{ getScreenHeight }}</strong></p>
-  </div>
+<!-- 
+<div class="icon__menu ">
+  <i class="pi pi-bars" #btn_open id="btn_open" (click)="clickbutton()"></i>
+</div> -->
+<!-- <div class="container text-center mt-5">
+  <p>
+    Window width: <strong>{{ getScreenWidth }}</strong>
+  </p>
+  <p>
+    Window height: <strong>{{ getScreenHeight }}</strong>
+  </p>
+</div> -->
 <div class="menu__side" #menu_side id="menu_side">
+  <div class="name__page" #btn_open (click)="clickbutton()" id="btn_open">
+    <i class="pi pi-bars"></i>
+    <h4>Sistema de control</h4>
+  </div>
 
-    <div class="name__page">
-        <i class="pi pi-users"></i>
-        <h4>Sistema de control</h4>
-    </div>
+  <div class="options__menu">
+    <a [ngClass]="'selected'" routerLink="/">
+      <div class="option">
+        <i class="pi pi-home" title="Inicio"></i>
+        <h4>Inicio</h4>
+      </div>
+    </a>
 
-    <div class="options__menu">	
+    <a routerLink="/seguimiento">
+      <div class="option">
+        <i class="pi pi-file"></i>
+        <h4>Seguimiento Estudiante</h4>
+      </div>
+    </a>
 
-        <a [ngClass]="'selected'" routerLink="/">
-            <div class="option">
-                <i class="pi pi-home" title="Inicio"></i>
-                <h4>Inicio</h4>
-            </div>
-        </a>
+    <a routerLink="/materia">
+      <div class="option">
+        <i class="pi pi-file"></i>
+        <h4>Materias</h4>
+      </div>
+    </a>
 
-        <a routerLink="/seguimiento" >
-            <div class="option">
-                <i class="pi pi-file"></i>
-                <h4>Seguimiento Estudiante</h4>
-            </div>
-        </a>
-        
-        <a routerLink="/materia">
-            <div class="option">
-                <i class="pi pi-file"></i>
-                <h4>Materias</h4>
-            </div>
-        </a>
+    <a routerLink="/competencias">
+      <div class="option">
+        <i class="pi pi-file" title="Blog"></i>
+        <h4>Competencias</h4>
+      </div>
+    </a>
 
-        <a routerLink="/competencias">
-            <div class="option">
-                <i class="pi pi-file" title="Blog"></i>
-                <h4>Competencias</h4>
-            </div>
-        </a>
+    <a routerLink="/docentes">
+      <div class="option">
+        <i class="pi pi-file" title="Contacto"></i>
+        <h4>Docentes</h4>
+      </div>
+    </a>
 
-        <a routerLink="/docentes">
-            <div class="option">
-                <i class="pi pi-file" title="Contacto"></i>
-                <h4>Docentes</h4>
-            </div>
-        </a>
-
-        <a routerLink="/estudiante">
-            <div class="option">
-                <i class="pi pi-file" title="Nosotros"></i>
-                <h4>Estudiantes</h4>
-            </div>
-        </a>
-
-    </div>
-
+    <a routerLink="/estudiante">
+      <div class="option">
+        <i class="pi pi-file" title="Nosotros"></i>
+        <h4>Estudiantes</h4>
+      </div>
+    </a>
+  </div>
 </div>
