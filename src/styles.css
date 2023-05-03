@@ -8,7 +8,10 @@
     margin: 0;
     padding: 0;
     text-decoration: none;
+    
     font-family: 'Open Sans', sans-serif;
+    font-weight: 400
+
  
 }
 
@@ -17,7 +20,10 @@ body{
     transition: margin-left 300ms cubic-bezier(0.785, 0.135, 0.15, 0.86);
     background-color: #eff3f8;
 }
-
+body .ui-fluid ui-button.ui-button-icon-only,
+body .ui-button.ui-button-icon-only {
+    width: 2.385em;
+}
 main{
     padding: 20px;
 }

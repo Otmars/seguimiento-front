@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -60,6 +60,10 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { JWT_OPTIONS } from '@auth0/angular-jwt';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { MenuLateralComponent } from './menu-lateral/menu-lateral.component';
+
+import localeMX from '@angular/common/locales/es-BO'
+import { registerLocaleData } from '@angular/common';
+registerLocaleData(localeMX)
 @NgModule({
   declarations: [
     AppComponent,
@@ -123,6 +127,7 @@ import { MenuLateralComponent } from './menu-lateral/menu-lateral.component';
     MessageService,
     ConfirmationService,
     JwtHelperService,
+    {provide:LOCALE_ID , useValue: 'es-BO'}
   ],
   bootstrap: [AppComponent],
 })
