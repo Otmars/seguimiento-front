@@ -6,6 +6,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ButtonModule } from 'primeng/button';
 
+import { InputMaskModule } from 'primeng/inputmask';
+
+import { TooltipModule } from 'primeng/tooltip';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { MenubarModule } from 'primeng/menubar';
@@ -118,6 +121,8 @@ registerLocaleData(localeMX)
     InputSwitchModule,
     CheckboxModule,
     ReactiveFormsModule,
+    InputMaskModule,
+    TooltipModule
   ],
   providers: [
     {provide:LocationStrategy,useClass:HashLocationStrategy},

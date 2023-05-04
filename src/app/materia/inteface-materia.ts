@@ -1,5 +1,5 @@
 export interface Asingatura {
-    id?:           number;
+    id:           number;
     nombre?:       string;
     siglaCodigo?:  string;
     cargaHoraria?: number;

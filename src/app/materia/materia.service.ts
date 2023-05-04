@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject, map } from 'rxjs';
+import { Observable, Subject, map, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Asingatura } from './inteface-materia';
 
@@ -12,7 +12,9 @@ export class MateriaService {
   private _refresh$ = new Subject<void>()
   constructor(private http : HttpClient) { }
   
-
+  get refresh$(){
+    return this._refresh$
+  }
 
   getMarteria():Observable<Asingatura[]>{
     return this.http.get<Asingatura[]>(this.url+'asignatura');
@@ -20,12 +22,24 @@ export class MateriaService {
   getDocenteNombre(){
     return this.http.get(this.url+"docente/nombre")
   }
-  postMateria(body : any){
-    return this.http.post(this.url+"asignatura",body)
+  postMateria(body : any):Observable<any>{
+    return this.http.post(this.url+"asignatura",body).pipe(
+      tap(()=>{
+        this._refresh$.next();
+      })
+    )
   }
 
-  deleteMateria(id:number){
-    return this.http.delete(this.url+"asignatura/"+id)
+  deleteMateria(id:number):Observable<any>{
+    return this.http.delete(this.url+"asignatura/"+id).pipe(
+      tap(()=>{
+        this._refresh$.next();
+      })
+    )
+  }
+
+  updatedaMateria (id:number,body:any):Observable<any>{
+    return this.http.patch(this.url+'asignatura/'+id,body)
   }
 
 }

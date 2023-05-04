@@ -4,137 +4,131 @@ import { ProductService } from '../service/product.service';
 
 import { ConfirmationService } from 'primeng/api';
 import { MessageService } from 'primeng/api';
+import { Competencia } from './interface-competencia';
+import { CompetenciaService } from './competencia.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-competencias',
   templateUrl: './competencias.component.html',
   styleUrls: ['./competencias.component.css'],
-  styles: [
-      `
-          :host ::ng-deep .p-dialog .product-image {
-              width: 150px;
-              margin: 0 auto 2rem auto;
-              display: block;
-          }
-      `
-  ],
-  providers: [MessageService, ConfirmationService]
-  
+  providers: [MessageService, ConfirmationService],
 })
 export class CompetenciasComponent implements OnInit {
-
-  productDialog!: boolean;
-
-  products!: Product[];
-
-  product!: Product;
-
-  selectedProducts!: Product[];
-
-  submitted!: boolean;
-
-  statuses!: any[];
+  
+  tipoCompetencia = [
+    { nombre: 'Competencia Macro' },
+    { nombre: 'Competencia Generica'},
+    { nombre: 'Competencia Especifica'}
+  ];
+  competemciaDialog!: boolean;
+  competencias!: Competencia[];
+  competencia!: Competencia;
+  selectedComeptencia!: any
   display: boolean = false;
-
-  inventoryStatus!: any;
+  formCompetencia!: FormGroup;
+  editar:boolean = false
   showDialog() {
-      this.display = true;
+    this.display = true;
   }
-  constructor(private productService: ProductService, private messageService: MessageService, private confirmationService: ConfirmationService) {}
+  constructor(
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService,
+    private competenciaService: CompetenciaService,
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit() {
-      this.productService.getProducts().then((data) => (this.products = data));
-
-      this.statuses = [
-          { label: 'INSTOCK', value: 'instock' },
-          { label: 'LOWSTOCK', value: 'lowstock' },
-          { label: 'OUTOFSTOCK', value: 'outofstock' }
-      ];
+    this.formCompetencia = this.initForm();
+    this.cargarCompetencia();
   }
 
-  openNew() {
-      this.product = {};
-      this.submitted = false;
-      this.productDialog = true;
-  }
-
-  deleteSelectedProducts() {
-      this.confirmationService.confirm({
-          message: 'Are you sure you want to delete the selected products?',
-          header: 'Confirm',
-          icon: 'pi pi-exclamation-triangle',
-          accept: () => {
-              this.products = this.products.filter((val) => !this.selectedProducts.includes(val));
-              // this.selectedProducts = null;
-              this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 });
-          }
-      });
-  }
-
-  editProduct(product: Product) {
-      this.product = { ...product };
-      this.productDialog = true;
-  }
-
-  deleteProduct(product: Product) {
-      this.confirmationService.confirm({
-          message: 'Are you sure you want to delete ' + product.name + '?',
-          header: 'Confirm',
-          icon: 'pi pi-exclamation-triangle',
-          accept: () => {
-              this.products = this.products.filter((val) => val.id !== product.id);
-              this.product = {};
-              this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
-          }
-      });
+  cargarCompetencia() {
+    this.competenciaService.getCompetencias().subscribe((res) => {
+      this.competencias = res;
+      console.log(this.competencias);
+    });
   }
 
   hideDialog() {
-      this.productDialog = false;
-      this.submitted = false;
+    this.competemciaDialog = false;
   }
-
-  saveProduct() {
-      this.submitted = true;
-
-      if (this.product.name!.trim()) {
-          if (this.product.id) {
-              this.products[this.findIndexById(this.product.id)] = this.product;
-              this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
-          } else {
-              this.product.id = this.createId();
-              this.product.image = 'product-placeholder.svg';
-              this.products.push(this.product);
-              this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
-          }
-
-          this.products = [...this.products];
-          this.productDialog = false;
-          this.product = {};
-      }
+  initForm(): FormGroup {
+    return this.fb.group({
+      id: [''],
+      descripcion: ['',[Validators.required]],
+      tipoCompetencia: ['',[Validators.required]],
+    });
   }
+  editCompetencia(competencia: Competencia) {
+    this.tituloModal="Editar Competencia"
+    this.editar=true
+    this.competemciaDialog = true
 
-  findIndexById(id: string): number {
-      let index = -1;
-      for (let i = 0; i < this.products.length; i++) {
-          if (this.products[i].id === id) {
-              index = i;
-              break;
-          }
-      }
-
-      return index;
+    
+    this.formCompetencia.setValue({
+      id:competencia.id,
+      descripcion: competencia.descripcion ,
+      tipoCompetencia: competencia.tipoCompetencia,
+    })
   }
+  deleteSelectedCompetencia() {
+    this.confirmationService.confirm({
+      message:
+        '¿Está seguro de que desea eliminar las asignatura selecionadas seleccionados?',
+      header: 'Confirmar',
+      icon: 'pi pi-exclamation-triangle text-orange-500',
+      accept: () => {
 
-  createId(): string {
-      let id = '';
-      var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      for (var i = 0; i < 5; i++) {
-          id += chars.charAt(Math.floor(Math.random() * chars.length));
-      }
-      return id;
+        for (let i = 0; i < this.selectedComeptencia.length; i++) {
+          this.competenciaService.deleteCompetencia(this.selectedComeptencia[i].id).subscribe(res=>{
+            console.log(res);
+          })
+          
+        }
+        // this.selectedProducts = null;
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Operacion Realizada',
+          detail: 'Eliminado con exito',
+          life: 3000,
+        });
+      },
+    });
   }
-  getEventValue($event:any) :string {
-    return $event.target.value;
-  } 
+  guardarEditarCompetencia() {
+    console.log(this.formCompetencia.value);
+    const editarCompetencia= this.formCompetencia.value
+    const idcompetencia = this.formCompetencia.value.id
+    delete editarCompetencia.id
+    this.competenciaService.editarCompetencia(idcompetencia,editarCompetencia).subscribe(res =>{
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Operacion Realizada',
+        detail: 'Editado con exito',
+        life: 3000,
+      })
+      this.hideDialog()
+    })
+  }
+  nuevaCompentecia() {
+    this.tituloModal = 'Crear Competencia';
+    this.competencia = {};
+    this.competemciaDialog = true;
+  }
+  tituloModal: string;
+
+  guardarCompetencia() {
+    const nuevaCompetencia = this.formCompetencia.value
+    delete nuevaCompetencia.id
+    this.competenciaService.postCompetencia(nuevaCompetencia).subscribe(res =>{
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Operacion Realizada',
+        detail: 'Creado con exito',
+        life: 3000,
+      })
+      this.hideDialog()
+    })
+  }
 }

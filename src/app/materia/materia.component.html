@@ -322,7 +322,9 @@
           [ngClass]="{'ng-dirty':asignaturaForm.get('siglaCodigo')?.touched && asignaturaForm.get('siglaCodigo')?.errors?.['required']}"
         >
         </p-inputNumber>
-        <small class="p-error" *ngIf=":asignaturaForm.get('siglaCodigo')?.touched && asignaturaForm.get('siglaCodigo')?.errors?.['required']"
+        <small
+          class="p-error"
+          *ngIf=":asignaturaForm.get('siglaCodigo')?.touched && asignaturaForm.get('siglaCodigo')?.errors?.['required']"
           >Sigla-Codigo is required.</small
         >
       </div>
@@ -337,7 +339,9 @@
           [ngClass]="{'ng-dirty':asignaturaForm.get('cargaHoraria')?.touched && asignaturaForm.get('cargaHoraria')?.errors?.['required']}"
         >
         </p-inputNumber>
-        <small class="p-error" *ngIf="asignaturaForm.get('cargaHoraria')?.touched && asignaturaForm.get('cargaHoraria')?.errors?.['required']"
+        <small
+          class="p-error"
+          *ngIf="asignaturaForm.get('cargaHoraria')?.touched && asignaturaForm.get('cargaHoraria')?.errors?.['required']"
           >Carga Horariao is required.</small
         >
       </div>
@@ -350,10 +354,11 @@
           autofocus
           suffix=" Meses"
           [ngClass]="{'ng-dirty':asignaturaForm.get('nMeses')?.touched && asignaturaForm.get('nMeses')?.errors?.['required']}"
-
         >
         </p-inputNumber>
-        <small class="p-error" *ngIf="asignaturaForm.get('nMeses')?.touched && asignaturaForm.get('nMeses')?.errors?.['required']"
+        <small
+          class="p-error"
+          *ngIf="asignaturaForm.get('nMeses')?.touched && asignaturaForm.get('nMeses')?.errors?.['required']"
           >N° Meses is required.</small
         >
       </div>
@@ -367,17 +372,26 @@
     </div> -->
       <div class="field">
         <label for="paralelo">Paralelo</label>
-        <input
-          type="paralelo"
+        <p-inputMask
+        id="paralelo"
+          mask="a"
+          formControlName="paralelo"
+          placeholder="A"
+          [ngClass]="{'ng-dirty':asignaturaForm.get('paralelo')?.touched && asignaturaForm.get('paralelo')?.errors?.['required']}"
+
+        ></p-inputMask>
+        <!-- <input
+          type="number"
           pInputText
           id="paralelo"
           formControlName="paralelo"
           placeholder="A"
           autofocus
           [ngClass]="{'ng-dirty':asignaturaForm.get('paralelo')?.touched && asignaturaForm.get('paralelo')?.errors?.['required']}"
-
-        />
-        <small class="p-error" *ngIf="asignaturaForm.get('paralelo')?.touched && asignaturaForm.get('paralelo')?.errors?.['required']"
+        /> -->
+        <small
+          class="p-error"
+          *ngIf="asignaturaForm.get('paralelo')?.touched && asignaturaForm.get('paralelo')?.errors?.['required']"
           >Paralelo is required.</small
         >
       </div>
@@ -398,7 +412,6 @@
           formControlName="docente"
           optionValue="id"
           [ngClass]="{'ng-dirty':asignaturaForm.get('docente')?.touched && asignaturaForm.get('docente')?.errors?.['required']}"
-
         >
           <ng-template let-docente pTemplate="item">
             <div class="country-item">
@@ -406,7 +419,9 @@
             </div>
           </ng-template>
         </p-dropdown>
-        <small class="p-error" *ngIf="asignaturaForm.get('docente')?.touched && asignaturaForm.get('docente')?.errors?.['required']"
+        <small
+          class="p-error"
+          *ngIf="asignaturaForm.get('docente')?.touched && asignaturaForm.get('docente')?.errors?.['required']"
           >Docenteis required.</small
         >
       </div>
@@ -422,7 +437,9 @@
         class="p-button-text"
         (click)="hideDialog()"
       ></button> -->
+
       <button
+        *ngIf="!editar"
         [disabled]="!asignaturaForm.valid"
         type="submit"
         pButton
@@ -431,6 +448,19 @@
         icon="pi pi-check"
         class="p-button-text"
       ></button>
+
+      <div *ngIf="editar">
+        <button
+          [disabled]="!asignaturaForm.valid"
+          pButton
+          type="button"
+          pRipple
+          label="Editar"
+          icon="pi pi-check"
+          class="p-button-text"
+          (click)="guardarEditarMateria(asignaturaForm.value)"
+        ></button>
+      </div>
     </ng-template>
   </p-dialog>
 </form>
@@ -531,11 +561,11 @@
         </td>
         <td><span class="p-column-title">Nombre</span>{{ dato.nombre }}</td>
         <td>
-          <span class="p-column-title">Sigla-Codigo</span>{{ dato.siglaCodigo }}
+          <span class="p-column-title">Sigla-Codigo</span>MED-{{ dato.siglaCodigo }}
         </td>
         <td>
           <span class="p-column-title">Carga Horaria</span
-          >{{ dato.cargaHoraria }}
+          >{{ dato.cargaHoraria }} Hrs
         </td>
         <td><span class="p-column-title">N° Meses</span>{{ dato.nMeses }}</td>
         <td><span class="p-column-title">Paralelo</span>{{ dato.paralelo }}</td>
@@ -543,11 +573,15 @@
           <span class="p-column-title">Docente</span
           >{{ dato.docente.iduser.nombres }}
         </td>
-        <td><span class="p-column-title">N° Meses</span>{{ dato.createdAt | date:'short'  }}</td>
+        <td>
+          <span class="p-column-title">N° Meses</span
+          >{{ dato.createdAt | date : "short" }}
+        </td>
         <td class="flex align-content-center justify-content-center">
           <p-button
             styleClass="p-button-outlined p-button-info m-1 py-1 "
             icon="pi pi-pencil"
+            (click)="editMateria(dato)"
           ></p-button>
           <p-button
             styleClass="p-button-outlined p-button-danger m-1 py-1 "

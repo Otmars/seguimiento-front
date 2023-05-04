@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 
 import { Product } from './Product';
 import { ProductService } from '../service/product.service';
@@ -8,16 +8,19 @@ import { MessageService } from 'primeng/api';
 import { MateriaService } from './materia.service';
 import { Asingatura } from './inteface-materia';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-materia',
   templateUrl: './materia.component.html',
   styleUrls: ['./materia.component.css'],
   providers: [MessageService, ConfirmationService],
 })
-export class MateriaComponent implements OnInit {
+export class MateriaComponent implements OnInit,OnDestroy {
+  subscription : Subscription
   public asignatura: any = [];
   datos!: Asingatura[];
   dato!: Asingatura;
+  datosedit !: Asingatura;
   productDialog!: boolean;
 
   products!: Product[];
@@ -37,6 +40,7 @@ export class MateriaComponent implements OnInit {
   selectedDocente:any
   listadocentes:any
   tituloModal ="Asignatura"
+  editar: boolean= false;
   constructor(
     private productService: ProductService,
     private messageService: MessageService,
@@ -44,6 +48,11 @@ export class MateriaComponent implements OnInit {
     private materiaService: MateriaService,
     private fb:FormBuilder
   ) {}
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+    console.log("suscripcion destuida");
+    
+  }
 
   ngOnInit(): void {
     this.asignaturaForm = this.initForm();
@@ -51,9 +60,13 @@ export class MateriaComponent implements OnInit {
     this.cargarDatos();
     this.cargarDocente()
     this.productService.getProducts().then((data) => (this.products = data));
+     this.subscription = this.materiaService.refresh$.subscribe(()=>{
+      this.cargarDatos();
+     })
   }
   initForm(): FormGroup {
     return this.fb.group({
+      id: [''],
       nombre:      ['',[Validators.required,Validators.minLength(7)]],
       siglaCodigo: [,[Validators.required,,Validators.minLength(7)]],
       cargaHoraria:[,[Validators.required]],
@@ -65,10 +78,11 @@ export class MateriaComponent implements OnInit {
   cargarDatos() {
     this.materiaService.getMarteria().subscribe((respuesta: Asingatura[]) => {
       this.datos = respuesta;
-      console.log(this.datos);
+      console.log("cargando tabla");
     });
   }
   nuevoAsignatura() {
+    this.editar = false
     this.asignaturaForm = this.initForm();
     this.product = {};
     this.submitted = false;
@@ -77,7 +91,7 @@ export class MateriaComponent implements OnInit {
   cargarDocente(){
     this.materiaService.getDocenteNombre().subscribe(res =>{
       this.listadocentes = res
-      console.log(this.listadocentes);
+      console.log("cargando docentes");
       
     })
   }
@@ -117,116 +131,38 @@ export class MateriaComponent implements OnInit {
     
   }
   guardarAsignatura() {
+    
     const newAsignatura = this.asignaturaForm.value
+    delete newAsignatura.id
     this.materiaService.postMateria(newAsignatura).subscribe(res =>{
       console.log(res);
-      
+      this.hideDialog()
     })
-    console.log(this.asignaturaForm.value);
-    
+
   }
-  
-  // openNew() {
-  //   this.product = {};
-  //   this.submitted = false;
-  //   this.productDialog = true;
-  // }
+  editMateria(dato:any){
+    console.log(dato);
+    this.asignatura= this.dato
+    this.asignaturaForm.setValue({
+      id: dato.id ,
+      nombre:      dato.nombre,
+      siglaCodigo: dato.siglaCodigo,
+      cargaHoraria: dato.cargaHoraria,
+      nMeses:     dato.nMeses,
+      paralelo:   dato.paralelo,
+      docente:   dato.docente.id,
+    })
+    this.editar = true
+    this.productDialog = true;
+  }
+  guardarEditarMateria(asignatura:any ){
+    console.log(asignatura);
+    const id = asignatura.id
+    delete asignatura.id
+    console.log(id,"*",asignatura);
+    
+    this.materiaService.updatedaMateria(id,asignatura).subscribe(res=>{
 
-  // deleteSelectedProducts() {
-  //   this.confirmationService.confirm({
-  //     message: 'Are you sure you want to delete the selected products?',
-  //     header: 'Confirm',
-  //     icon: 'pi pi-exclamation-triangle',
-  //     accept: () => {
-  //       this.products = this.products.filter(
-  //         (val) => !this.selectedProducts.includes(val)
-  //       );
-  //       // this.selectedProducts = null;
-  //       this.messageService.add({
-  //         severity: 'success',
-  //         summary: 'Successful',
-  //         detail: 'Products Deleted',
-  //         life: 3000,
-  //       });
-  //     },
-  //   });
-  // }
-
-  // editProduct(product: Product) {
-  //   this.product = { ...product };
-  //   this.productDialog = true;
-  // }
-
-  // deleteProduct(product: Product) {
-  //   this.confirmationService.confirm({
-  //     message: 'Are you sure you want to delete ' + product.name + '?',
-  //     header: 'Confirm',
-  //     icon: 'pi pi-exclamation-triangle',
-  //     accept: () => {
-  //       this.products = this.products.filter((val) => val.id !== product.id);
-  //       this.product = {};
-  //       this.messageService.add({
-  //         severity: 'success',
-  //         summary: 'Successful',
-  //         detail: 'Product Deleted',
-  //         life: 3000,
-  //       });
-  //     },
-  //   });
-  // }
-
-  // saveProduct() {
-  //   this.submitted = true;
-
-  //   if (this.product.name!.trim()) {
-  //     if (this.product.id) {
-  //       this.products[this.findIndexById(this.product.id)] = this.product;
-  //       this.messageService.add({
-  //         severity: 'success',
-  //         summary: 'Successful',
-  //         detail: 'Product Updated',
-  //         life: 3000,
-  //       });
-  //     } else {
-  //       this.product.id = this.createId();
-  //       this.product.image = 'product-placeholder.svg';
-  //       this.products.push(this.product);
-  //       this.messageService.add({
-  //         severity: 'success',
-  //         summary: 'Successful',
-  //         detail: 'Product Created',
-  //         life: 3000,
-  //       });
-  //     }
-
-  //     this.products = [...this.products];
-  //     this.productDialog = false;
-  //     this.product = {};
-  //   }
-  // }
-
-  // findIndexById(id: string): number {
-  //   let index = -1;
-  //   for (let i = 0; i < this.products.length; i++) {
-  //     if (this.products[i].id === id) {
-  //       index = i;
-  //       break;
-  //     }
-  //   }
-
-  //   return index;
-  // }
-
-  // createId(): string {
-  //   let id = '';
-  //   var chars =
-  //     'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  //   for (var i = 0; i < 5; i++) {
-  //     id += chars.charAt(Math.floor(Math.random() * chars.length));
-  //   }
-  //   return id;
-  // }
-  // getEventValue($event: any): string {
-  //   return $event.target.value;
-  // }
+    })
+  }
 }
