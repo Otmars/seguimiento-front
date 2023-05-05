@@ -10,6 +10,9 @@ import { DocenteComponent } from "./docente/docente.component";
 import { AuthGuard } from "./guards/auth.guard";
 import { RoleGuard } from "./guards/role.guard";
 import { MenuLateralComponent } from "./menu-lateral/menu-lateral.component";
+import { MateriasDocenteComponent } from "./materias-docente/materias-docente.component";
+import { DetalleAsignaturaComponent } from "./detalle-asignatura/detalle-asignatura.component";
+import { HorarioComponent } from "./horario/horario.component";
 const routes: Routes=[
     { path:'', redirectTo: '/login', pathMatch:'full'},
     {path:'home', component:HomeComponent,canActivate:[AuthGuard]},
@@ -19,7 +22,10 @@ const routes: Routes=[
     {path:'seguimiento', component:SegimientoEstudianteComponent,canActivate:[RoleGuard], data:{expectedRole:'docente'}},
     {path:'login', component:LoginComponent},
     {path:'docentes', component:DocenteComponent},
-    {path:'menu',component:MenuLateralComponent}
+    {path:'menu',component:MenuLateralComponent},
+    {path:'asignatura-docentes',component:MateriasDocenteComponent},
+    {path: 'detalle-asignatura', component: DetalleAsignaturaComponent},
+    {path: 'horario', component:HorarioComponent}
 ]
 
 @NgModule({

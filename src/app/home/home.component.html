@@ -1,7 +1,128 @@
 <!-- <div>
     <app-menu></app-menu>
 </div> -->
-<div><app-menu-lateral (newItemEvent)="nuevo($event)" [ngClass]="{'hidden': menuLateral}" ></app-menu-lateral></div>
+<div>
+  <p-dialog
+    header="Header"
+    [(visible)]="perfilModal"
+    [style]="{ width: '100vw' }"
+    [draggable]="true"
+    position="top"
+    [modal]="true"
+    [resizable]="false"
+    [maximizable]="true"
+  >
+    <ng-template pTemplate="header">
+      <span class="text-xl font-bold">Perfil usuario</span>
+    </ng-template>
+    <div class="surface-section">
+      <div class="font-medium text-3xl text-900 mb-3">
+        {{
+          getdatostoken().nombres +
+            " " +
+            getdatostoken().apellidoPaterno +
+            " " +
+            getdatostoken().apellidoMaterno
+        }}
+      </div>
+      <!-- <div class="text-500 mb-5">Morbi tristique blandit turpis. In viverra ligula id nulla hendrerit rutrum.</div> -->
+      <ul class="list-none p-0 m-0">
+        <li
+          class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap"
+        >
+          <div class="text-500 w-6 md:w-2 font-medium">Nombre Usuario</div>
+          <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
+            {{ this.user.username }}
+          </div>
+          <div class="w-6 md:w-2 flex justify-content-end">
+            <button
+              pButton
+              pRipple
+              label="Edit"
+              icon="pi pi-pencil"
+              class="p-button-text"
+            ></button>
+          </div>
+        </li>
+        <li
+          class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap"
+        >
+          <div class="text-500 w-6 md:w-2 font-medium">Carnet Identad</div>
+          <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
+            {{ this.user.ci }}
+          </div>
+          <div class="w-6 md:w-2 flex justify-content-end">
+            <button
+              pButton
+              pRipple
+              label="Edit"
+              icon="pi pi-pencil"
+              class="p-button-text"
+            ></button>
+          </div>
+        </li>
+        <li
+          class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap"
+        >
+          <div class="text-500 w-6 md:w-2 font-medium">Rol</div>
+          <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
+            {{ this.user.rol | titlecase }}
+          </div>
+          <div class="w-6 md:w-2 flex justify-content-end">
+            <button
+              pButton
+              pRipple
+              label="Edit"
+              icon="pi pi-pencil"
+              class="p-button-text"
+            ></button>
+          </div>
+        </li>
+        <li
+          class="flex align-items-center py-3 px-2 border-top-1 border-bottom-1 surface-border flex-wrap"
+        >
+          <div class="text-500 w-6 md:w-2 font-medium">Asinaturas en curso</div>
+          <div
+            class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1 line-height-3"
+          >
+            <ul class="list-none p-0 m-0">
+              <li>Anatomía Humana y Neuroanatomía clínica</li>
+              <li>Embriología médica y Genética clínica</li>
+              <li>Histología Medica y Biología celular</li>
+              <li>Integración Básico Clínica I</li>
+              <li>Metodología de Investigación I</li>
+              <li>Salud Publica e Interculturalidad</li>
+            </ul>
+          </div>
+          <div class="w-6 md:w-2 flex justify-content-end">
+            <button
+              pButton
+              pRipple
+              label="Ver"
+              icon="pi pi-file-edit"
+              class="p-button-text"
+            ></button>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <ng-template pTemplate="footer">
+      <p-button
+        icon="pi pi-check"
+        (click)="perfilModal = false"
+        label="Ok"
+        styleClass="p-button-text"
+      ></p-button>
+    </ng-template>
+  </p-dialog>
+</div>
+
+<div>
+  <app-menu-lateral
+    (newItemEvent)="nuevo($event)"
+    [ngClass]="{ hidden: menuLateral }"
+  ></app-menu-lateral>
+</div>
 <!-- <div class="bloque">
     <div class="flex flex-row align-content-around justify-content-center w-full mb-2">
         <p class="text-center text-6xl font-semibold">Bienvenido al sistema de Control</p>
@@ -16,7 +137,10 @@
 <div class="fondo1">
   <div class="flex justify-content-between flex-wrap text-xl p-4">
     <div class="flex align-items-center m-2">
-      <i class="pi pi-bars text-xl button-menu cursor-pointer" (click)="clickMenu()"  ></i>
+      <i
+        class="pi pi-bars text-xl button-menu cursor-pointer"
+        (click)="clickMenu()"
+      ></i>
     </div>
     <div class="flex align-items-center font-bold text-xl">
       <span class="">{{ this.saludo }} </span>
@@ -24,7 +148,10 @@
       <span class="pl-1 text-primary">{{ this.nombreusuario }}</span>
     </div>
     <div class="flex align-items-center m-2">
-      <i class="pi pi-user text-xl"></i>
+      <i
+        class="pi pi-user text-xl cursor-pointer"
+        (click)="showModalPerfil()"
+      ></i>
     </div>
   </div>
   <div class="flex">
@@ -42,7 +169,7 @@
   </div>
 </div>
 
-<div class="surface-section px-3 py-3 md:px-6 md:py-5  lg:px-8 ">
+<div class="surface-section px-3 py-3 md:px-6 md:py-5 lg:px-8">
   <div class="grid text-center">
     <div class="col-6 md:col-3 mb-4 px-3" *ngIf="roluser == 'estudiante'">
       <span
@@ -51,9 +178,9 @@
       >
         <i class="pi pi-check-circle text-4xl text-blue-500"></i>
       </span>
-      <div class="text-900 text-xl mb-2 font-medium">Calificaciones </div>
+      <div class="text-900 text-xl mb-2 font-medium">Calificaciones</div>
       <span class="text-700 line-height-"
-        >Mira tus calificaciones  obteniadas</span
+        >Mira tus calificaciones obteniadas</span
       >
     </div>
     <div class="col-6 md:col-3 mb-4 px-3" *ngIf="roluser == 'estudiante'">
@@ -68,7 +195,11 @@
         >Mira tus competencias adquiridas</span
       >
     </div>
-    <div class="col-6 md:col-3 mb-4 px-3" *ngIf="roluser == 'estudiante' ||roluser == 'docente'  ">
+    <div
+      class="col-6 md:col-3 mb-4 px-3"
+      routerLink="/horario"
+      *ngIf="roluser == 'estudiante' || roluser == 'docente'"
+    >
       <span
         class="p-3 shadow-2 mb-3 inline-block surface-card"
         style="border-radius: 10px"
@@ -76,9 +207,7 @@
         <i class="pi pi-calendar text-4xl text-blue-500"></i>
       </span>
       <div class="text-900 text-xl mb-3 font-medium">Horario</div>
-      <span class="text-700 line-height-3"
-        >Mira tus materias y horario</span
-      >
+      <span class="text-700 line-height-3">Mira tus materias y horario</span>
     </div>
     <div class="col-6 md:col-3 mb-4 px-3" *ngIf="roluser == 'estudiante'">
       <span
@@ -88,11 +217,14 @@
         <i class="pi pi-users text-4xl text-blue-500"></i>
       </span>
       <div class="text-900 text-xl mb-3 font-medium">Docentes</div>
-      <span class="text-700 line-height-3"
-        >Añadir descripcion</span
-      >
+      <span class="text-700 line-height-3">Añadir descripcion</span>
     </div>
-    <div class="col-6 md:col-3 mb-4 px-3" *ngIf="roluser == 'docente'">
+    <div
+      class="col-6 md:col-3 mb-4 px-3 cursor-pointer"
+      routerLink="/asignatura-docentes"
+      [queryParams]="{ id: iduser }"
+      *ngIf="roluser == 'docente'"
+    >
       <span
         class="p-3 shadow-2 mb-3 inline-block surface-card"
         style="border-radius: 10px"
@@ -104,6 +236,5 @@
         >Vea y califique sus asignaturas</span
       >
     </div>
-    
   </div>
 </div>

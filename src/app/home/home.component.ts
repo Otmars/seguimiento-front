@@ -6,22 +6,29 @@ import decode from 'jwt-decode';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
+perfilModal: boolean ;
+showModalPerfil() {
+ this.perfilModal= true
+}
   saludo!: string;
   nombreusuario!: string;
   estadomenu!:boolean;
   menuLateral:boolean= true;
   roluser :string 
+  iduser: any;
+  user:any
   ngOnInit() {
     this.roluser = this.rol()
     this.mostrarSaludo();
     console.log(this.roluser);
-    
+    this.iduser = this.getdatostoken().id
+    console.log(this.iduser);
+    this.user = this.getdatostoken()
   }
 
   
   rol(){
   const token :any= localStorage.getItem('token')
-    
     const tokendecode:any = decode(token);
     console.log(tokendecode.rol);
     return tokendecode.rol
@@ -50,7 +57,6 @@ export class HomeComponent implements OnInit {
     const token: any = localStorage.getItem('token');
     const tokendecode: any = decode(token);
     console.log(tokendecode);
-
     return tokendecode;
   }
   clickMenu(){

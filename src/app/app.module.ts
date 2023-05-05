@@ -55,7 +55,7 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { LoginComponent } from './login/login.component';
-
+import {DataViewModule} from 'primeng/dataview';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DocenteComponent } from './docente/docente.component';
 import { MessagesModule } from 'primeng/messages';
@@ -63,9 +63,12 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { JWT_OPTIONS } from '@auth0/angular-jwt';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { MenuLateralComponent } from './menu-lateral/menu-lateral.component';
-
+import { FullCalendarModule } from '@fullcalendar/angular';
 import localeMX from '@angular/common/locales/es-BO'
 import { registerLocaleData } from '@angular/common';
+import { MateriasDocenteComponent } from './materias-docente/materias-docente.component';
+import { DetalleAsignaturaComponent } from './detalle-asignatura/detalle-asignatura.component';
+import { HorarioComponent } from './horario/horario.component';
 registerLocaleData(localeMX)
 @NgModule({
   declarations: [
@@ -81,6 +84,9 @@ registerLocaleData(localeMX)
     LoginComponent,
     DocenteComponent,
     MenuLateralComponent,
+    MateriasDocenteComponent,
+    DetalleAsignaturaComponent,
+    HorarioComponent,
   ],
   imports: [
     MessagesModule,
@@ -122,7 +128,9 @@ registerLocaleData(localeMX)
     CheckboxModule,
     ReactiveFormsModule,
     InputMaskModule,
-    TooltipModule
+    TooltipModule,
+    DataViewModule,
+    FullCalendarModule
   ],
   providers: [
     {provide:LocationStrategy,useClass:HashLocationStrategy},
