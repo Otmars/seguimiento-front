@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Docente } from './docente-inteface';
+import { Docente, User } from './docente-inteface';
 import { DocenteService } from './docente.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -10,49 +10,121 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./docente.component.css'],
 })
 export class DocenteComponent implements OnInit {
-  resetPass() {
-    throw new Error('Method not implemented.');
-  }
-  guardarEditarDocente(arg0: any) {}
-
-  guardarDocente() {
-    // console.log(this.docenteForm.value.fnacimiento);
-
-     var nuevoDocente  = this.docenteForm.value;
-
-    nuevoDocente.fnacimiento = this.cambiarFormatoFecha(this.docenteForm.value.fnacimiento)
-    console.log(nuevoDocente);
-    delete nuevoDocente.id
-    nuevoDocente.rol = 1
-    this.docenteService.postDocente(nuevoDocente).subscribe(res =>{
-      console.log(res);
-
-    })
-  }
-  cambiarFormatoFecha(fecha:String ){
-    const datofecha = fecha.split('/');
-
-    const nuevafecha =
-      datofecha[2] + '-' + datofecha[1] + '-' + datofecha[0];
-    return nuevafecha
-  }
-
+  subscription: any;
+  selectedDocente!: any;
+  docente: User;
   editarbutton: boolean = false;
   display: boolean;
   tituloModal: string;
+  docentes: Docente[];
+  selectedDocentes: any;
+  buttonfiltros: boolean = true;
+  constructor(
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService,
+    private docenteService: DocenteService,
+    private fb: FormBuilder
+  ) {}
+  deleteSelectedDocente() {
+    this.confirmationService.confirm({
+      message:
+        '¿Está seguro de que desea eliminar las asignatura selecionadas seleccionados?',
+      header: 'Confirmar',
+      icon: 'pi pi-exclamation-triangle text-orange-500',
+      accept: () => {
+        for (let i = 0; i < this.selectedDocentes.length; i++) {
+          this.docenteService
+            .deleteDocente(this.selectedDocentes[i].iduser.id)
+            .subscribe((res) => {});
+        }
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Operacion Realizada',
+          detail: 'Usuarios Eliminados',
+          life: 3000,
+        });
+      },
+    });
+  }
+
+  resetPass() {
+    throw new Error('Method not implemented.');
+  }
+  guardarEditarDocente() {
+    const id = this.docente.id;
+
+    const data = this.docenteForm.value;
+    console.log(id, data);
+
+    this.docenteService.patchDocente(id, data).subscribe((res) => {
+      console.log(res);
+      this.hideDialog();
+    });
+  }
+
+  guardarDocente() {
+    var nuevoDocente = this.docenteForm.value;
+    nuevoDocente.fnacimiento = this.cambiarFormatoFecha(
+      this.docenteForm.value.fnacimiento
+    );
+    delete nuevoDocente.id;
+    nuevoDocente.rol = 1;
+    this.docenteService.postDocente(nuevoDocente).subscribe((res) => {
+      const respuesta = res;
+      if (Object.values(respuesta)[0] == 'Usuario ya existe') {
+        this.hideDialog();
+        this.messageService.add({
+          severity: 'warn',
+          summary: 'Operacion Cancelada',
+          detail: 'Usuario ya existe',
+          life: 3000,
+        });
+      } else {
+        this.hideDialog();
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Operacion Realizada',
+          detail: 'Usuario Creado',
+          life: 3000,
+        });
+      }
+    });
+  }
+
+  hideDialog() {
+    this.display = false;
+  }
+  cambiarFormatoFecha(fecha: String) {
+    const datofecha = fecha.split('/');
+
+    const nuevafecha = datofecha[2] + '-' + datofecha[1] + '-' + datofecha[0];
+    return nuevafecha;
+  }
+
   showDialog() {
     this.display = true;
   }
-  editar() {
+  editar(user: any) {
+    console.log(user);
+    this.docente = user;
     this.showDialog();
     this.editarbutton = true;
+    this.docenteForm.setValue({
+      nombres: user.nombres,
+      apellidoPaterno: user.apellidoPaterno,
+      apellidoMaterno: user.apellidoMaterno,
+      email: user.email,
+      ci: user.ci,
+      telefono: user.telefono,
+      direccion: user.direccion,
+      fnacimiento: user.fnacimiento,
+    });
   }
   eliminar() {
     throw new Error('Method not implemented.');
   }
   initForm(): FormGroup {
     return this.fb.group({
-      id: [''],
       nombres: ['Juan Pedro', [Validators.required]],
       apellidoPaterno: ['Perez', [Validators.required]],
       apellidoMaterno: ['Mamani', [Validators.required]],
@@ -73,24 +145,18 @@ export class DocenteComponent implements OnInit {
   mostrarfiltros() {
     this.buttonfiltros = !this.buttonfiltros;
   }
-  docentes: Docente[];
-  selectedDocentes: any;
-  buttonfiltros: boolean = true;
-  constructor(
-    private messageService: MessageService,
-    private confirmationService: ConfirmationService,
-    private docenteService: DocenteService,
-    private fb: FormBuilder
-  ) {}
+
   ngOnInit(): void {
     this.cargarDocentes();
     this.docenteForm = this.initForm();
+    this.subscription = this.docenteService.refresh$.subscribe(() => {
+      this.cargarDocentes();
+    });
   }
 
   cargarDocentes() {
     this.docenteService.getDocentes().subscribe((res) => {
       this.docentes = res;
-      console.log(res);
     });
   }
   getEventValue($event: any): string {

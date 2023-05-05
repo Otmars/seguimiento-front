@@ -1,6 +1,6 @@
 
-<div class="bloque">
-<p-dialog header="Title" [(visible)]="display">
+
+<!-- <p-dialog header="Title" [(visible)]="display">
   
 <div class="card">
     <div class="surface-section">
@@ -64,110 +64,424 @@
     </div>
     </div>
 
-</p-dialog>
+</p-dialog> -->
 <!-- <p-button type="button" (click)="showDialog()" icon="pi pi-info-circle" label="Show"></p-button>  
 <p-button (click)="showDialog()" icon="pi pi-external-link" label="Long Content"></p-button> -->
 <!-- <input type="button" value="asdasd"> -->
 
-<div class="card card2" >
-    <p-table #dt [value]="customers" [(selection)]="selectedCustomers" dataKey="id" styleClass="p-datatable-customers p-datatable-sm " [rowHover]="true"
-            [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading"
-            [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-            [filterDelay]="0" [globalFilterFields]="['name','country.name','representative.name','status']">
-            <ng-template pTemplate="caption" >
-                <div class="table-header" >
-                    Lista de estudiantes
-                    <span class="p-input-icon-left">
-                        <i class="pi pi-search"></i>
-                        <input pInputText type="text" (input)="dt.filterGlobal(getEventValue($event), 'contains')" placeholder="Global Search" />
-                    </span>
-                </div>
-            </ng-template>
-            <ng-template pTemplate="header">
-                <tr>
-                    <th style="width: 3rem"></th>
-                    <th pSortableColumn="name">Nombre <p-sortIcon field="name"></p-sortIcon></th>
-                    <th pSortableColumn="country.name">Country <p-sortIcon field="country.name"></p-sortIcon></th>
-                    <th pSortableColumn="representative.name">Representative <p-sortIcon field="representative.name"></p-sortIcon></th>
-                    <th pSortableColumn="date">Date <p-sortIcon field="date"></p-sortIcon></th>
-                    <th pSortableColumn="status">Status <p-sortIcon field="status"></p-sortIcon></th>
-                    <th pSortableColumn="activity">Activity <p-sortIcon field="activity"></p-sortIcon></th>
-                    <th style="width: 8rem"></th>
-                </tr>
-                <tr>
-                    <th>
-                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-                    </th>
-                    <th>
-                        <input pInputText type="text" (input)="dt.filter(getEventValue($event), 'name', 'startsWith')" placeholder="Search by Name" class="p-column-filter ">
-                    </th>
-                    <th>
-                        <input pInputText [style]="{width: '150 px'}" type="text"  (input)="dt.filter(getEventValue($event), 'country.name', 'contains')" placeholder="Search by Country" class="p-column-filter">
-                    </th>
-                    <th>
-                        <p-multiSelect  [style]="{width: '100px'}" [options]="representatives" placeholder="All" (onChange)="onRepresentativeChange($event)" styleClass="p-column-filter" optionLabel="name">
-                            <ng-template let-option pTemplate="item">
-                                <div class="p-multiselect-representative-option">
-                                    <span class="p-ml-1">{{option.label}}</span>
-                                </div>
-                            </ng-template>
-                        </p-multiSelect>
-                    </th>
-                    <th >
-                        <p-calendar [style]="{width: '200px'}" (onSelect)="onDateSelect($event)" (onClearClick)="dt.filter('', 'date', 'equals')" [showButtonBar]="true" styleClass="p-column-filter " [touchUI]="true" placeholder="Registration Date" [readonlyInput]="true" dateFormat="yy-mm-dd"></p-calendar>
-                    </th>
-                    <th>
-                        <p-dropdown [options]="statuses" (onChange)="dt.filter($event.value, 'status', 'equals')" styleClass="p-column-filter" placeholder="Select a Status" [showClear]="true">
-                            <ng-template let-option pTemplate="item">
-                                <span [class]="'customer-badge status-' + option.value">&#123;&#123;option.label&#125;&#125;</span>
-                            </ng-template>
-                        </p-dropdown>
-                    </th>
-                    <th>
-                        <input pInputText type="text" (input)="onActivityChange($event)" placeholder="Minimum" class="p-column-filter" >
-                    </th>
-                    <th></th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-customer >
-                <tr class="p-selectable-row " (click)="estudiante_select(customer)"  >
-                    <td >
-                        <p-tableCheckbox [value]="customer"></p-tableCheckbox>
-                    </td>
-                    <td>
-                        <span class="p-column-title">Name</span>
-                        {{customer.name}}
-                    </td>
-                    <td>
-                        <span class="p-column-title">Country</span>
-                        <span class="image-text">{{customer.country.name}}</span>
-                    </td>
-                    <td>
-                        <span class="p-column-title">Representative</span>
-                        <span class="image-text">{{customer.representative.name}}</span>
-                    </td>
-                    <td>
-                        <span class="p-column-title">Date</span>
-                        {{customer.date}}
-                    </td>
-                    <td>
-                        <span class="p-column-title">Status</span>
-                        <span [class]="'customer-badge status-' + customer.status">{{customer.status}}</span>
-                    </td>
-                    <td>
-                        <span class="p-column-title">Activity</span>
-                        <p-progressBar [value]="customer.activity" [showValue]="false"></p-progressBar>
-                    </td>
-                    <td style="text-align: center">
-                        <button pButton type="button" class="p-button-secondary" icon="pi pi-cog"></button>
-                    </td>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="emptymessage">
-                <tr>
-                    <td colspan="8">No customers found.</td>
-                </tr>
-            </ng-template>
-        </p-table>
-</div>
+<p>Estudiante work</p>
+<form (ngSubmit)="guardarEstudiante()" [formGroup]="estudianteForm">
+    <p-dialog
+      [(visible)]="display"
+      [style]="{ width: '450px' }"
+      [header]="tituloModal"
+      [modal]="true"
+      styleClass="p-fluid"
+    >
+      <ng-template pTemplate="content">
+        <div class="field">
+          <label for="nombres">Nombres</label>
+          <input
+            type="text"
+            pInputText
+            id="nombres"
+            formControlName="nombres"
+            autofocus
+            [ngClass]="{'ng-dirty':estudianteForm.get('nombres')?.touched && estudianteForm.get('nombres')?.errors?.['required']}"
+          />
+          <small
+            class="p-error"
+            *ngIf="estudianteForm.get('nombres')?.touched && estudianteForm.get('nombres')?.errors?.['required']"
+            >Nombre is required.</small
+          >
+        </div>
+        <div class="field">
+          <label for="apellidoPaterno">Apellido Paterno</label>
+          <input
+            type="text"
+            pInputText
+            id="apellidoPaterno"
+            formControlName="apellidoPaterno"
+            autofocus
+            [ngClass]="{'ng-dirty':estudianteForm.get('apellidoPaterno')?.touched && estudianteForm.get('apellidoPaterno')?.errors?.['required']}"
+          />
+          <small
+            class="p-error"
+            *ngIf="estudianteForm.get('apellidoPaterno')?.touched && estudianteForm.get('apellidoPaterno')?.errors?.['required']"
+            >Apellido Paterno is required.</small
+          >
+        </div>
+        <div class="field">
+          <label for="apellidoMaterno">Apellido Materno</label>
+          <input
+            type="text"
+            pInputText
+            id="apellidoMaterno"
+            formControlName="apellidoMaterno"
+            autofocus
+            [ngClass]="{'ng-dirty':estudianteForm.get('apellidoMaterno')?.touched && estudianteForm.get('apellidoMaterno')?.errors?.['required']}"
+          />
+          <small
+            class="p-error"
+            *ngIf="estudianteForm.get('apellidoMaterno')?.touched && estudianteForm.get('apellidoMaterno')?.errors?.['required']"
+            >Apellido Materno is required.</small
+          >
+        </div>
+        <div class="field">
+          <label for="ci">Carnet Identidad</label>
+          <p-inputNumber
+            formControlName="ci"
+            [ngClass]="{
+          'ng-dirty':
+          estudianteForm.get('ci')?.touched && estudianteForm.get('ci')?.errors?.['required']
+        }"
+            mode="decimal"
+            inputId="withoutgrouping"
+            [useGrouping]="false"
+          >
+          </p-inputNumber>
+          <small
+            class="p-error"
+            *ngIf="estudianteForm.get('ci')?.touched && estudianteForm.get('ci')?.errors?.['required']"
+            >Telefono is required.</small
+          >
+        </div>
+        <div class="field">
+          <label for="email">Correo</label>
+          <input
+            type="email"
+            pInputText
+            id="email"
+            formControlName="email"
+            autofocus
+            [ngClass]="{'ng-dirty':estudianteForm.get('email')?.touched && estudianteForm.get('email')?.errors?.['required']}"
+          />
+          <small
+            class="p-error"
+            *ngIf="estudianteForm.get('email')?.touched && estudianteForm.get('email')?.errors?.['required']"
+            >Correo is required.</small
+          >
+          <small
+            class="p-error"
+            *ngIf="estudianteForm.get('email')?.touched && estudianteForm.get('email')?.errors?.['email']"
+            >Llene el campo con un correo valido.</small
+          >
+        </div>
+        <div class="field">
+          <label for="telefono">Telefono</label>
+          <p-inputMask
+            mask="99999999"
+            id="telefono"
+            formControlName="telefono"
+            [ngClass]="{
+            'ng-dirty':
+            estudianteForm.get('telefono')?.touched && estudianteForm.get('telefono')?.errors?.['required']
+          }"
+          ></p-inputMask>
+          <small
+            class="p-error"
+            *ngIf="estudianteForm.get('telefono')?.touched && estudianteForm.get('telefono')?.errors?.['required']"
+            >Telefono is required.</small
+          >
+        </div>
+        <div class="field">
+          <label for="direccion">Direccion</label>
+          <input
+            type="text"
+            pInputText
+            id="direccion"
+            formControlName="direccion"
+            autofocus
+            [ngClass]="{'ng-dirty':estudianteForm.get('direccion')?.touched && estudianteForm.get('direccion')?.errors?.['required']}"
+          />
+          <small
+            class="p-error"
+            *ngIf="estudianteForm.get('direccion')?.touched && estudianteForm.get('direccion')?.errors?.['required']"
+            >Direccion is required.</small
+          >
+        </div>
+  
+        <div class="field">
+          <label for="fnacimiento">Fecha de nacimiento</label>
+          <p-inputMask
+            mask="99/99/9999"
+            slotChar="dd/mm /yyyy"
+            id="fnacimiento"
+            formControlName="fnacimiento"
+            [ngClass]="{
+            'ng-dirty':
+            estudianteForm.get('fnacimiento')?.touched && estudianteForm.get('fnacimiento')?.errors?.['required']
+          }"
+          ></p-inputMask>
+          <small
+            class="p-error"
+            *ngIf="estudianteForm.get('fnacimiento')?.touched && estudianteForm.get('fnacimiento')?.errors?.['required']"
+            >Fecha de nacimiento is required.</small
+          >
+        </div>
+        <div>{{estudianteForm.getError| json}}</div>
+      </ng-template>
+  
+      <ng-template pTemplate="footer">
+        
+        <button
+          *ngIf="!editarbutton"
+          [disabled]="!estudianteForm.valid"
+          type="submit"
+          pButton
+          pRipple
+          label="Guardar"
+          icon="pi pi-check"
+          class="p-button-text"
+        ></button>
+  
+        <div *ngIf="editarbutton">
+          <button
+            [disabled]="!estudianteForm.valid"
+            pButton
+            type="button"
+            pRipple
+            label="Editar"
+            icon="pi pi-check"
+            class="p-button-text"
+            (click)="guardarEditarEstudiante()"
+          ></button>
+        </div>
+      </ng-template>
+    </p-dialog>
+  </form>
+  
+  <p-toast></p-toast>
+    <p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
+
+<div class="m-3 card">
+  <div class="flex align-content-end justify-content-end mb-1">
+    <div class="mx-1">
+      <p-button
+        icon="pi pi-filter"
+        styleClass="p-button-secondary"
+        (click)="mostrarfiltros()"
+      ></p-button>
+    </div>
+    <div class="mx-1">
+      <p-button
+        icon="pi pi-plus"
+        styleClass="p-button-success"
+        (click)="crearnuevo()"
+      ></p-button>
+    </div>
+    <div class="mx-1">
+      <p-button
+        icon="pi pi-trash"
+        styleClass="p-button-danger"
+        (click)="deleteSelectedEstudiante()"
+        [disabled]="!selectedEstudiantes || !selectedEstudiantes.length"
+      ></p-button>
+    </div>
+  </div>
+  <p-table
+    #dt1
+    [value]="estudiantes"
+    [(selection)]="selectedEstudiantes"
+    dataKey="id"
+    [tableStyle]="{ 'min-width': '18rem' }"
+    [rows]="10"
+    [paginator]="true"
+    responsiveLayout="stack" [breakpoint]="'420px'" 
+    [scrollable]="true"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 4rem" pFrozenColumn>
+          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        </th>
+        <th pSortableColumn="iduser.username" pFrozenColumn>
+          Nombre Usuario<p-sortIcon field="iduser.username"></p-sortIcon>
+        </th>
+        <th pSortableColumn="iduser.nombres">
+          Nombres<p-sortIcon field="iduser.nombres"></p-sortIcon>
+        </th>
+        <th pSortableColumn="iduser.apellidoPaterno">
+          Apellido Paterno
+          <p-sortIcon field="iduser.apellidoPaterno"></p-sortIcon>
+        </th>
+        <th pSortableColumn="iduser.apellidoMaterno">
+          Apellido Materno
+          <p-sortIcon field="iduser.apellidoMaterno"></p-sortIcon>
+        </th>
+        <th pSortableColumn="iduser.ci">
+          Carnet Identidad <p-sortIcon field="iduser.ci"></p-sortIcon>
+        </th>
+        <th>Correo</th>
+        <th>Telefono</th>
+        <th>Direccion</th>
+        <th>Fecha de nacimiento</th>
+        <th>Fecha de alta</th>
+        <th>Acciones</th>
+      </tr>
+      <tr [hidden]="buttonfiltros">
+        <th style="width: 4rem" pFrozenColumn></th>
+        <th pFrozenColumn>
+          <input
+            pInputText
+            type="text"
+            (input)="
+              dt1.filter(getEventValue($event), 'iduser.username', 'contains')
+            "
+            [value]="$any(dt1.filters['iduser.username'])?.value"
+            placeholder="Buscar por Username "
+            class="w-full"
+          />
+        </th>
+        <th>
+          <input
+            pInputText
+            type="text"
+            (input)="
+              dt1.filter(getEventValue($event), 'iduser.nombres', 'contains')
+            "
+            [value]="$any(dt1.filters['iduser.nombres'])?.value"
+            placeholder="Buscar por nombre"
+            class="w-full"
+          />
+        </th>
+        <th>
+          <input
+            pInputText
+            type="text"
+            (input)="
+              dt1.filter(
+                getEventValue($event),
+                'iduser.apellidoPaterno',
+                'contains'
+              )
+            "
+            [value]="$any(dt1.filters['iduser.apellidoPaterno'])?.value"
+            placeholder="Buscar por apellido Paterno"
+            class="w-full"
+          />
+        </th>
+        <th>
+          <input
+            pInputText
+            type="text"
+            (input)="
+              dt1.filter(
+                getEventValue($event),
+                'iduser.apellidoMaterno',
+                'contains'
+              )
+            "
+            [value]="$any(dt1.filters['iduser.apellidoMaterno'])?.value"
+            placeholder="Buscar por apellido Materno"
+            class="w-full"
+          />
+        </th>
+        <th>
+          <input
+            pInputText
+            type="text"
+            (input)="dt1.filter(getEventValue($event), 'iduser.ci', 'contains')"
+            [value]="$any(dt1.filters['iduser.ci'])?.value"
+            placeholder="Buscar por CI"
+            class="w-full"
+          />
+        </th>
+        <th>
+          <input
+            pInputText
+            type="text"
+            (input)="
+              dt1.filter(getEventValue($event), 'iduser.email', 'contains')
+            "
+            [value]="$any(dt1.filters['iduser.email'])?.value"
+            placeholder="Buscar por correo"
+            class="w-full"
+          />
+        </th>
+        <th>
+          <input
+            pInputText
+            type="text"
+            (input)="
+              dt1.filter(getEventValue($event), 'iduser.telefono', 'contains')
+            "
+            [value]="$any(dt1.filters['iduser.telefono'])?.value"
+            placeholder="Buscar por CI"
+            class="w-full"
+          />
+        </th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-estudiante>
+      <tr>
+        <td pFrozenColumn>
+          <p-tableCheckbox [value]="estudiante"></p-tableCheckbox>
+        </td>
+        <td pFrozenColumn>
+          <span class="p-column-title font-semibold" >Nombre Usuario</span>
+          {{ estudiante.iduser.username }}
+        </td>
+        <td>
+          <span class="p-column-title font-semibold">Nombres</span>
+          {{ estudiante.iduser.nombres }}
+        </td>
+        <td>
+          <span class="p-column-title font-semibold">Ap. Paterno</span>
+          {{ estudiante.iduser.apellidoPaterno }}
+        </td>
+        <td>
+          <span class="p-column-title font-semibold">Ap. Materno</span>
+          {{ estudiante.iduser.apellidoMaterno }}
+        </td>
+        <td>
+          <span class="p-column-title font-semibold">C.I.</span>
+          {{ estudiante.iduser.ci }}
+        </td>
+        <td>
+          <span class="p-column-title font-semibold">Correo</span>
+          {{ estudiante.iduser.email }}
+        </td>
+        <td>
+          <span class="p-column-title font-semibold">Telefono</span>
+          {{ estudiante.iduser.telefono }}
+        </td>
+        <td>
+          <span class="p-column-title font-semibold">Direccion</span>
+          {{ estudiante.iduser.direccion }}
+        </td>
+        <td>
+          <span class="p-column-title font-semibold">Fecha de nacimiento</span>
+          {{ estudiante.iduser.fnacimiento | date}}
+        </td>
+        <td>
+          <span class="p-column-title font-semibold">Fecha de Alta</span>
+          {{ estudiante.iduser.createdAt | date }}
+        </td>
+        <td>
+          
+          <p-button
+            icon="pi pi-user-edit"
+            styleClass="p-button-info"
+            (click)="editar(estudiante.iduser)"
+          ></p-button>
+          <p-button
+            icon="pi pi-key"
+            styleClass="p-button-warning"
+            (click)="resetPass()"
+          ></p-button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="4">No hay estudiantes</td>
+      </tr>
+    </ng-template>
+  </p-table>
 </div>

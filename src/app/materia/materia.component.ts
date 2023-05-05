@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 
 import { Product } from './Product';
-import { ProductService } from '../service/product.service';
 
 import { ConfirmationService } from 'primeng/api';
 import { MessageService } from 'primeng/api';
@@ -42,7 +41,6 @@ export class MateriaComponent implements OnInit,OnDestroy {
   tituloModal ="Asignatura"
   editar: boolean= false;
   constructor(
-    private productService: ProductService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
     private materiaService: MateriaService,
@@ -59,7 +57,6 @@ export class MateriaComponent implements OnInit,OnDestroy {
 
     this.cargarDatos();
     this.cargarDocente()
-    this.productService.getProducts().then((data) => (this.products = data));
      this.subscription = this.materiaService.refresh$.subscribe(()=>{
       this.cargarDatos();
      })

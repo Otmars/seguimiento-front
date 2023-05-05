@@ -1,4 +1,4 @@
-export interface Docente {
+export interface Estudiante {
     id?:     number;
     iduser?: Iduser;
 }

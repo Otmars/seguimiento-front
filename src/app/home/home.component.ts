@@ -10,13 +10,22 @@ export class HomeComponent implements OnInit {
   nombreusuario!: string;
   estadomenu!:boolean;
   menuLateral:boolean= true;
- 
+  roluser :string 
   ngOnInit() {
+    this.roluser = this.rol()
     this.mostrarSaludo();
+    console.log(this.roluser);
+    
   }
 
   
-
+  rol(){
+  const token :any= localStorage.getItem('token')
+    
+    const tokendecode:any = decode(token);
+    console.log(tokendecode.rol);
+    return tokendecode.rol
+ }
   nuevo(event : any){
     this.menuLateral= true;
     

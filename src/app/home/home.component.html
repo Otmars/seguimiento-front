@@ -44,7 +44,7 @@
 
 <div class="surface-section px-3 py-3 md:px-6 md:py-5  lg:px-8 ">
   <div class="grid text-center">
-    <div class="col-6 md:col-3 mb-4 px-3">
+    <div class="col-6 md:col-3 mb-4 px-3" *ngIf="roluser == 'estudiante'">
       <span
         class="p-3 shadow-2 mb-3 inline-block surface-card"
         style="border-radius: 10px"
@@ -56,7 +56,7 @@
         >Mira tus calificaciones  obteniadas</span
       >
     </div>
-    <div class="col-6 md:col-3 mb-4 px-3">
+    <div class="col-6 md:col-3 mb-4 px-3" *ngIf="roluser == 'estudiante'">
       <span
         class="p-3 shadow-2 mb-3 inline-block surface-card"
         style="border-radius: 10px"
@@ -68,7 +68,7 @@
         >Mira tus competencias adquiridas</span
       >
     </div>
-    <div class="col-6 md:col-3 mb-4 px-3">
+    <div class="col-6 md:col-3 mb-4 px-3" *ngIf="roluser == 'estudiante' ||roluser == 'docente'  ">
       <span
         class="p-3 shadow-2 mb-3 inline-block surface-card"
         style="border-radius: 10px"
@@ -80,7 +80,7 @@
         >Mira tus materias y horario</span
       >
     </div>
-    <div class="col-6 md:col-3 mb-4 px-3">
+    <div class="col-6 md:col-3 mb-4 px-3" *ngIf="roluser == 'estudiante'">
       <span
         class="p-3 shadow-2 mb-3 inline-block surface-card"
         style="border-radius: 10px"
@@ -90,6 +90,18 @@
       <div class="text-900 text-xl mb-3 font-medium">Docentes</div>
       <span class="text-700 line-height-3"
         >Añadir descripcion</span
+      >
+    </div>
+    <div class="col-6 md:col-3 mb-4 px-3" *ngIf="roluser == 'docente'">
+      <span
+        class="p-3 shadow-2 mb-3 inline-block surface-card"
+        style="border-radius: 10px"
+      >
+        <i class="pi pi-users text-4xl text-blue-500"></i>
+      </span>
+      <div class="text-900 text-xl mb-3 font-medium">Asignaturas</div>
+      <span class="text-700 line-height-3"
+        >Vea y califique sus asignaturas</span
       >
     </div>
     
