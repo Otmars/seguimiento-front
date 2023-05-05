@@ -15,6 +15,9 @@ import { Subscription } from 'rxjs';
   providers: [MessageService, ConfirmationService],
 })
 export class MateriaComponent implements OnInit,OnDestroy {
+asociarCompetencia() {
+  this.relacionDialog=true
+}
   subscription : Subscription
   public asignatura: any = [];
   datos!: Asingatura[];
@@ -29,7 +32,7 @@ export class MateriaComponent implements OnInit,OnDestroy {
   selectedProducts!: any;
 
   submitted!: boolean;
-
+  relacionDialog! : boolean 
   statuses!: any[];
   prerequisitos: any;
   asignaturaForm!: FormGroup;

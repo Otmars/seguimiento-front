@@ -27,7 +27,6 @@ import { SliderModule } from 'primeng/slider';
 import { DialogModule } from 'primeng/dialog';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { ContextMenuModule } from 'primeng/contextmenu';
-
 import { ToastModule } from 'primeng/toast';
 
 import { ProgressBarModule } from 'primeng/progressbar';
@@ -69,6 +68,7 @@ import { registerLocaleData } from '@angular/common';
 import { MateriasDocenteComponent } from './materias-docente/materias-docente.component';
 import { DetalleAsignaturaComponent } from './detalle-asignatura/detalle-asignatura.component';
 import { HorarioComponent } from './horario/horario.component';
+import { AsignaturaCompetenciaComponent } from './asignatura-competencia/asignatura-competencia.component';
 registerLocaleData(localeMX)
 @NgModule({
   declarations: [
@@ -87,6 +87,7 @@ registerLocaleData(localeMX)
     MateriasDocenteComponent,
     DetalleAsignaturaComponent,
     HorarioComponent,
+    AsignaturaCompetenciaComponent,
   ],
   imports: [
     MessagesModule,
@@ -130,7 +131,7 @@ registerLocaleData(localeMX)
     InputMaskModule,
     TooltipModule,
     DataViewModule,
-    FullCalendarModule
+    FullCalendarModule,
   ],
   providers: [
     {provide:LocationStrategy,useClass:HashLocationStrategy},
