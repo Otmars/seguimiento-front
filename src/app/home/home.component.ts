@@ -41,9 +41,9 @@ showModalPerfil() {
     var texto = '';
     var ahora = new Date();
     var hora = ahora.getHours();
-    if (hora >= 6 && hora < 13) {
+    if (hora >= 6 && hora < 12) {
       texto = 'Buenos días, ';
-    } else if (hora >= 13 && hora < 21) {
+    } else if (hora >= 12 && hora < 18) {
       texto = 'Buenas tardes, ';
     } else {
       texto = 'Buenas noches, ';
@@ -51,12 +51,13 @@ showModalPerfil() {
     this.nombreusuario = this.getdatostoken().nombres.split(' ');
     this.nombreusuario = this.nombreusuario[0]
     this.saludo = texto ;
+    console.log(ahora);
+    
   }
 
   getdatostoken() {
     const token: any = localStorage.getItem('token');
     const tokendecode: any = decode(token);
-    console.log(tokendecode);
     return tokendecode;
   }
   clickMenu(){

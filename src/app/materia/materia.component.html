@@ -1,11 +1,25 @@
 
-<p-dialog header="Header" [(visible)]="relacionDialog" [style]="{ width: '50vw' }"  [maximizable]="true" [modal]="true">
+<p-dialog header="Header" [(visible)]="relacionDialog" [style]="{ width: '90vw' }"  [maximizable]="true" [modal]="true">
     <ng-template pTemplate="header">
         <span class="text-xl font-bold">Header Content</span>
     </ng-template>
-    <app-asignatura-competencia></app-asignatura-competencia>
+    <p-pickList class="z-100 relative" [source]="sourceCompetencia" [target]="targetCompetencia" sourceHeader="Todas" targetHeader="Selecionada" [dragdrop]="true" [responsive]="true" 
+    [sourceStyle]="{ height: '30rem' }" [targetStyle]="{ height: '30rem' , color :'red' }" breakpoint="500px" filterBy="descripcion" sourceFilterPlaceholder="Search by name" targetFilterPlaceholder="Search by name">
+    <ng-template let-competencia pTemplate="item">
+        <div class=" flex flex-wrap p-2 align-items-center gap-3">
+            <div class="flex-1 flex flex-column gap-2">
+                <span class="font-light">{{ competencia.descripcion }}</span>
+                <div class="flex align-items-center gap-2">
+                    <i class="pi pi-flag text-sm"></i>
+                    <span>{{ competencia.tipoCompetencia }}</span>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</p-pickList>
+
     <ng-template pTemplate="footer">
-        <p-button icon="pi pi-check" (click)="relacionDialog=false" label="Ok" styleClass="p-button-text"></p-button>
+        <p-button icon="pi pi-check" (click)="guardarRelacionCompetencia()" label="Guardar" styleClass="p-button-text"></p-button>
     </ng-template>
 </p-dialog>
 <form (ngSubmit)="guardarAsignatura()" [formGroup]="asignaturaForm">
@@ -244,14 +258,7 @@
         <div > Asignaturas </div>
         
         <div class="flex "> 
-          <button
-          pButton
-          pRipple
-          label="Compentencia"
-          icon="pi pi-plus"
-          class="p-button-info "
-          (click)="asociarCompetencia()"
-        ></button>
+         
         <button
           pButton
           pRipple
@@ -329,10 +336,16 @@
             icon="pi pi-pencil"
             (click)="editMateria(dato)"
           ></p-button>
-          <p-button
+          <p-button  
+          styleClass="p-button-outlined p-button-success m-1 py-1 "
+          icon="pi pi-plus"
+          (click)="asociarCompetencia(dato)"
+        ></p-button>
+          <!-- <p-button
             styleClass="p-button-outlined p-button-danger m-1 py-1 "
             icon="pi pi-trash"
-          ></p-button>
+          ></p-button> -->
+
         </td>
       </tr>
     </ng-template>

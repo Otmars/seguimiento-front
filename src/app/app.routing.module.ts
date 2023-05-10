@@ -13,6 +13,7 @@ import { MenuLateralComponent } from "./menu-lateral/menu-lateral.component";
 import { MateriasDocenteComponent } from "./materias-docente/materias-docente.component";
 import { DetalleAsignaturaComponent } from "./detalle-asignatura/detalle-asignatura.component";
 import { HorarioComponent } from "./horario/horario.component";
+import { AsignaturaCompetenciaComponent } from "./asignatura-competencia/asignatura-competencia.component";
 const routes: Routes=[
     { path:'', redirectTo: '/login', pathMatch:'full'},
     {path:'home', component:HomeComponent,canActivate:[AuthGuard]},
@@ -25,7 +26,8 @@ const routes: Routes=[
     {path:'menu',component:MenuLateralComponent},
     {path:'asignatura-docentes',component:MateriasDocenteComponent},
     {path: 'detalle-asignatura', component: DetalleAsignaturaComponent},
-    {path: 'horario', component:HorarioComponent}
+    {path: 'horario', component:HorarioComponent},
+    {path : 'asignatura-competencia', component:AsignaturaCompetenciaComponent}
 ]
 
 @NgModule({

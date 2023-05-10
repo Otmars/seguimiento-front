@@ -22,3 +22,8 @@ export interface Iduser {
     id?:      string;
     nombres?: string;
 }
+
+export interface relacionCompetencia{
+    competenciaId: number, 
+    asignaturaId: number
+}

@@ -41,6 +41,7 @@
         <th style="width: 4rem">
           <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
         </th>
+        <th>Id</th>
         <th pSortableColumn="descripcion">
           Descripcion<p-sortIcon field="descripcion"></p-sortIcon>
         </th>
@@ -57,6 +58,9 @@
       <tr>
         <td>
           <p-tableCheckbox [value]="competencia"></p-tableCheckbox>
+        </td>
+        <td>
+          {{competencia.id}}
         </td>
         <td><span class="p-column-title">Nombre</span>{{ competencia.descripcion }}</td>
         <td>

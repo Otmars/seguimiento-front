@@ -42,4 +42,15 @@ export class MateriaService {
     return this.http.patch(this.url+'asignatura/'+id,body)
   }
 
+  relacionMateriaCompetencia (body:any):Observable<any>{
+    return this.http.post(this.url+"asignatura/asicom",body).pipe(
+      tap(()=>{
+        this._refresh$.next();
+      })
+    )
+  }
+  getRelacionMateriaCompetencia(id:number){
+    return this.http.get(this.url+"asignatura/asicom/"+id)
+  }
+
 }

@@ -68,6 +68,7 @@ import { registerLocaleData } from '@angular/common';
 import { MateriasDocenteComponent } from './materias-docente/materias-docente.component';
 import { DetalleAsignaturaComponent } from './detalle-asignatura/detalle-asignatura.component';
 import { HorarioComponent } from './horario/horario.component';
+import { PickListModule } from 'primeng/picklist';
 import { AsignaturaCompetenciaComponent } from './asignatura-competencia/asignatura-competencia.component';
 registerLocaleData(localeMX)
 @NgModule({
@@ -132,6 +133,7 @@ registerLocaleData(localeMX)
     TooltipModule,
     DataViewModule,
     FullCalendarModule,
+    PickListModule
   ],
   providers: [
     {provide:LocationStrategy,useClass:HashLocationStrategy},

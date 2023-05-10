@@ -5,9 +5,10 @@ import { Product } from './Product';
 import { ConfirmationService } from 'primeng/api';
 import { MessageService } from 'primeng/api';
 import { MateriaService } from './materia.service';
-import { Asingatura } from './inteface-materia';
+import { Asingatura, relacionCompetencia } from './inteface-materia';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { CompetenciaService } from '../competencias/competencia.service';
 @Component({
   selector: 'app-materia',
   templateUrl: './materia.component.html',
@@ -15,8 +16,14 @@ import { Subscription } from 'rxjs';
   providers: [MessageService, ConfirmationService],
 })
 export class MateriaComponent implements OnInit,OnDestroy {
-asociarCompetencia() {
+guardarRelacion($event: Event) {
+throw new Error('Method not implemented.');
+}
+asociarCompetencia(dato : any) {
   this.relacionDialog=true
+  this.idAsignatura = dato.id
+  console.log(this.idAsignatura);
+  this.cargarCompetencias()
 }
   subscription : Subscription
   public asignatura: any = [];
@@ -24,7 +31,7 @@ asociarCompetencia() {
   dato!: Asingatura;
   datosedit !: Asingatura;
   productDialog!: boolean;
-
+  idAsignatura : number
   products!: Product[];
 
   product!: Product;
@@ -43,11 +50,15 @@ asociarCompetencia() {
   listadocentes:any
   tituloModal ="Asignatura"
   editar: boolean= false;
+  sourceCompetencia!: any[];
+
+  targetCompetencia!: any[];
   constructor(
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
     private materiaService: MateriaService,
-    private fb:FormBuilder
+    private fb:FormBuilder,
+    private competenciaService:CompetenciaService
   ) {}
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
@@ -63,6 +74,63 @@ asociarCompetencia() {
      this.subscription = this.materiaService.refresh$.subscribe(()=>{
       this.cargarDatos();
      })
+     
+     this.targetCompetencia = [];
+  }
+  guardarRelacionCompetencia(){
+    console.log(this.idAsignatura);
+    
+    this.relacionDialog= false
+    console.log(this.targetCompetencia);
+    
+    this.targetCompetencia
+    for (let i = 0; i < this.targetCompetencia.length; i++) {
+      console.log(this.targetCompetencia[i].id);
+      var relaciones:relacionCompetencia = {
+        asignaturaId : this.idAsignatura,
+        competenciaId : this.targetCompetencia[i].id
+      }
+      this.materiaService.relacionMateriaCompetencia(relaciones).subscribe(res =>{
+        console.log(res);
+        
+      })
+    }
+  }
+  cargarCompetencias(){
+    var reCompetencias: any = []
+    var relacion : any=[]
+    var competenciasrelacionadas : any= []
+    this.competenciaService.getCompetencias().subscribe(res=>{
+      console.log(res);
+      
+      reCompetencias = res
+      
+      this.materiaService.getRelacionMateriaCompetencia(this.idAsignatura).subscribe(ress => {
+        console.log(ress);
+        relacion = ress
+        for (let i = 0; i < reCompetencias.length; i++) {
+          for (let j = 0; j < relacion.length; j++) {
+            
+            
+            if (reCompetencias[i].id == relacion[j].competenciaId) {
+              console.log(reCompetencias[i].id, "------",relacion[j].competenciaId);
+            console.log("hay");
+            competenciasrelacionadas.push(reCompetencias[i])
+            reCompetencias.splice(i, 1)
+            console.log("----------",competenciasrelacionadas);
+            console.log("----------", reCompetencias);
+          }
+          
+            
+          }
+        }
+        this.targetCompetencia = competenciasrelacionadas
+        this.sourceCompetencia = reCompetencias
+      })
+
+      
+    })
+    
   }
   initForm(): FormGroup {
     return this.fb.group({
