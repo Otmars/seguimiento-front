@@ -14,6 +14,7 @@ import { MateriasDocenteComponent } from "./materias-docente/materias-docente.co
 import { DetalleAsignaturaComponent } from "./detalle-asignatura/detalle-asignatura.component";
 import { HorarioComponent } from "./horario/horario.component";
 import { AsignaturaCompetenciaComponent } from "./asignatura-competencia/asignatura-competencia.component";
+import { InscripcionComponent } from "./inscripcion/inscripcion.component";
 const routes: Routes=[
     { path:'', redirectTo: '/login', pathMatch:'full'},
     {path:'home', component:HomeComponent,canActivate:[AuthGuard]},
@@ -27,7 +28,8 @@ const routes: Routes=[
     {path:'asignatura-docentes',component:MateriasDocenteComponent},
     {path: 'detalle-asignatura', component: DetalleAsignaturaComponent},
     {path: 'horario', component:HorarioComponent},
-    {path : 'asignatura-competencia', component:AsignaturaCompetenciaComponent}
+    {path : 'asignatura-competencia', component:AsignaturaCompetenciaComponent},
+    {path : 'inscripcion', component: InscripcionComponent}
 ]
 
 @NgModule({

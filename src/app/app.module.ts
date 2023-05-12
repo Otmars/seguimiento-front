@@ -70,7 +70,9 @@ import { DetalleAsignaturaComponent } from './detalle-asignatura/detalle-asignat
 import { HorarioComponent } from './horario/horario.component';
 import { PickListModule } from 'primeng/picklist';
 import { AsignaturaCompetenciaComponent } from './asignatura-competencia/asignatura-competencia.component';
+import { InscripcionComponent } from './inscripcion/inscripcion.component';
 registerLocaleData(localeMX)
+import { SpeedDialModule } from 'primeng/speeddial';
 @NgModule({
   declarations: [
     AppComponent,
@@ -89,6 +91,7 @@ registerLocaleData(localeMX)
     DetalleAsignaturaComponent,
     HorarioComponent,
     AsignaturaCompetenciaComponent,
+    InscripcionComponent,
   ],
   imports: [
     MessagesModule,
@@ -133,7 +136,7 @@ registerLocaleData(localeMX)
     TooltipModule,
     DataViewModule,
     FullCalendarModule,
-    PickListModule
+    PickListModule,
   ],
   providers: [
     {provide:LocationStrategy,useClass:HashLocationStrategy},

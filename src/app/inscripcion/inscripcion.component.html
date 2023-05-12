@@ -1,0 +1,165 @@
+<div class="card m-3">
+  <div class="m-2">
+    <p-button
+      label="Inscribir"
+      styleClass="p-button-outlined"
+      (onClick)="showModalInscripcion()"
+    ></p-button>
+  </div>
+  <div class="m-2">
+    <p-table
+      [value]="datos"
+      dataKey="id"
+      [tableStyle]="{ 'min-width': '10rem' }"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 5rem"></th>
+          <th pSortableColumn="iduser.nombres">
+            Nombre Completo <p-sortIcon field="iduser.nombres"></p-sortIcon>
+          </th>
+          <th>C.I.</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-estudiante let-expanded="expanded">
+        <tr>
+          <td>
+            <button
+              type="button"
+              pButton
+              pRipple
+              [pRowToggler]="estudiante"
+              class="p-button-text p-button-rounded p-button-plain"
+              [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
+            ></button>
+          </td>
+          <td>
+            {{
+              estudiante.iduser.nombres +
+                " " +
+                estudiante.iduser.apellidoPaterno +
+                " " +
+                estudiante.iduser.apellidoMaterno
+            }}
+          </td>
+          <td>{{ estudiante.iduser.ci }}</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="rowexpansion" let-dato>
+        <tr>
+          <td colspan="7">
+            <div class="p-3">
+              <p-table [value]="dato.inscripcion" dataKey="id">
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th p>Id</th>
+                    <th>nombre</th>
+                    <th>Sigla-Codigo</th>
+                    <th>Paralelo</th>
+                    <th>Acciones</th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-materia>
+                  <tr>
+                    <td>{{ materia.asignatura.id }}</td>
+                    <td>{{ materia.asignatura.nombre }}</td>
+                    <td>{{ materia.asignatura.siglaCodigo }}</td>
+                    <td>{{ materia.asignatura.paralelo }}</td>
+                    <td><p-button
+                      styleClass="p-button-outlined p-button-danger m-1 py-1 "
+                      icon="pi pi-trash"
+                      (click)="retirarMateria(materia)"
+                    ></p-button></td>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                  <tr>
+                    <td colspan="6">
+                      There are no order for this product yet.
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+<p-dialog
+  header="Header"
+  [(visible)]="inscripcionDialog"
+  [style]="{ width: '90vw' }"
+  [maximizable]="true"
+  [modal]="true"
+>
+  <ng-template pTemplate="header">
+    <span class="text-xl font-bold">Header Content</span>
+  </ng-template>
+  <p-dropdown
+    [options]="estudiantes"
+    [(ngModel)]="selectedEstudiante"
+    optionLabel="id"
+    [filter]="true"
+    filterBy="iduser.nombres,iduser.apellidoPaterno,iduser.apellidoMaterno,iduser.ci"
+    [showClear]="true"
+    placeholder="Seleccione un estudiante"
+   styleClass="w-11 m-3"
+  >
+    <ng-template pTemplate="selectedItem">
+      <div class="flex align-items-center gap-2" *ngIf="selectedEstudiante">
+        <div>{{ getnombrecompleto(selectedEstudiante) }}</div>
+      </div>
+    </ng-template>
+    <ng-template let-estudiante pTemplate="item">
+      <div class="flex align-items-center gap-2">
+        <!-- <div>{{  estudiante.iduser.ci+" | "+estudiante.iduser.nombres +
+          " " +
+          estudiante.iduser.apellidoPaterno +
+          " " +
+          estudiante.iduser.apellidoMaterno }}</div> -->
+          <tr><td>{{estudiante.iduser.ci}}</td> {{getnombrecompleto(estudiante)}}<td></td></tr>
+      </div>
+      
+    </ng-template>
+  </p-dropdown>
+
+  <p-pickList
+    class="z-100 relative"
+    [source]="sourceAsignatura"
+    [target]="targetAsignatura"
+    sourceHeader="Todas"
+    targetHeader="Selecionada"
+    [dragdrop]="true"
+    [responsive]="true"
+    [sourceStyle]="{ height: '30rem' }"
+    [targetStyle]="{ height: '30rem', color: 'red' }"
+    breakpoint="500px"
+    filterBy="nombre"
+    sourceFilterPlaceholder="Buscar por nombre"
+    targetFilterPlaceholder="Buscar por nombre"
+  >
+    <ng-template let-asignatura pTemplate="item">
+      <div class="flex flex-wrap p-2 align-items-center gap-3">
+        <div class="flex-1 flex flex-column gap-2">
+          <span class="font-light">{{ asignatura.nombre }}</span>
+          <div class="flex align-items-center gap-2">
+            <i class="pi pi-flag text-sm"></i>
+            <span>{{ "MED-"+asignatura.siglaCodigo }}</span>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </p-pickList>
+
+  <ng-template pTemplate="footer">
+    <p-button
+      icon="pi pi-check"
+      (click)="inscribir()"
+      label="Guardar"
+      styleClass="p-button-text"
+    ></p-button>
+  </ng-template>
+</p-dialog>
