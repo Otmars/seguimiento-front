@@ -2,72 +2,64 @@ import { Component, OnInit } from '@angular/core';
 import { EstudianteService } from '../estudiante/estudiante.service';
 import { DetalleAsignaturaService } from './detalle-asignatura.service';
 import { ActivatedRoute } from '@angular/router';
-import { MenuItem,MessageService } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-detalle-asignatura',
   templateUrl: './detalle-asignatura.component.html',
-  styleUrls: ['./detalle-asignatura.component.css']
+  styleUrls: ['./detalle-asignatura.component.css'],
 })
-export class DetalleAsignaturaComponent  implements OnInit{
- estudiantes :any
- layout: string = 'list';
- items: MenuItem[];
-
+export class DetalleAsignaturaComponent implements OnInit {
+  estudiantes: any;
+  layout: string = 'list';
+  dialogCompetencia: boolean = false;
+  id = this.route.snapshot.queryParams['id'];
+  competenciaAsignatura: any = [];
 
   ngOnInit() {
-    
-    this.cargarDatos()
-    this.items = this.items = [
-      {
-          icon: 'pi pi-pencil',
-          command: () => {
-              this.messageService.add({ severity: 'info', summary: 'Add', detail: 'Data Added' });
-          }
-      },
-      {
-          icon: 'pi pi-refresh',
-          command: () => {
-              this.messageService.add({ severity: 'success', summary: 'Update', detail: 'Data Updated' });
-          }
-      },
-      {
-          icon: 'pi pi-trash',
-          command: () => {
-              this.messageService.add({ severity: 'error', summary: 'Delete', detail: 'Data Deleted' });
-          }
-      },
-      {
-          icon: 'pi pi-upload',
-          routerLink: ['/fileupload']
-      },
-      {
-          icon: 'pi pi-external-link',
-          target: '_blank',
-          url: 'http://angular.io'
-      }
-  ];
+    this.cargarDatos();
   }
-  constructor (private detalleAsignaturaService: DetalleAsignaturaService,private route: ActivatedRoute,private messageService: MessageService){
-  }
-  cargarDatos(){
-    const id = this.route.snapshot.queryParams['id']
-    
-    this.detalleAsignaturaService.getListaEstudiantes(id).subscribe(res=>{
-      console.log(res);
-      
-      this.estudiantes = res
-    })
+  constructor(
+    private detalleAsignaturaService: DetalleAsignaturaService,
+    private route: ActivatedRoute,
+    private messageService: MessageService
+  ) {}
+  cargarDatos() {
+    console.log(this.id);
+
+    this.detalleAsignaturaService
+      .getListaEstudiantes(this.id)
+      .subscribe((res) => {
+        console.log(res);
+
+        this.estudiantes = res;
+      });
   }
   getEventValue($event: any): string {
     return $event.target.value;
   }
   getnombrecompleto(dato: any) {
-    const nombreCompleto = dato.iduser.nombres +
+    const nombreCompleto =
+      dato.iduser.nombres +
       ' ' +
       dato.iduser.apellidoPaterno +
       ' ' +
       dato.iduser.apellidoMaterno;
-    return nombreCompleto
+    return nombreCompleto;
+  }
+  cargarCompetenciasmateria() {
+    this.detalleAsignaturaService
+      .cargarCompetenciasmateria(this.id)
+      .subscribe((res) => {
+        console.log(res);
+        this.competenciaAsignatura = res;
+      });
+  }
+  guardarComptencias() {
+    throw new Error('Method not implemented.');
+  }
+  showCompetenciaDialog(dato: any) {
+    this.cargarCompetenciasmateria();
+    this.dialogCompetencia = true;
   }
 }

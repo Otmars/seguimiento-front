@@ -17,4 +17,7 @@ export class DetalleAsignaturaService {
   getListaEstudiantes(id:number):Observable<any[]>{
     return this.http.get<any[]>(this.url+"asignatura/inscritos/"+id)
   }
+  cargarCompetenciasmateria(id:number):Observable<any[]>{
+    return this.http.get<any[]>(this.url+"asignatura/asicom/"+id)
+  }
 }
