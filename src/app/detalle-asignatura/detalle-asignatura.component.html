@@ -1,7 +1,8 @@
 <div class="card m-3">
+  <h2>{{tituloAsignatura}}</h2>
   <h1>Lista Estudiantes</h1>
-  <!-- <ul *ngFor="let item of estudiantes">
-        <li> {{item.estudiante.iduser.nombres}}</li>
+  <!-- <ul *ngFor="let item of datosAsignatura">
+        <li> {{item.nombre}}</li>
       </ul> -->
 
   <div class="m-2">
@@ -151,7 +152,7 @@
   [style]="{ width: '90vw' }"
 >
   <ng-template pTemplate="header">
-    <span class="text-xl font-bold">Asignar Competencias</span>
+    <span class="text-xl font-bold">Administrar Practicas</span>
   </ng-template>
 
   <p-table
@@ -192,6 +193,7 @@
         </span>
         <small
           class="p-error"
+          
           *ngIf="formCalificacionPractica.controls.descripcion.touched && formCalificacionPractica.get('descripcion')?.errors?.['required']"
           >Descripcion is required.</small
         >
@@ -257,7 +259,7 @@
   [style]="{ width: '90vw' }"
 >
   <ng-template pTemplate="header">
-    <span class="text-xl font-bold">Asignar Competencias</span>
+    <span class="text-xl font-bold">Administrar Parciales</span>
   </ng-template>
 
   <p-table
@@ -350,7 +352,7 @@
   <ng-template pTemplate="footer">
     <p-button
       icon="pi pi-check"
-      (click)="dialogPractica = false"
+      (click)="dialogParcial = false"
       label="Close"
       styleClass="p-button-text"
     ></p-button>

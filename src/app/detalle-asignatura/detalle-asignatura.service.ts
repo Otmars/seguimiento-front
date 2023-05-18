@@ -29,4 +29,8 @@ export class DetalleAsignaturaService {
   crearCalificacion(body : any){
     return this.http.post(this.url+"calificacion",body)
   }
+
+  datosAsignatura(id:number){
+    return this.http.get(this.url+"asignatura/"+id)
+  }
 }
