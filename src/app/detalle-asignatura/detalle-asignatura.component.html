@@ -1,85 +1,358 @@
 <div class="card m-3">
-    <h1>Lista Estudiantes</h1>
-    <!-- <ul *ngFor="let item of estudiantes">
+  <h1>Lista Estudiantes</h1>
+  <!-- <ul *ngFor="let item of estudiantes">
         <li> {{item.estudiante.iduser.nombres}}</li>
       </ul> -->
 
-      <div class="m-2">
-          <p-button label="Crear Calificacion"></p-button>
-          <p-button label="Crear Practica" class="m-3"></p-button>
+  <div class="m-2">
+    <p-button label="Administrar Parciales" (click)="showParcialesDialog()"></p-button>
+    <p-button
+      label="Administrar Practicas"
+      class="m-3"
+      (click)="showPracticasDialog()"
+    ></p-button>
+  </div>
+  <p-dataView #dv [value]="estudiantes" [layout]="layout">
+    <ng-template pTemplate="header">
+      <div class="flex justify-content-end">
+        <input type="text" />
+        <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
       </div>
-      <p-dataView #dv [value]="estudiantes" [layout]="layout">
-        <ng-template pTemplate="header">
-            <div class="flex justify-content-end">
-                <input type="text">
-                <p-dataViewLayoutOptions ></p-dataViewLayoutOptions>
+    </ng-template>
+
+    <ng-template let-dato pTemplate="listItem">
+      <div class="col-12">
+        <div
+          class="flex flex-column xl:flex-row xl:align-items-start p-4 gap-4"
+        >
+          <div
+            class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4"
+          >
+            <div
+              class="flex flex-column align-items-center sm:align-items-start gap-3"
+            >
+              <div class="text-lg font-semibold text-900">
+                {{ getnombrecompleto(dato.estudiante) }}
+              </div>
+              <span class="text-2xl font-semibold">{{
+                dato.estudiante.iduser.ci
+              }}</span>
             </div>
-        </ng-template>
-        
-        <ng-template let-dato pTemplate="listItem">
-            <div class="col-12">
-                <div class="flex flex-column xl:flex-row xl:align-items-start p-4 gap-4">
-                    <div class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
-                        <div class="flex flex-column align-items-center sm:align-items-start gap-3">
-                            <div class="text-lg font-semibold text-900">{{ getnombrecompleto(dato.estudiante)}}</div>
-                            <span class="text-2xl font-semibold">{{ dato.estudiante.iduser.ci}}</span>                
-                        </div>
-                        <div class="flex sm:flex-column align-items-center sm:align-items-end gap-3 sm:gap-2">
-                            <div class="flex align-items-center gap-3">
-                                <span class="flex align-items-center gap-2">
-                                    <p-button label="Calificar" styleClass="p-button-sm"></p-button>
-                                </span>
-                                <span class="flex align-items-center gap-2">
-                                    <p-button label="Adjudicar Competencia" (click)="showCompetenciaDialog(dato.estudiante)" styleClass="p-button-sm"></p-button>
-                                    
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div
+              class="flex sm:flex-column align-items-center sm:align-items-end gap-3 sm:gap-2"
+            >
+              <div class="flex align-items-center gap-3">
+                <span class="flex align-items-center gap-2">
+                  <p-button
+                    label="Calificar"
+                    styleClass="p-button-sm"
+                  ></p-button>
+                </span>
+                <span class="flex align-items-center gap-2">
+                  <p-button
+                    label="Adjudicar Competencia"
+                    (click)="showCompetenciaDialog(dato.estudiante)"
+                    styleClass="p-button-sm"
+                  ></p-button>
+                </span>
+              </div>
             </div>
-        </ng-template>
-        <ng-template let-product pTemplate="gridItem">
-            <div class="col-12 sm:col-4 lg:col-6 xl:col-2 p-2">
-                <div class="p-4 border-1 surface-border surface-card border-round">
-                    <div class="flex flex-wrap align-items-center justify-content-between gap-2">
-                        <span class="flex align-items-center gap-2">
-                            <i class="pi pi-tag"></i>
-                            <span class="font-semibold">{{ product.category }}</span>
-                        </span>
-                    </div>
-                    <div class="flex flex-column align-items-center gap-3 py-5">
-                        <img class="w-9 shadow-2 border-round" [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + product.image" [alt]="product.name" />
-                        <div class="text-2xl font-bold">{{ product.estudiante.iduser.nombres +" "+ product.iduser.apellidoPaterno +" "+ product.iduser.apellidoMaterno}}</div>
-                        <p-rating [ngModel]="product.rating" [readonly]="true" [cancel]="false"></p-rating>
-                    </div>
-                    <div class="flex align-items-center justify-content-between">
-                        <span class="text-2xl font-semibold">{{ '$' + product.price }}</span>
-                        <button pButton icon="pi pi-check" class="p-button-rounded" [disabled]="product.inventoryStatus === 'OUTOFSTOCK'"></button>
-                    </div>
-                </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template let-product pTemplate="gridItem">
+      <div class="col-12 sm:col-4 lg:col-6 xl:col-2 p-2">
+        <div class="p-4 border-1 surface-border surface-card border-round">
+          <div
+            class="flex flex-wrap align-items-center justify-content-between gap-2"
+          >
+            <span class="flex align-items-center gap-2">
+              <i class="pi pi-tag"></i>
+              <span class="font-semibold">{{ product.category }}</span>
+            </span>
+          </div>
+          <div class="flex flex-column align-items-center gap-3 py-5">
+            <img
+              class="w-9 shadow-2 border-round"
+              [src]="
+                'https://primefaces.org/cdn/primeng/images/demo/product/' +
+                product.image
+              "
+              [alt]="product.name"
+            />
+            <div class="text-2xl font-bold">
+              {{
+                product.estudiante.iduser.nombres +
+                  " " +
+                  product.iduser.apellidoPaterno +
+                  " " +
+                  product.iduser.apellidoMaterno
+              }}
             </div>
-        </ng-template>
-    </p-dataView>
+            <p-rating
+              [ngModel]="product.rating"
+              [readonly]="true"
+              [cancel]="false"
+            ></p-rating>
+          </div>
+          <div class="flex align-items-center justify-content-between">
+            <span class="text-2xl font-semibold">{{
+              "$" + product.price
+            }}</span>
+            <button
+              pButton
+              icon="pi pi-check"
+              class="p-button-rounded"
+              [disabled]="product.inventoryStatus === 'OUTOFSTOCK'"
+            ></button>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </p-dataView>
 </div>
 
+<p-dialog
+  header="Header"
+  [(visible)]="dialogCompetencia"
+  [style]="{ width: '90vw' }"
+>
+  <ng-template pTemplate="header">
+    <span class="text-xl font-bold">Asignar Competencias</span>
+  </ng-template>
 
-<p-dialog header="Header" [(visible)]="dialogCompetencia" [style]="{ width: '90vw' }">
+  <!-- {{competenciaAsignatura|json}} -->
+  <p-timeline [value]="competenciaAsignatura" align="right">
+    <ng-template pTemplate="content" let-dato>
+      <small class="p-text-secondary">{{ dato.competencia.descripcion }}</small>
+    </ng-template>
+    <ng-template pTemplate="opposite" let-event>
+      <p-button
+        label="Otorgar competencia"
+        styleClass="p-button-link"
+      ></p-button>
+    </ng-template>
+  </p-timeline>
+
+  <ng-template pTemplate="footer">
+    <p-button
+      icon="pi pi-check"
+      (click)="guardarComptencias()"
+      label="Ok"
+      styleClass="p-button-text"
+    ></p-button>
+  </ng-template>
+</p-dialog>
+
+<p-dialog
+  header="Header"
+  [(visible)]="dialogPractica"
+  [style]="{ width: '90vw' }"
+>
+  <ng-template pTemplate="header">
+    <span class="text-xl font-bold">Asignar Competencias</span>
+  </ng-template>
+
+  <p-table
+    [value]="listaCalificaciones"
+    [tableStyle]="{ 'min-width': '50rem' }"
+  >
     <ng-template pTemplate="header">
-        <span class="text-xl font-bold">Asignar Competencias</span>
+      <tr>
+        <th>ID</th>
+        <th>Descripcion</th>
+        <th>Puntaje</th>
+        <th>Tipo de Calificacion</th>
+      </tr>
     </ng-template>
-   
-        <!-- {{competenciaAsignatura|json}} -->
-        <p-timeline [value]="competenciaAsignatura" align="right">
-            <ng-template pTemplate="content" let-dato>
-                <small class="p-text-secondary">{{ dato.competencia.descripcion }}</small>
-            </ng-template>
-            <ng-template pTemplate="opposite" let-event>
-                <p-button label="Otorgar competencia" styleClass="p-button-link"></p-button>
-            </ng-template>
-        </p-timeline>
- 
-    <ng-template pTemplate="footer">
-        <p-button icon="pi pi-check" (click)="guardarComptencias()" label="Ok" styleClass="p-button-text"></p-button>
+    <ng-template pTemplate="body" let-calificacion>
+      <tr>
+        <td>{{ calificacion.id }}</td>
+        <td>{{ calificacion.descripcion }}</td>
+        <td>{{ calificacion.puntaje }}</td>
+        <td>{{ calificacion.tipoCalificacion }}</td>
+      </tr>
     </ng-template>
+  </p-table>
+  <h3 class="mt-3">Cree una nueva calificacion</h3>
+  <form [formGroup]="formCalificacionPractica">
+    <div class="flex flex-column sm:flex-row h-5rem mt-5">
+      <div
+        class="flex flex-column align-items-center justify-content-start ml-8 mx-2"
+      >
+        <span class="p-float-label">
+          <input
+            pInputText
+            formControlName="descripcion"
+            class="p-inputtext-sm"
+            [ngClass]="{'ng-dirty':formCalificacionPractica.controls.descripcion.touched && formCalificacionPractica.get('descripcion')?.errors?.['required']}"
+          />
+          <label htmlFor="username">Descripcion</label>
+        </span>
+        <small
+          class="p-error"
+          *ngIf="formCalificacionPractica.controls.descripcion.touched && formCalificacionPractica.get('descripcion')?.errors?.['required']"
+          >Descripcion is required.</small
+        >
+      </div>
+      <div
+        class="flex flex-column align-items-center justify-content-start mx-2"
+      >
+        <span class="p-float-label">
+          <p-inputNumber
+            formControlName="puntaje"
+            mode="decimal"
+            inputId="withoutgrouping"
+            class="p-inputtext-sm"
+            [useGrouping]="false"
+            [ngClass]="{'ng-dirty':formCalificacionPractica.controls.puntaje.touched && formCalificacionPractica.get('puntaje')?.errors?.['required']}"
+
+          >
+          </p-inputNumber>
+          <label htmlFor="username">Puntaje</label>
+        </span>
+        <small
+          class="p-error"
+          *ngIf="formCalificacionPractica.controls.puntaje.touched && formCalificacionPractica.get('puntaje')?.errors?.['required']"
+          >Descripcion is required.</small
+        >
+        <small
+          class="p-error"
+          *ngIf="
+          formCalificacionPractica.controls.puntaje.touched &&
+            !formCalificacionPractica.controls.puntaje.valid
+          "
+          ><p>
+            El valor maximo que puede tener <br />
+            este campo es : {{ 35 - sumaPracticas }}
+          </p></small
+        >
+      </div>
+      <div class="flex flex-column align-items-end justify-content-start">
+        <p-button
+          label="Submit"
+          icon="pi pi-check"
+          iconPos="right"
+          [disabled]="!formCalificacionPractica.valid"
+          (onClick)="guardarPracticas()"
+        ></p-button>
+      </div>
+    </div>
+  </form>
+  {{ formCalificacionPractica.valid }}
+  <ng-template pTemplate="footer">
+    <p-button
+      icon="pi pi-check"
+      (click)="dialogPractica = false"
+      label="Close"
+      styleClass="p-button-text"
+    ></p-button>
+  </ng-template>
+</p-dialog>
+
+<p-dialog
+  header="Header"
+  [(visible)]="dialogParcial"
+  [style]="{ width: '90vw' }"
+>
+  <ng-template pTemplate="header">
+    <span class="text-xl font-bold">Asignar Competencias</span>
+  </ng-template>
+
+  <p-table
+    [value]="listaCalificacionesParciales"
+    [tableStyle]="{ 'min-width': '50rem' }"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th>ID</th>
+        <th>Descripcion</th>
+        <th>Puntaje</th>
+        <th>Tipo de Calificacion</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-calificacion>
+      <tr>
+        <td>{{ calificacion.id }}</td>
+        <td>{{ calificacion.descripcion }}</td>
+        <td>{{ calificacion.puntaje }}</td>
+        <td>{{ calificacion.tipoCalificacion }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+  <h3 class="mt-3">Cree una nueva calificacion</h3>
+  <form [formGroup]="formCalificacionParciales">
+    <div class="flex flex-column sm:flex-row h-5rem mt-5">
+      <div
+        class="flex flex-column align-items-center justify-content-start ml-8 mx-2"
+      >
+        <span class="p-float-label">
+          <input
+            pInputText
+            formControlName="descripcion"
+            class="p-inputtext-sm"
+            [ngClass]="{'ng-dirty':formCalificacionParciales.controls.descripcion.touched && formCalificacionParciales.get('descripcion')?.errors?.['required']}"
+          />
+          <label htmlFor="username">Descripcion</label>
+        </span>
+        <small
+          class="p-error"
+          *ngIf="formCalificacionParciales.controls.descripcion.touched && formCalificacionParciales.get('descripcion')?.errors?.['required']"
+          >Descripcion is required.</small
+        >
+      </div>
+      <div
+        class="flex flex-column align-items-center justify-content-start mx-2"
+      >
+        <span class="p-float-label">
+          <p-inputNumber
+            formControlName="puntaje"
+            mode="decimal"
+            inputId="withoutgrouping"
+            class="p-inputtext-sm"
+            [useGrouping]="false"
+            [ngClass]="{'ng-dirty':formCalificacionParciales.controls.puntaje.touched && formCalificacionParciales.get('puntaje')?.errors?.['required']}"
+
+          >
+          </p-inputNumber>
+          <label htmlFor="username">Puntaje</label>
+        </span>
+        <small
+          class="p-error"
+          *ngIf="formCalificacionParciales.controls.puntaje.touched && formCalificacionParciales.get('puntaje')?.errors?.['required']"
+          >Descripcion is required.</small
+        >
+        <small
+          class="p-error"
+          *ngIf="
+          formCalificacionParciales.controls.puntaje.touched &&
+            !formCalificacionParciales.controls.puntaje.valid
+          "
+          ><p>
+            El valor maximo que puede tener <br />
+            este campo es : {{ 35 - sumaParciales }}
+          </p></small
+        >
+      </div>
+      <div class="flex flex-column align-items-end justify-content-start">
+        <p-button
+          label="Submit"
+          icon="pi pi-check"
+          iconPos="right"
+          [disabled]="!formCalificacionParciales.valid"
+          (onClick)="guardarParciales()"
+        ></p-button>
+      </div>
+    </div>
+  </form>
+  {{ formCalificacionParciales.valid }}
+  <ng-template pTemplate="footer">
+    <p-button
+      icon="pi pi-check"
+      (click)="dialogPractica = false"
+      label="Close"
+      styleClass="p-button-text"
+    ></p-button>
+  </ng-template>
 </p-dialog>

@@ -20,4 +20,13 @@ export class DetalleAsignaturaService {
   cargarCompetenciasmateria(id:number):Observable<any[]>{
     return this.http.get<any[]>(this.url+"asignatura/asicom/"+id)
   }
+  cargarPracticas(id:number):Observable<any[]>{
+    return this.http.get<any[]>(this.url+"calificacion/practicas/"+id)
+  }
+  cargarParciales(id:number):Observable<any[]>{
+    return this.http.get<any[]>(this.url+"calificacion/parciales/"+id)
+  }
+  crearCalificacion(body : any){
+    return this.http.post(this.url+"calificacion",body)
+  }
 }
