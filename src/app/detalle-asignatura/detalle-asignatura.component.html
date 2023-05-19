@@ -129,29 +129,27 @@
 
   <!-- {{competenciaAsignatura|json}} -->
   <div class="m-3">
-    <p-timeline [value]="competenciaAsignatura" align="right">
-      <ng-template pTemplate="content" let-dato>
-        <small class="p-text-secondary">{{ dato.competencia.descripcion }}</small>
-      </ng-template>
-      <ng-template pTemplate="opposite" let-event>
-        <div class="flex flex-row align-items-center justify-content-start">
-          <p-button
-          label="Otorgar competencia"
-          styleClass="p-button-link"
-        ></p-button>
-        
-        <label for="">Adquirida</label>
+    <p-pickList class="z-100 relative" [source]="competenciaAsignatura" [target]="competenciaEstudiante" sourceHeader="Todas" targetHeader="Selecionada" [dragdrop]="true" [responsive]="true" 
+    [sourceStyle]="{ height: '30rem' }" [targetStyle]="{ height: '30rem' , color :'red' }" breakpoint="500px" filterBy="descripcion" sourceFilterPlaceholder="Search by name" targetFilterPlaceholder="Search by name">
+    <ng-template let-competencia pTemplate="item">
+        <div class=" flex flex-wrap p-2 align-items-center gap-3">
+            <div class="flex-1 flex flex-column gap-2">
+                <span class="font-light">{{ competencia.competencia.descripcion }}</span>
+                <div class="flex align-items-center gap-2">
+                    <i class="pi pi-flag text-sm"></i>
+                    <span>{{ competencia.competencia.tipoCompetencia }}</span>
+                </div>
+            </div>
         </div>
-        
-      </ng-template>
-    </p-timeline>
+    </ng-template>
+</p-pickList>
   </div>
 
   <ng-template pTemplate="footer">
     <p-button
       icon="pi pi-check"
       (click)="guardarComptencias()"
-      label="Ok"
+      label="Guardar"
       styleClass="p-button-text"
     ></p-button>
   </ng-template>

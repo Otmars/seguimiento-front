@@ -40,4 +40,11 @@ export class DetalleAsignaturaService {
   calificado(id:number, calificacion:any){
     return this.http.post(this.url+"calificacion/calificacion-estudiante/"+id,calificacion)
   }
+
+  getcompetenciasEstudiante(id:number){
+    return this.http.get(this.url+"estudiante/competencia/"+id)
+  }
+  guardarComptenciaEstudiante(body:any){
+    return this.http.post(this.url+"estudiante/competencia",body)
+  }
 }

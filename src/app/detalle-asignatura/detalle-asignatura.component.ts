@@ -151,7 +151,6 @@ export class DetalleAsignaturaComponent implements OnInit {
     this.detalleAsignaturaService
       .getListaEstudiantes(this.id)
       .subscribe((res) => {
-        console.log('**************', res);
         this.estudiantes = res;
       });
   }
@@ -171,21 +170,50 @@ export class DetalleAsignaturaComponent implements OnInit {
     this.detalleAsignaturaService
       .cargarCompetenciasmateria(this.id)
       .subscribe((res) => {
-        console.log(res);
         this.competenciaAsignatura = res;
       });
   }
   guardarComptencias() {
-    throw new Error('Method not implemented.');
+    console.log(this.competenciaEstudiante);
+    console.log('***', this.idEstududiante);
+    for (let i = 0; i < this.competenciaEstudiante.length; i++) {
+      console.log(this.competenciaEstudiante[i]);
+      if (this.competenciaEstudiante[i].asignaturaCompetenciaId) {
+        console.log('true');
+        this.detalleAsignaturaService.guardarComptenciaEstudiante({
+            competenciaId: this.competenciaEstudiante[i].competenciaId,
+            estudianteId: this.idEstududiante,
+          })
+          .subscribe((res) => console.log(res));
+      }
+    }
   }
+  idEstududiante: number;
   showCompetenciaDialog(dato: any) {
+    this.idEstududiante = dato.id;
     this.cargarCompetenciasmateria();
     this.dialogCompetencia = true;
+    this.detalleAsignaturaService
+      .getcompetenciasEstudiante(dato.id)
+      .subscribe((res) => {
+        this.competenciaEstudiante = res;
+        for (let i = 0; i < this.competenciaEstudiante.length; i++) {
+          console.log(this.competenciaEstudiante[i].competencia.id);
+          for (let j = 0; j < this.competenciaAsignatura.length; j++) {
+            if (
+              this.competenciaEstudiante[i].competencia.id ==
+              this.competenciaAsignatura[j].competencia.id
+            ) {
+              this.competenciaAsignatura.splice(j, 1);
+            }
+          }
+        }
+      });
   }
-
+  competenciaEstudiante: any = [];
+  restoCompetencias: any = [];
   cargarDatosAsignatura() {
     this.detalleAsignaturaService.datosAsignatura(this.id).subscribe((res) => {
-      console.log(res);
       this.datosAsignatura = res;
       this.tituloAsignatura = this.datosAsignatura[0].nombre;
     });
