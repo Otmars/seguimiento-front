@@ -15,7 +15,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class CompetenciasComponent implements OnInit {
   
   tipoCompetencia = [
-    { nombre: 'Competencia Macro' },
+    { nombre: 'Macro Competencia' },
     { nombre: 'Competencia Generica'},
     { nombre: 'Competencia Especifica'}
   ];
