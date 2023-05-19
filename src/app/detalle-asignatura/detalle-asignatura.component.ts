@@ -16,6 +16,35 @@ import {
   styleUrls: ['./detalle-asignatura.component.css'],
 })
 export class DetalleAsignaturaComponent implements OnInit {
+  calificadoSubmit() {
+    console.log(this.calificado.value);
+    console.log('idCalificacion', this.idCalificacion);
+    this.detalleAsignaturaService
+      .calificado(this.idCalificacion, {
+        calificacionObtenida: this.calificado.value,
+      })
+      .subscribe((res) => {
+        console.log(res);
+        this.dialogCalificando = false;
+      });
+  }
+  dialogCalificando: boolean = false;
+  idCalificacion: number;
+  calificando(dato: any) {
+    this.calificado.setValidators([
+      Validators.max(dato.calificacion.puntaje),
+      Validators.required,
+    ]);
+    this.calificado.setValue(null);
+    this.idCalificacion = dato.id;
+    this.dialogCalificando = true;
+  }
+  calificado = new FormControl(null, [
+    Validators.max(100),
+    Validators.required,
+  ]);
+
+  calificacionestudiante: any = [];
   sumaPracticas: number = 0;
   sumaParciales: number = 0;
   listaCalificaciones: any = [];
@@ -23,14 +52,14 @@ export class DetalleAsignaturaComponent implements OnInit {
   estudiantes: any;
   layout: string = 'list';
   dialogCompetencia: boolean = false;
+  dialogCalificar: boolean = false;
   id = this.route.snapshot.queryParams['id'];
   competenciaAsignatura: any = [];
   dialogPractica: boolean = false;
-  tituloAsignatura :string
+  tituloAsignatura: string;
   showParcialesDialog() {
     this.dialogParcial = true;
     this.cargarCalificacionesParciales();
-
   }
   messages: any;
   tiposCa: { name: string }[];
@@ -40,8 +69,8 @@ export class DetalleAsignaturaComponent implements OnInit {
     this.dialogPractica = true;
     console.log(this.sumaParciales);
   }
-  datosAsignatura :any = [] 
-  
+  datosAsignatura: any = [];
+
   guardarParciales() {
     console.log(this.formCalificacionParciales.value);
     const objeto = {
@@ -53,7 +82,7 @@ export class DetalleAsignaturaComponent implements OnInit {
     this.detalleAsignaturaService.crearCalificacion(objeto).subscribe((res) => {
       console.log(res);
     });
-    this.dialogParcial = false
+    this.dialogParcial = false;
   }
 
   guardarPracticas() {
@@ -67,7 +96,7 @@ export class DetalleAsignaturaComponent implements OnInit {
     this.detalleAsignaturaService.crearCalificacion(objeto).subscribe((res) => {
       console.log(res);
     });
-    this.dialogPractica=false
+    this.dialogPractica = false;
   }
 
   cargarCalificaciones() {
@@ -78,7 +107,9 @@ export class DetalleAsignaturaComponent implements OnInit {
         this.sumaPracticas =
           this.sumaPracticas + this.listaCalificaciones[i].puntaje;
       }
-      this.formCalificacionPractica.controls.puntaje.setValidators([Validators.max(35-this.sumaPracticas)])
+      this.formCalificacionPractica.controls.puntaje.setValidators([
+        Validators.max(35 - this.sumaPracticas),
+      ]);
     });
   }
   cargarCalificacionesParciales() {
@@ -90,7 +121,9 @@ export class DetalleAsignaturaComponent implements OnInit {
           this.sumaParciales + this.listaCalificacionesParciales[i].puntaje;
       }
       console.log(this.sumaParciales);
-      this.formCalificacionParciales.controls.puntaje.setValidators([Validators.max(35-this.sumaParciales)])
+      this.formCalificacionParciales.controls.puntaje.setValidators([
+        Validators.max(35 - this.sumaParciales),
+      ]);
     });
   }
 
@@ -105,7 +138,6 @@ export class DetalleAsignaturaComponent implements OnInit {
       { name: 'Final' },
     ];
     this.cargarCalificaciones();
-    
   }
   constructor(
     private detalleAsignaturaService: DetalleAsignaturaService,
@@ -119,7 +151,7 @@ export class DetalleAsignaturaComponent implements OnInit {
     this.detalleAsignaturaService
       .getListaEstudiantes(this.id)
       .subscribe((res) => {
-        console.log(res);
+        console.log('**************', res);
         this.estudiantes = res;
       });
   }
@@ -150,15 +182,15 @@ export class DetalleAsignaturaComponent implements OnInit {
     this.cargarCompetenciasmateria();
     this.dialogCompetencia = true;
   }
-  
-  cargarDatosAsignatura(){
-    this.detalleAsignaturaService.datosAsignatura(this.id).subscribe(res=>{
+
+  cargarDatosAsignatura() {
+    this.detalleAsignaturaService.datosAsignatura(this.id).subscribe((res) => {
       console.log(res);
-      this.datosAsignatura = res
-      this.tituloAsignatura = this.datosAsignatura[0].nombre
-    })
+      this.datosAsignatura = res;
+      this.tituloAsignatura = this.datosAsignatura[0].nombre;
+    });
   }
-  
+
   formCalificacionPractica = new FormGroup({
     descripcion: new FormControl('', [
       Validators.minLength(10),
@@ -181,4 +213,14 @@ export class DetalleAsignaturaComponent implements OnInit {
     ]),
     tipoCalificacion: new FormControl(''),
   });
+
+  showCalificarDialog(idEstudiante: number) {
+    this.dialogCalificar = true;
+    this.detalleAsignaturaService
+      .cargarCalificacionesEstudiante(idEstudiante, { asignaturaId: this.id })
+      .subscribe((res) => {
+        console.log(res);
+        this.calificacionestudiante = res;
+      });
+  }
 }

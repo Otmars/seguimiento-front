@@ -33,4 +33,11 @@ export class DetalleAsignaturaService {
   datosAsignatura(id:number){
     return this.http.get(this.url+"asignatura/"+id)
   }
+
+  cargarCalificacionesEstudiante(id:number,asignaturaId:any){
+    return this.http.post(this.url+"calificacion/estudiante/"+id,asignaturaId)
+  }
+  calificado(id:number, calificacion:any){
+    return this.http.post(this.url+"calificacion/calificacion-estudiante/"+id,calificacion)
+  }
 }
