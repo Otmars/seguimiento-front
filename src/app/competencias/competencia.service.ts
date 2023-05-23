@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Competencia } from './interface-competencia';
 
@@ -22,12 +22,24 @@ export class CompetenciaService {
   }
 
   postCompetencia(body : Competencia):Observable<Competencia>{
-    return this.http.post<Competencia>(this.url+"competencia",body)
+    return this.http.post<Competencia>(this.url+"competencia",body).pipe(
+      tap(()=>{
+        this._refresh$.next();
+      })
+    )
   }
   deleteCompetencia(id:number){
-    return this.http.delete(this.url+"competencia/"+id)
+    return this.http.delete(this.url+"competencia/"+id).pipe(
+      tap(()=>{
+        this._refresh$.next();
+      })
+    )
   }
   editarCompetencia (id : number, body : Competencia){
-    return this,this.http.patch(this.url+"competencia/"+id,body)
+    return this,this.http.patch(this.url+"competencia/"+id,body).pipe(
+      tap(()=>{
+        this._refresh$.next();
+      })
+    )
   }
 }

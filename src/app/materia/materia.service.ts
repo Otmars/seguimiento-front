@@ -39,7 +39,11 @@ export class MateriaService {
   }
 
   updatedaMateria (id:number,body:any):Observable<any>{
-    return this.http.patch(this.url+'asignatura/'+id,body)
+    return this.http.patch(this.url+'asignatura/'+id,body).pipe(
+      tap(()=>{
+        this._refresh$.next();
+      })
+    )
   }
 
   relacionMateriaCompetencia (body:any):Observable<any>{

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -18,7 +18,11 @@ export class InscripcionService {
     return this.http.get<any[]>(this.url+"estudiante/inscripcion")
   }
   inscribir(body: any):Observable<any>{
-    return this.http.post<any>(this.url+"estudiante/inscripcion",body)
+    return this.http.post<any>(this.url+"estudiante/inscripcion",body).pipe(
+      tap(()=>{
+        this._refresh$.next();
+      })
+    )
   }
   retirar(id:number){
     return this.http.delete(this.url+"estudiante/retirar/"+id)

@@ -230,7 +230,13 @@ asociarCompetencia(dato : any) {
     console.log(id,"*",asignatura);
     
     this.materiaService.updatedaMateria(id,asignatura).subscribe(res=>{
-
+      this.hideDialog()
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Operacion Realizada',
+        detail: 'Eliminado con exito',
+        life: 3000,
+      });
     })
   }
 }

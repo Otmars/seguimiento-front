@@ -1,7 +1,7 @@
 <p-toast></p-toast>
     <p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
 
-<div class="m-3 card">
+<div class="card m-2 md:ml-8 md:m-4 scalein animation-ease-in-out animation-duration-500">
   <div class="flex align-content-end justify-content-end mb-1">
     <div class="mx-1">
       <p-button
@@ -32,7 +32,7 @@
     [(selection)]="selectedDocentes"
     dataKey="id"
     [tableStyle]="{ 'min-width': '18rem' }"
-    [rows]="10"
+    [rows]="4"
     [paginator]="true"
     responsiveLayout="stack" [breakpoint]="'420px'" 
     [scrollable]="false"
@@ -59,7 +59,7 @@
         <th pSortableColumn="iduser.ci">
           Carnet Identidad <p-sortIcon field="iduser.ci"></p-sortIcon>
         </th>
-        <th>Correo</th>
+        <th style="width:10%">Correo</th>
         <th>Telefono</th>
         <th>Direccion</th>
         <th>Fecha de nacimiento</th>
@@ -190,9 +190,11 @@
           <span class="p-column-title font-semibold">C.I.</span>
           {{ docente.iduser.ci }}
         </td>
-        <td>
+        <td class="text-sm">
           <span class="p-column-title font-semibold">Correo</span>
-          {{ docente.iduser.email }}
+          {{ serpararcorreo(docente.iduser.email)[0]+"@"  }}
+          <br>
+          {{ serpararcorreo(docente.iduser.email)[1]  }}
         </td>
         <td>
           <span class="p-column-title font-semibold">Telefono</span>

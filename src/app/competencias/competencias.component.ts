@@ -5,6 +5,7 @@ import { MessageService } from 'primeng/api';
 import { Competencia } from './interface-competencia';
 import { CompetenciaService } from './competencia.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-competencias',
@@ -26,6 +27,8 @@ export class CompetenciasComponent implements OnInit {
   display: boolean = false;
   formCompetencia!: FormGroup;
   editar:boolean = false
+  subscription : Subscription
+
   showDialog() {
     this.display = true;
   }
@@ -38,6 +41,9 @@ export class CompetenciasComponent implements OnInit {
 
   ngOnInit() {
     this.formCompetencia = this.initForm();
+    this.subscription = this.competenciaService.refresh$.subscribe(()=>{
+      this.cargarCompetencia();
+     })
     this.cargarCompetencia();
   }
 
@@ -110,6 +116,7 @@ export class CompetenciasComponent implements OnInit {
     })
   }
   nuevaCompentecia() {
+    this.formCompetencia.reset()
     this.tituloModal = 'Crear Competencia';
     this.competencia = {};
     this.competemciaDialog = true;

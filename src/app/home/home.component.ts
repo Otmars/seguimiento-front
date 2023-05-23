@@ -7,9 +7,13 @@ import decode from 'jwt-decode';
 })
 export class HomeComponent implements OnInit {
 perfilModal: boolean ;
+showmodalOtros(){
+
+}
 showModalPerfil() {
  this.perfilModal= true
 }
+  modal: boolean= false
   saludo!: string;
   nombreusuario!: string;
   estadomenu!:boolean;

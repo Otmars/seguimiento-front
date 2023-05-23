@@ -162,4 +162,8 @@ export class DocenteComponent implements OnInit {
   getEventValue($event: any): string {
     return $event.target.value;
   }
+  serpararcorreo(text : string){
+    
+    return text.split('@')
+  }
 }

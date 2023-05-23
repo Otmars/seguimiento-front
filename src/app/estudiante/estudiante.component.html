@@ -253,7 +253,7 @@
   <p-toast></p-toast>
     <p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
 
-<div class="m-3 card">
+<div class="card md:ml-8 m-4">
   <div class="flex align-content-end justify-content-end mb-1">
     <div class="mx-1">
       <p-button
@@ -284,7 +284,7 @@
     [(selection)]="selectedEstudiantes"
     dataKey="id"
     [tableStyle]="{ 'min-width': '18rem' }"
-    [rows]="10"
+    [rows]="4"
     [paginator]="true"
     responsiveLayout="stack" [breakpoint]="'420px'" 
     [scrollable]="false"
@@ -444,7 +444,9 @@
         </td>
         <td>
           <span class="p-column-title font-semibold">Correo</span>
-          {{ estudiante.iduser.email }}
+          {{ serpararcorreo(estudiante.iduser.email)[0]+"@"  }}
+          <br>
+          {{ serpararcorreo(estudiante.iduser.email)[1]  }}
         </td>
         <td>
           <span class="p-column-title font-semibold">Telefono</span>

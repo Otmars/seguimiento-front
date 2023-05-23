@@ -1,6 +1,6 @@
 
 
-<div class="m-3 card">
+<div class="card md:ml-8 m-4">
     <!-- <ul *ngFor="let item of competencias">
     <li> {{item.createdAt}}</li>
   </ul> -->
@@ -122,7 +122,7 @@
           optionLabel="nombre"
           optionValue="nombre"
           appendTo="body"
-          placeholder="Select una opcion"
+          placeholder="Seleccione una opcion"
           [ngClass]="{'ng-dirty':formCompetencia.get('tipoCompetencia')?.touched && formCompetencia.get('tipoCompetencia')?.errors?.['required']}"
         ></p-dropdown>
         <small

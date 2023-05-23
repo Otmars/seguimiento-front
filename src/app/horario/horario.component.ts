@@ -10,6 +10,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 export class HorarioComponent {
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
-    plugins: [dayGridPlugin]
+    plugins: [dayGridPlugin],
+    height: 650 
   };
 }
