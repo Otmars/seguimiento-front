@@ -73,6 +73,7 @@ import { AsignaturaCompetenciaComponent } from './asignatura-competencia/asignat
 import { InscripcionComponent } from './inscripcion/inscripcion.component';
 registerLocaleData(localeMX)
 import { SpeedDialModule } from 'primeng/speeddial';
+import { ReportesComponent } from './reportes/reportes.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -92,6 +93,7 @@ import { SpeedDialModule } from 'primeng/speeddial';
     HorarioComponent,
     AsignaturaCompetenciaComponent,
     InscripcionComponent,
+    ReportesComponent,
   ],
   imports: [
     MessagesModule,

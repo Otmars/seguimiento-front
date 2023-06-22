@@ -24,6 +24,8 @@
     "@fullcalendar/core": "^6.1.6",
     "@fullcalendar/daygrid": "^6.1.6",
     "chart.js": "^4.2.1",
+    "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.5.29",
     "jwt-decode": "^3.1.2",
     "primeflex": "^3.3.0",
     "primeicons": "^6.0.1",

@@ -183,6 +183,7 @@
         >Mira tus calificaciones obteniadas</span
       >
     </div>
+    
     <div class="col-6 md:col-3 mb-4 px-3 cursor-pointer" (click)="modal= true" *ngIf="roluser == 'estudiante'" >
       <span
         class="p-3 shadow-2 mb-3 inline-block surface-card"
@@ -236,6 +237,30 @@
         >Vea y califique sus asignaturas</span
       >
     </div>
+    <div class="col-6 md:col-3 mb-4 px-3" *ngIf="roluser == 'estudiante'" (click)="modal= true">
+      <span
+        class="p-3 shadow-2 mb-3 inline-block surface-card"
+        style="border-radius: 10px"
+      >
+        <i class="pi pi-check-circle text-4xl text-blue-500"></i>
+      </span>
+      <div class="text-900 text-xl mb-2 font-medium">Reportes Estudiante</div>
+      <span class="text-700 line-height-"
+        >Descargar tus reportes</span
+      >
+    </div>
+    <div class="col-6 md:col-3 mb-4 px-3" *ngIf="roluser == 'docente'" (click)="modal= true">
+      <span
+        class="p-3 shadow-2 mb-3 inline-block surface-card"
+        style="border-radius: 10px"
+      >
+        <i class="pi pi-check-circle text-4xl text-blue-500"></i>
+      </span>
+      <div class="text-900 text-xl mb-2 font-medium">Reportes Docente</div>
+      <span class="text-700 line-height-"
+        >Descargar tus reportes</span
+      >
+    </div>
   </div>
 </div>
 
@@ -252,3 +277,5 @@
         <p-button icon="pi pi-check" (click)="modal = false" label="Ok" styleClass="p-button-text"></p-button>
     </ng-template>
 </p-dialog>
+
+<app-reportes></app-reportes>
