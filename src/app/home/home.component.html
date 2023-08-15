@@ -86,13 +86,9 @@
             class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1 line-height-3"
           >
             <ul class="list-none p-0 m-0">
-              <li>Anatomía Humana y Neuroanatomía clínica</li>
-              <li>Embriología médica y Genética clínica</li>
-              <li>Histología Medica y Biología celular</li>
-              <li>Integración Básico Clínica I</li>
-              <li>Metodología de Investigación I</li>
-              <li>Salud Publica e Interculturalidad</li>
+              <li *ngFor="let item of materiasUser">{{ item | json }}</li>
             </ul>
+            <!-- {{materiasUser|json}} -->
           </div>
           <div class="w-6 md:w-2 flex justify-content-end">
             <button
@@ -169,9 +165,15 @@
   </div>
 </div>
 
-<div class="surface-section px-3 py-3 md:px-6 md:py-5 lg:px-8 ">
-  <div class="grid text-center scalein animation-ease-in-out animation-duration-500">
-    <div class="col-6 md:col-3 mb-4 px-3" *ngIf="roluser == 'estudiante'" (click)="modal= true">
+<div class="surface-section px-3 py-3 md:px-6 md:py-5 lg:px-8">
+  <div
+    class="grid text-center scalein animation-ease-in-out animation-duration-500"
+  >
+    <div
+      class="col-6 md:col-3 mb-4 px-3"
+      *ngIf="roluser == 'estudiante'"
+      (click)="cargarCalificaciones()"
+    >
       <span
         class="p-3 shadow-2 mb-3 inline-block surface-card"
         style="border-radius: 10px"
@@ -183,8 +185,12 @@
         >Mira tus calificaciones obteniadas</span
       >
     </div>
-    
-    <div class="col-6 md:col-3 mb-4 px-3 cursor-pointer" (click)="modal= true" *ngIf="roluser == 'estudiante'" >
+
+    <div
+      class="col-6 md:col-3 mb-4 px-3 cursor-pointer"
+      (click)="modal = true"
+      *ngIf="roluser == 'estudiante'"
+    >
       <span
         class="p-3 shadow-2 mb-3 inline-block surface-card"
         style="border-radius: 10px"
@@ -210,7 +216,11 @@
       <div class="text-900 text-xl mb-3 font-medium">Horario</div>
       <span class="text-700 line-height-3">Mira tus materias y horario</span>
     </div>
-    <div class="col-6 md:col-3 mb-4 px-3 cursor-pointer" (click)="modal= true" *ngIf="roluser == 'estudiante'">
+    <div
+      class="col-6 md:col-3 mb-4 px-3 cursor-pointer"
+      (click)="modal = true"
+      *ngIf="roluser == 'estudiante'"
+    >
       <span
         class="p-3 shadow-2 mb-3 inline-block surface-card"
         style="border-radius: 10px"
@@ -237,7 +247,11 @@
         >Vea y califique sus asignaturas</span
       >
     </div>
-    <div class="col-6 md:col-3 mb-4 px-3" *ngIf="roluser == 'estudiante'" (click)="modal= true">
+    <div
+      class="col-6 md:col-3 mb-4 px-3"
+      *ngIf="roluser == 'estudiante'"
+      (click)="modal = true"
+    >
       <span
         class="p-3 shadow-2 mb-3 inline-block surface-card"
         style="border-radius: 10px"
@@ -245,11 +259,13 @@
         <i class="pi pi-check-circle text-4xl text-blue-500"></i>
       </span>
       <div class="text-900 text-xl mb-2 font-medium">Reportes Estudiante</div>
-      <span class="text-700 line-height-"
-        >Descargar tus reportes</span
-      >
+      <span class="text-700 line-height-">Descargar tus reportes</span>
     </div>
-    <div class="col-6 md:col-3 mb-4 px-3" *ngIf="roluser == 'docente'" (click)="modal= true">
+    <div
+      class="col-6 md:col-3 mb-4 px-3"
+      *ngIf="roluser == 'docente'"
+      (click)="modal = true"
+    >
       <span
         class="p-3 shadow-2 mb-3 inline-block surface-card"
         style="border-radius: 10px"
@@ -257,25 +273,85 @@
         <i class="pi pi-check-circle text-4xl text-blue-500"></i>
       </span>
       <div class="text-900 text-xl mb-2 font-medium">Reportes Docente</div>
-      <span class="text-700 line-height-"
-        >Descargar tus reportes</span
-      >
+      <span class="text-700 line-height-">Descargar tus reportes</span>
     </div>
   </div>
 </div>
 
+<p-dialog
+  header="Header"
+  [(visible)]="modal"
+  [style]="{ width: '80vw' }"
+  [maximizable]="true"
+  position="top"
+  [modal]="true"
+>
+  <ng-template pTemplate="header">
+    <span class="text-xl font-bold">Calificaciones</span>
+  </ng-template>
+  <p-table
+    #dt1
+    [value]="calificacionesEstudiante"
+    [tableStyle]="{ 'min-width': '60rem' }"
+    [globalFilterFields]="[
+      'calificacion.asignatura.nombre',
+      'calificacion.descripcion'
+    ]"
+  >
+    <ng-template pTemplate="caption">
+      <div class="flex ">
+        
+        <span class="p-input-icon-left ">
+          <i class="pi pi-search"></i>
+          <input
+            pInputText
+            type="text"
+            (input)="dt1.filterGlobal(getEventValue($event), 'contains')"
+            placeholder="Buscar"
+          />
+        </span>
 
-<p-dialog header="Header" [(visible)]="modal" [style]="{ width: '80vw' }"  [maximizable]="true" position="top" [modal]="true">
+        <button
+          pButton
+          label="Limpiar"
+          class="p-button-outlined ml-auto"
+          icon="pi pi-filter-slash"
+          (click)="clear(dt1)"
+        ></button>
+      </div>
+    </ng-template>
     <ng-template pTemplate="header">
-        <span class="text-xl font-bold">Header Content</span>
+      <tr>
+        <th pSortableColumn="calificacion.asignatura.nombre" style="width: 20%">
+          Asignatura
+          <p-sortIcon field="calificacion.asignatura.nombre"></p-sortIcon>
+        </th>
+        <th pSortableColumn="calificacion.descripcion" style="width: 20%">
+          Descripcion <p-sortIcon field="calificacion.descripcion"></p-sortIcon>
+        </th>
+        <th style="width: 20%">Calificacion</th>
+      </tr>
     </ng-template>
-    <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    </p>
-    <ng-template pTemplate="footer">
-        <p-button icon="pi pi-check" (click)="modal = false" label="Ok" styleClass="p-button-text"></p-button>
-    </ng-template>
+    <ng-template pTemplate="body" let-product>
+      <tr>
+        <td>{{ product.calificacion.asignatura.nombre }}</td>
+        <td>{{ product.calificacion.descripcion }}</td>
+        <td>
+          {{
+            product.calificacionObtenida + "/" + product.calificacion.puntaje
+          }}
+        </td>
+      </tr></ng-template
+    >
+  </p-table>
+  <ng-template pTemplate="footer">
+    <p-button
+      icon="pi pi-check"
+      (click)="modal = false"
+      label="Ok"
+      styleClass="p-button-text"
+    ></p-button>
+  </ng-template>
 </p-dialog>
 
-<app-reportes></app-reportes>
+<!-- <app-reportes></app-reportes> -->
