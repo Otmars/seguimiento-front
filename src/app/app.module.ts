@@ -69,6 +69,7 @@ import { MateriasDocenteComponent } from './materias-docente/materias-docente.co
 import { DetalleAsignaturaComponent } from './detalle-asignatura/detalle-asignatura.component';
 import { HorarioComponent } from './horario/horario.component';
 import { PickListModule } from 'primeng/picklist';
+import { TagModule } from 'primeng/tag';
 import { AsignaturaCompetenciaComponent } from './asignatura-competencia/asignatura-competencia.component';
 import { InscripcionComponent } from './inscripcion/inscripcion.component';
 registerLocaleData(localeMX)
@@ -139,6 +140,7 @@ import { ReportesComponent } from './reportes/reportes.component';
     DataViewModule,
     FullCalendarModule,
     PickListModule,
+    TagModule
   ],
   providers: [
     {provide:LocationStrategy,useClass:HashLocationStrategy},

@@ -8,19 +8,30 @@ import { Table } from 'primeng/table';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
+  modalCompetencias: boolean;
+  dataCompetencias: any
+modalReportes: boolean;
+  showCompentecias() {
+    this.modalCompetencias = true;
+    this.homeService.cargarCompetenciaEstudiantes(this.iduser).subscribe(res=>{
+     
+      this.dataCompetencias=res
+    })
+  }
   cargarCalificaciones() {
     this.homeService
       .cargarCalificacionesEstudiante(this.iduser)
       .subscribe((res) => {
-        this.calificacionesEstudiante=res
+        this.calificacionesEstudiante = res;
       });
-    this.modal = true;
+    this.modalAsignatura = true;
   }
   clear(table: Table) {
     table.clear();
-}getEventValue($event:any) :string {
-  return $event.target.value;
-} 
+  }
+  getEventValue($event: any): string {
+    return $event.target.value;
+  }
   constructor(private homeService: HomeService) {}
   perfilModal: boolean;
   showmodalOtros() {}
@@ -28,9 +39,9 @@ export class HomeComponent implements OnInit {
     this.perfilModal = true;
     console.log(this.materiasUser);
   }
-  calificacionesEstudiante: any
+  calificacionesEstudiante: any;
   materiasUser: string[] = [];
-  modal: boolean = false;
+  modalAsignatura: boolean = false;
   saludo!: string;
   nombreusuario!: string;
   estadomenu!: boolean;

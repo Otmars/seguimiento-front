@@ -188,7 +188,7 @@
 
     <div
       class="col-6 md:col-3 mb-4 px-3 cursor-pointer"
-      (click)="modal = true"
+      (click)="showCompentecias()"
       *ngIf="roluser == 'estudiante'"
     >
       <span
@@ -218,7 +218,6 @@
     </div>
     <div
       class="col-6 md:col-3 mb-4 px-3 cursor-pointer"
-      (click)="modal = true"
       *ngIf="roluser == 'estudiante'"
     >
       <span
@@ -250,7 +249,7 @@
     <div
       class="col-6 md:col-3 mb-4 px-3"
       *ngIf="roluser == 'estudiante'"
-      (click)="modal = true"
+
     >
       <span
         class="p-3 shadow-2 mb-3 inline-block surface-card"
@@ -264,7 +263,7 @@
     <div
       class="col-6 md:col-3 mb-4 px-3"
       *ngIf="roluser == 'docente'"
-      (click)="modal = true"
+      (click)="modalReportes=true"  
     >
       <span
         class="p-3 shadow-2 mb-3 inline-block surface-card"
@@ -275,12 +274,26 @@
       <div class="text-900 text-xl mb-2 font-medium">Reportes Docente</div>
       <span class="text-700 line-height-">Descargar tus reportes</span>
     </div>
+    <div
+      class="col-6 md:col-3 mb-4 px-3"
+      *ngIf="roluser == 'docente'"
+      (click)="modalReportes=true"  
+    >
+      <span
+        class="p-3 shadow-2 mb-3 inline-block surface-card"
+        style="border-radius: 10px"
+      >
+        <i class="pi pi-sign-out text-4xl text-blue-500"></i>
+      </span>
+      <div class="text-900 text-xl mb-2 font-medium">Salir</div>
+      <span class="text-700 line-height-">Cerrar Sesion</span>
+    </div>
   </div>
 </div>
 
 <p-dialog
   header="Header"
-  [(visible)]="modal"
+  [(visible)]="modalAsignatura"
   [style]="{ width: '80vw' }"
   [maximizable]="true"
   position="top"
@@ -347,11 +360,97 @@
   <ng-template pTemplate="footer">
     <p-button
       icon="pi pi-check"
-      (click)="modal = false"
+      (click)="modalAsignatura = false"
       label="Ok"
       styleClass="p-button-text"
     ></p-button>
   </ng-template>
 </p-dialog>
 
+
+<p-dialog
+  header="Header"
+  [(visible)]="modalCompetencias"
+  [style]="{ width: '80vw' }"
+  [maximizable]="true"
+  position="top"
+  [modal]="true"
+>
+  <ng-template pTemplate="header">
+    <span class="text-xl font-bold">Competencias Adquiridas</span>
+    <!-- <p> {{dataCompetencias|json}} </p> -->
+  </ng-template>
+  <p-table
+    #dtCom
+    [value]="dataCompetencias"
+    [tableStyle]="{ 'min-width': '60rem' }"
+    [globalFilterFields]="[
+      'asi_nombre','c_descripcion'
+    ]"
+  >
+    <ng-template pTemplate="caption">
+      <div class="flex ">
+        
+        <span class="p-input-icon-left ">
+          <i class="pi pi-search"></i>
+          <input
+            pInputText
+            type="text"
+            (input)="dtCom.filterGlobal(getEventValue($event), 'contains')"
+            placeholder="Buscar"
+          />
+        </span>
+
+        <button
+          pButton
+          label="Limpiar"
+          class="p-button-outlined ml-auto"
+          icon="pi pi-filter-slash"
+          (click)="clear(dtCom)"
+        ></button>
+      </div>
+    </ng-template>
+    
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="asi_nombre" style="width: 20%">
+          Asignatura
+          <p-sortIcon field="asi_nombre"></p-sortIcon>
+        </th>
+        <th pSortableColumn="c_descripcion" style="width: 20%">
+          Competencia<p-sortIcon field="c_descripcion"></p-sortIcon>
+        </th>
+        <th style="width: 20%">Tipo Competencia</th>
+        <th style="width: 20%">Estado</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-product>
+      <tr>
+        
+        <td>{{ product.asi_nombre}}</td>
+        <td>{{ product.c_descripcion}}</td>
+        <td>{{ product.c_tipoCompetencia}}</td>
+        <td><p-tag severity="success" value="Adquirida"></p-tag></td>
+        <!-- <td>{{ product.calificacion.descripcion }}</td> -->
+        <!-- <td>
+          {{
+            product.calificacionObtenida + "/" + product.calificacion.puntaje
+          }}
+        </td> -->
+      </tr></ng-template
+    >
+  </p-table>
+  <ng-template pTemplate="footer">
+    <p-button
+      icon="pi pi-check"
+      (click)="modalCompetencias = false"
+      label="Ok"
+      styleClass="p-button-text"
+    ></p-button>
+  </ng-template>
+</p-dialog>
+
+<p-dialog header="Reportes" [(visible)]="modalReportes" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
+<app-reportes ></app-reportes>
+</p-dialog>
 <!-- <app-reportes></app-reportes> -->

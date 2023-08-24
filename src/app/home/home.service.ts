@@ -17,4 +17,8 @@ export class HomeService {
   cargarCalificacionesEstudiante(id:string){
     return this.http.get(this.url+"calificacion/all_estudiante/"+id)
   }
+
+  cargarCompetenciaEstudiantes(id:string){
+    return this.http.get(this.url+"estudiante/competencia/"+id)
+  }
 }

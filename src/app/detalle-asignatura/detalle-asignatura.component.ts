@@ -194,7 +194,7 @@ export class DetalleAsignaturaComponent implements OnInit {
     this.cargarCompetenciasmateria();
     this.dialogCompetencia = true;
     this.detalleAsignaturaService
-      .getcompetenciasEstudiante(dato.id)
+      .getcompetenciasEstudiante(dato.id,{asignaturaid:this.id})
       .subscribe((res) => {
         this.competenciaEstudiante = res;
         for (let i = 0; i < this.competenciaEstudiante.length; i++) {
