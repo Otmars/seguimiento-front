@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import decode from 'jwt-decode';
 import { HomeService } from './home.service';
 import { Table } from 'primeng/table';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -32,7 +33,7 @@ modalReportes: boolean;
   getEventValue($event: any): string {
     return $event.target.value;
   }
-  constructor(private homeService: HomeService) {}
+  constructor(private homeService: HomeService,private router:Router) {}
   perfilModal: boolean;
   showmodalOtros() {}
   showModalPerfil() {
@@ -108,4 +109,8 @@ modalReportes: boolean;
     if (menu == false) this.menuLateral = true;
     if (menu == true) this.menuLateral = false;
   }
+  cerrarSesion() {
+    localStorage.removeItem('token')
+    this.router.navigate(['login'])
+    }
 }

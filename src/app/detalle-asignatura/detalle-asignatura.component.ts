@@ -251,4 +251,5 @@ export class DetalleAsignaturaComponent implements OnInit {
         this.calificacionestudiante = res;
       });
   }
+  
 }
