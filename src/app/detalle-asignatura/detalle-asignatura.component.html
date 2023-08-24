@@ -7,15 +7,18 @@
         <li> {{item.nombre}}</li>
       </ul> -->
 
-  <div class="flex m-2">
+  <div class="flex flex-row md:flex-row m-2">
     <p-button
       label="Administrar Parciales"
+      class="flex my-2 px-2"
       (click)="showParcialesDialog()"
+      styleClass="p-button-sm"
     ></p-button>
     <p-button
       label="Administrar Practicas"
-      class="mx-2"
+      class="flex my-2 md:mx-2 "
       (click)="showPracticasDialog()"
+      styleClass="p-button-sm"
     ></p-button>
   </div>
   <p-dataView #dv [value]="estudiantes" >
@@ -224,7 +227,7 @@
         >
       </div>
       <div
-        class="flex flex-column align-items-center justify-content-start mx-2"
+        class="flex flex-column align-items-center justify-content-start mx-2 my-5 md:my-0"
       >
         <span class="p-float-label">
           <p-inputNumber
@@ -257,7 +260,7 @@
       </div>
       <div class="flex flex-column align-items-end justify-content-start">
         <p-button
-          label="Submit"
+          label="Enviar"
           icon="pi pi-check"
           iconPos="right"
           [disabled]="!formCalificacionPractica.valid"
@@ -266,12 +269,12 @@
       </div>
     </div>
   </form>
-  {{ formCalificacionPractica.valid }}
+  <!-- {{ formCalificacionPractica.valid }} -->
   <ng-template pTemplate="footer">
     <p-button
       icon="pi pi-check"
       (click)="dialogPractica = false"
-      label="Close"
+      label="Cerrar"
       styleClass="p-button-text"
     ></p-button>
   </ng-template>
@@ -280,7 +283,8 @@
 <p-dialog
   header="Header"
   [(visible)]="dialogParcial"
-  [style]="{ width: '90vw' }"
+  [style]="{ width: '90vw',height:'80vh' }"
+  
 >
   <ng-template pTemplate="header">
     <span class="text-xl font-bold">Administrar Parciales</span>
@@ -288,7 +292,7 @@
 
   <p-table
     [value]="listaCalificacionesParciales"
-    [tableStyle]="{ 'min-width': '50rem' }"
+    [tableStyle]="{ 'min-width': '30rem' }"
   >
     <ng-template pTemplate="header">
       <tr>
@@ -329,7 +333,7 @@
         >
       </div>
       <div
-        class="flex flex-column align-items-center justify-content-start mx-2"
+        class="flex flex-column align-items-center justify-content-start mx-2 my-5 md:my-0"
       >
         <span class="p-float-label">
           <p-inputNumber
@@ -362,7 +366,7 @@
       </div>
       <div class="flex flex-column align-items-end justify-content-start">
         <p-button
-          label="Submit"
+          label="Enviar"
           icon="pi pi-check"
           iconPos="right"
           [disabled]="!formCalificacionParciales.valid"
@@ -371,12 +375,12 @@
       </div>
     </div>
   </form>
-  {{ formCalificacionParciales.valid }}
+  <!-- {{ formCalificacionParciales.valid }} -->
   <ng-template pTemplate="footer">
     <p-button
       icon="pi pi-check"
       (click)="dialogParcial = false"
-      label="Close"
+      label="Cerrar"
       styleClass="p-button-text"
     ></p-button>
   </ng-template>
@@ -385,7 +389,7 @@
 <p-dialog
   header="Header"
   [(visible)]="dialogCalificar"
-  [style]="{ width: '80vw' }"
+  [style]="{ width: '90vw',height:'80vh' }"
 >
   <ng-template pTemplate="header">
     <span class="text-xl font-bold">Calificar Estudiante</span>
@@ -437,9 +441,11 @@
   header="Calificando estudiante"
   [(visible)]="dialogCalificando"
   [style]="{ width: '40vw' }"
+  [breakpoints]="{ '960px': '75vw' }"
+  [modal]="true"
 >
   <div class="flex flex-row flex-wrap card-container blue-container">
-    {{ calificado.valid }}
+    <!-- {{ calificado.valid }} -->
     <div class="flex align-items-center justify-content-center m-2">
       <p-inputNumber
         [formControl]="calificado"
