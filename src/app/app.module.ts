@@ -1,4 +1,4 @@
-import { LOCALE_ID, NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -75,6 +75,7 @@ import { InscripcionComponent } from './inscripcion/inscripcion.component';
 registerLocaleData(localeMX)
 import { SpeedDialModule } from 'primeng/speeddial';
 import { ReportesComponent } from './reportes/reportes.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
 @NgModule({
   declarations: [
     AppComponent,
@@ -140,7 +141,13 @@ import { ReportesComponent } from './reportes/reportes.component';
     DataViewModule,
     FullCalendarModule,
     PickListModule,
-    TagModule
+    TagModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    })
   ],
   providers: [
     {provide:LocationStrategy,useClass:HashLocationStrategy},
