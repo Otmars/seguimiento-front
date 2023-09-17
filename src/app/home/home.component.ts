@@ -12,6 +12,9 @@ export class HomeComponent implements OnInit {
   modalCompetencias: boolean;
   dataCompetencias: any
 modalReportes: boolean;
+changepasswordModal: boolean ;
+oldpass: string;
+newpass: string;
   showCompentecias() {
     this.modalCompetencias = true;
     this.homeService.cargarCompetenciaEstudiantes(this.iduser).subscribe(res=>{
@@ -112,5 +115,17 @@ modalReportes: boolean;
   cerrarSesion() {
     localStorage.removeItem('token')
     this.router.navigate(['login'])
+    }
+
+    changePass(){
+      this.homeService.cambiarContraseña({
+        id: this.iduser,
+        password: this.oldpass,
+        newpassword:this.newpass
+      }).subscribe(res=>{
+        console.log(res);
+        
+      })
+      this.changepasswordModal=false
     }
 }

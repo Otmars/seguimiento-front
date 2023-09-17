@@ -174,17 +174,21 @@ export class DetalleAsignaturaComponent implements OnInit {
       });
   }
   guardarComptencias() {
-    console.log(this.competenciaEstudiante);
-    console.log('***', this.idEstududiante);
+    // console.log(this.competenciaEstudiante);
+    // console.log('***', this.idEstududiante);
     for (let i = 0; i < this.competenciaEstudiante.length; i++) {
       console.log(this.competenciaEstudiante[i]);
       if (this.competenciaEstudiante[i].asignaturaCompetenciaId) {
-        console.log('true');
-        this.detalleAsignaturaService.guardarComptenciaEstudiante({
-            competenciaId: this.competenciaEstudiante[i].competenciaId,
+        // console.log('true');
+        this.detalleAsignaturaService
+          .guardarComptenciaEstudiante({
+            competenciaAsignaturaCompetenciaId:this.competenciaEstudiante[i].asignaturaCompetenciaId,
             estudianteId: this.idEstududiante,
           })
           .subscribe((res) => console.log(res));
+          console.log({competenciaAsignaturaCompetenciaId:this.competenciaEstudiante[i].competenciaId,
+            estudianteId: this.idEstududiante,});
+          
       }
     }
   }
@@ -194,22 +198,27 @@ export class DetalleAsignaturaComponent implements OnInit {
     this.cargarCompetenciasmateria();
     this.dialogCompetencia = true;
     this.detalleAsignaturaService
-      .getcompetenciasEstudiante(dato.id,{asignaturaid:this.id})
+      .getcompetenciasEstudiante(dato.id, { asignaturaid: this.id })
       .subscribe((res) => {
         this.competenciaEstudiante = res;
         for (let i = 0; i < this.competenciaEstudiante.length; i++) {
-          console.log(this.competenciaEstudiante[i].competencia.id);
           for (let j = 0; j < this.competenciaAsignatura.length; j++) {
             if (
-              this.competenciaEstudiante[i].competencia.id ==
-              this.competenciaAsignatura[j].competencia.id
+              this.competenciaEstudiante[i].competencia
+                .asignaturaCompetenciaId ==
+              this.competenciaAsignatura[j].asignaturaCompetenciaId
             ) {
               this.competenciaAsignatura.splice(j, 1);
             }
           }
+          this.targetCompetenciaEstudiante.push(
+            this.competenciaEstudiante[i].competencia
+          );
         }
+        this.competenciaEstudiante = this.targetCompetenciaEstudiante;
       });
   }
+  targetCompetenciaEstudiante: any = [];
   competenciaEstudiante: any = [];
   restoCompetencias: any = [];
   cargarDatosAsignatura() {
@@ -251,5 +260,9 @@ export class DetalleAsignaturaComponent implements OnInit {
         this.calificacionestudiante = res;
       });
   }
-  
+  SacarDatosTarget(datos: any) {
+    console.log('DATOS ENTRANTES ->>>>>>>', datos);
+
+    return datos;
+  }
 }

@@ -21,4 +21,8 @@ export class HomeService {
   cargarCompetenciaEstudiantes(id:string){
     return this.http.get(this.url+"estudiante/competencia/"+id)
   }
+
+  cambiarContraseña(body:any){
+    return this.http.post(this.url+'user/changepass',body)
+  }
 }
