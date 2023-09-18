@@ -218,7 +218,7 @@ asociarCompetencia(dato : any) {
       cargaHoraria: dato.cargaHoraria,
       nMeses:     dato.nMeses,
       paralelo:   dato.paralelo,
-      docente:   dato.docente.id,
+      docente:   this.isnullid(dato),
     })
     this.editar = true
     this.productDialog = true;
@@ -238,5 +238,18 @@ asociarCompetencia(dato : any) {
         life: 3000,
       });
     })
+  }
+  isnull(dato:any){
+    if (dato == null) {
+      return "Docente no registrado"
+    }
+    return dato.iduser.nombres
+  }
+  isnullid(dato:any){
+    if (dato.docente == null) {
+      console.log("aqui");
+      return ""
+    }
+    return dato.docente.id
   }
 }

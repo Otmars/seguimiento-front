@@ -349,7 +349,7 @@
         <td><span class="p-column-title">Paralelo</span>{{ dato.paralelo }}</td>
         <td>
           <span class="p-column-title">Docente</span
-          >{{ dato.docente.iduser.nombres }}
+          >{{ isnull (dato.docente) }}
         </td>
         <td>
           <span class="p-column-title">N° Meses</span

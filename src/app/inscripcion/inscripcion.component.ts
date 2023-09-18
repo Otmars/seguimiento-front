@@ -3,6 +3,7 @@ import { InscripcionService } from './inscripcion.service';
 import { EstudianteService } from '../estudiante/estudiante.service';
 import { MateriaService } from '../materia/materia.service';
 import { Subscription } from 'rxjs';
+import { Table } from 'primeng/table';
 
 @Component({
   selector: 'app-inscripcion',
@@ -86,5 +87,11 @@ export class InscripcionComponent implements OnInit {
       ' ' +
       dato.iduser.apellidoMaterno;
     return nombreCompleto;
+  }
+  clear(table: Table) {
+    table.clear();
+  }
+  getEventValue($event: any): string {
+    return $event.target.value;
   }
 }

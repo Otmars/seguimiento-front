@@ -8,10 +8,39 @@
   </div>
   <div class="m-2">
     <p-table
+      #dtinscripcion
       [value]="datos"
       dataKey="id"
       [tableStyle]="{ 'min-width': '10rem' }"
+      [paginator]="true"
+      [rows]="5"
+      [showCurrentPageReport]="true"
+      currentPageReportTemplate="Mostrando del {first} al {last} de {totalRecords} entries"
+      [rowsPerPageOptions]="[5, 10, 25, 50]"
+      [globalFilterFields]="['iduser.nombres','iduser.ci']"
     >
+      <ng-template pTemplate="caption">
+        <div class="flex justify-content-end flex-wrap">
+          <button
+            pButton
+            label=""
+            class="p-button-outlined"
+            icon="pi pi-filter-slash"
+            (click)="clear(dtinscripcion)"
+          ></button>
+          <span class="p-input-icon-left mx-2">
+            <i class="pi pi-search"></i>
+            <input
+              pInputText
+              type="text"
+              (input)="
+                dtinscripcion.filterGlobal(getEventValue($event), 'contains')
+              "
+              placeholder="Search keyword"
+            />
+          </span>
+        </div>
+      </ng-template>
       <ng-template pTemplate="header">
         <tr>
           <th style="width: 5rem"></th>
@@ -19,6 +48,9 @@
             Nombre Completo <p-sortIcon field="iduser.nombres"></p-sortIcon>
           </th>
           <th>C.I.</th>
+          <th pSortableColumn="id">
+            Id <p-sortIcon field="iduser.nombres"></p-sortIcon>
+          </th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-estudiante let-expanded="expanded">
@@ -43,6 +75,7 @@
             }}
           </td>
           <td>{{ estudiante.iduser.ci }}</td>
+          <td>{{ estudiante.id }}</td>
         </tr>
       </ng-template>
       <ng-template pTemplate="rowexpansion" let-dato>
@@ -65,11 +98,13 @@
                     <td>{{ materia.asignatura.nombre }}</td>
                     <td>{{ materia.asignatura.siglaCodigo }}</td>
                     <td>{{ materia.asignatura.paralelo }}</td>
-                    <td><p-button
-                      styleClass="p-button-outlined p-button-danger m-1 py-1 "
-                      icon="pi pi-trash"
-                      (click)="retirarMateria(materia)"
-                    ></p-button></td>
+                    <td>
+                      <p-button
+                        styleClass="p-button-outlined p-button-danger m-1 py-1 "
+                        icon="pi pi-trash"
+                        (click)="retirarMateria(materia)"
+                      ></p-button>
+                    </td>
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="emptymessage">
@@ -106,7 +141,7 @@
     filterBy="iduser.nombres,iduser.apellidoPaterno,iduser.apellidoMaterno,iduser.ci"
     [showClear]="true"
     placeholder="Seleccione un estudiante"
-   styleClass="w-11 m-3"
+    styleClass="w-11 m-3"
   >
     <ng-template pTemplate="selectedItem">
       <div class="flex align-items-center gap-2" *ngIf="selectedEstudiante">
@@ -120,9 +155,14 @@
           estudiante.iduser.apellidoPaterno +
           " " +
           estudiante.iduser.apellidoMaterno }}</div> -->
-          <tr><td>{{estudiante.iduser.ci}}</td> {{getnombrecompleto(estudiante)}}<td></td></tr>
+        <tr>
+          <td>{{ estudiante.iduser.ci }}</td>
+          {{
+            getnombrecompleto(estudiante)
+          }}
+          <td></td>
+        </tr>
       </div>
-      
     </ng-template>
   </p-dropdown>
 
@@ -144,10 +184,13 @@
     <ng-template let-asignatura pTemplate="item">
       <div class="flex flex-wrap p-2 align-items-center gap-3">
         <div class="flex-1 flex flex-column gap-2">
-          <span class="font-light">{{ asignatura.nombre }}</span>
+          <div>
+            <span class="font-light">{{ asignatura.nombre }}</span>
+            <span class="font-bold px-3">{{ asignatura.paralelo }}</span>
+          </div>
           <div class="flex align-items-center gap-2">
             <i class="pi pi-flag text-sm"></i>
-            <span>{{ "MED-"+asignatura.siglaCodigo }}</span>
+            <span>{{ "MED-" + asignatura.siglaCodigo }}</span>
           </div>
         </div>
       </div>
