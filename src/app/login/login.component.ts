@@ -53,8 +53,8 @@ export class LoginComponent implements OnInit {
   }
   initForm(): FormGroup {
     return this.fb.group({
-      username: ['Otmar_9991405', [Validators.required]],
-      password: ['10-02-1998', [Validators.required]],
+      username: ['', [Validators.required]],
+      password: ['', [Validators.required]],
       remember: [true],
     });
   }

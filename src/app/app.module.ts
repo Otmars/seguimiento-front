@@ -1,7 +1,7 @@
 import { LOCALE_ID, NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ButtonModule } from 'primeng/button';
@@ -76,6 +76,7 @@ registerLocaleData(localeMX)
 import { SpeedDialModule } from 'primeng/speeddial';
 import { ReportesComponent } from './reportes/reportes.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { JwtInterceptorInterceptor } from './jwt-interceptor.interceptor';
 @NgModule({
   declarations: [
     AppComponent,
@@ -157,7 +158,12 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     MessageService,
     ConfirmationService,
     JwtHelperService,
-    {provide:LOCALE_ID , useValue: 'es-BO'}
+    {provide:LOCALE_ID , useValue: 'es-BO'},
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptorInterceptor,
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent],
 })

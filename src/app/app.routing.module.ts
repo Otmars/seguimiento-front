@@ -15,21 +15,24 @@ import { DetalleAsignaturaComponent } from "./detalle-asignatura/detalle-asignat
 import { HorarioComponent } from "./horario/horario.component";
 import { AsignaturaCompetenciaComponent } from "./asignatura-competencia/asignatura-competencia.component";
 import { InscripcionComponent } from "./inscripcion/inscripcion.component";
+import { DashboardComponent } from "./admin/dashboard/dashboard.component";
+
 const routes: Routes=[
     { path:'', redirectTo: '/login', pathMatch:'full'},
     {path:'home', component:HomeComponent,canActivate:[AuthGuard]},
-    {path:'estudiante', component:EstudianteComponent},
-    {path:'asignatura', component:MateriaComponent},
-    {path:'competencia', component:CompetenciasComponent},
-    {path:'seguimiento', component:SegimientoEstudianteComponent,canActivate:[RoleGuard], data:{expectedRole:'docente'}},
+    {path:'estudiante', component:EstudianteComponent,canActivate:[RoleGuard,AuthGuard], data:{expectedRole:'admin'}},
+    {path:'asignatura', component:MateriaComponent,canActivate:[RoleGuard,AuthGuard], data:{expectedRole:'admin'}},
+    {path:'competencia', component:CompetenciasComponent,canActivate:[RoleGuard,AuthGuard], data:{expectedRole:'admin'}},
+    // {path:'seguimiento', component:SegimientoEstudianteComponent,canActivate:[RoleGuard], data:{expectedRole:'docente'}},
     {path:'login', component:LoginComponent},
-    {path:'docente', component:DocenteComponent},
+    {path:'docente', component:DocenteComponent,canActivate:[RoleGuard,AuthGuard], data:{expectedRole:'admin'}},
     {path:'menu',component:MenuLateralComponent},
-    {path:'asignatura-docentes',component:MateriasDocenteComponent},
-    {path: 'detalle-asignatura', component: DetalleAsignaturaComponent},
+    {path:'asignatura-docentes',component:MateriasDocenteComponent,canActivate:[RoleGuard,AuthGuard], data:{expectedRole:'docente'}},
+    {path: 'detalle-asignatura', component: DetalleAsignaturaComponent ,canActivate:[RoleGuard,AuthGuard], data:{expectedRole:'docente'}},
     {path: 'horario', component:HorarioComponent},
-    {path : 'asignatura-competencia', component:AsignaturaCompetenciaComponent},
-    {path : 'inscripcion', component: InscripcionComponent}
+    // {path : 'asignatura-competencia', component:AsignaturaCompetenciaComponent},
+    {path : 'inscripcion', component: InscripcionComponent,canActivate:[RoleGuard,AuthGuard], data:{expectedRole:'admin'}},
+    {path:'admin',component:DashboardComponent,canActivate:[RoleGuard,AuthGuard], data:{expectedRole:'admin'}},
 ]
 
 @NgModule({
