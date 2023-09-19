@@ -133,41 +133,31 @@
     [ngClass]="{ hidden: menuLateral }"
   ></app-menu-lateral>
 </div>
-<!-- <div class="bloque">
-    <div class="flex flex-row align-content-around justify-content-center w-full mb-2">
-        <p class="text-center text-6xl font-semibold">Bienvenido al sistema de Control</p>
-    </div>
-    <div class="flex align-items-center align-content-center">
-        <div class=" flex align-items-center px-4">
-            <app-cards></app-cards>
-        </div>
-        <div class=" flex align-items-center">
-        </div>
-</div> -->
+<div class="flex flex-column">
 <div class="fondo1">
   <div class="flex justify-content-between flex-wrap text-xl p-4">
     <div class="flex align-items-center m-2">
       <i
-        class="pi pi-bars text-xl button-menu cursor-pointer"
+        class="pi pi-bars text-xl button-menu cursor-pointer text-blue-50"
         (click)="clickMenu()"
       ></i>
     </div>
-    <div class="flex align-items-center font-bold text-xl">
+    <div class="flex align-items-center font-bold text-xl text-blue-50">
       <span class="">{{ this.saludo }} </span>
 
       <span class="pl-1 text-primary">{{ this.nombreusuario }}</span>
     </div>
     <div class="flex align-items-center m-2">
       <i
-        class="pi pi-user text-xl cursor-pointer"
+        class="pi pi-user text-xl cursor-pointer text-blue-50"
         (click)="showModalPerfil()"
       ></i>
     </div>
   </div>
   <div class="flex">
-    <div class="col-6 px-3 text-center">
-      <h2 class="text-600">Feliz dia!</h2>
-      <h3 class="text-600">Revisa tu progreso academico</h3>
+    <div class="col-6 px-3 md:text-center">
+      <h2 class="text-0">Feliz dia!</h2>
+      <h3 class="text-900">Revisa tu progreso academico</h3>
     </div>
     <div class="col-6">
       <object
@@ -179,7 +169,7 @@
   </div>
 </div>
 
-<div class="surface-section px-3 py-3 md:px-6 md:py-5 lg:px-8">
+<div class="surface-section px-3 py-3 md:px-6 md:py-5 lg:px-8 fondo3">
   <div
     class="grid text-center scalein animation-ease-in-out animation-duration-500"
   >
@@ -320,7 +310,7 @@
     </div>
   </div>
 </div>
-
+</div>
 <p-dialog
   header="Header"
   [(visible)]="modalAsignatura"

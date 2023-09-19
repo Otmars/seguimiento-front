@@ -5,13 +5,14 @@
 }
 
 .fondo1 {
-  color: whitesmoke;
+  /* color: whitesmoke;
   background-image: radial-gradient(
     circle farthest-corner at 10% 20%,
     rgba(97, 186, 255, 1) 0%,
     rgba(166, 239, 253, 1) 90.1%
-  );
+  ); */
   height: 35vh;
+  max-height: 35vh;
 }
 
 .fondo2{
@@ -19,5 +20,9 @@
   /* background-color: aquamarine; */
   color: antiquewhite;
   margin: -10px;
+}
+.fondo3{
+  height: 65vh;
+  overflow: hidden;
 }
 
