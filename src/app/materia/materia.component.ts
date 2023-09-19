@@ -136,7 +136,7 @@ asociarCompetencia(dato : any) {
     return this.fb.group({
       id: [''],
       nombre:      ['',[Validators.required,Validators.minLength(7)]],
-      siglaCodigo: [,[Validators.required,,Validators.minLength(7)]],
+      siglaCodigo: [,[Validators.required]],
       cargaHoraria:[,[Validators.required]],
       nMeses:      [,[Validators.required]],
       paralelo:    ['',[Validators.required]],

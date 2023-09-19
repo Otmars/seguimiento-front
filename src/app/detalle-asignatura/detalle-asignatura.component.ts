@@ -129,7 +129,7 @@ export class DetalleAsignaturaComponent implements OnInit {
 
   ngOnInit() {
     this.cargarDatosAsignatura();
-
+    this.cargarCompetenciasmateria();
     this.cargarDatos();
     this.messages = [{ severity: 'error', summary: 'Campo Obligatorio' }];
     this.tiposCa = [
@@ -191,13 +191,22 @@ export class DetalleAsignaturaComponent implements OnInit {
           
       }
     }
+    this.dialogCompetencia= false
+  }
+  cerrardialogCompetencias(){
+    this.dialogCompetencia=false
+    this.competenciaEstudiante=[]
+    this.competenciaAsignatura=[]
+    this.targetCompetenciaEstudiante=[]
+    this.cargarCompetenciasmateria();
   }
   idEstududiante: number;
-  showCompetenciaDialog(dato: any) {
+  async showCompetenciaDialog(dato: any) {
+    
     this.idEstududiante = dato.id;
-    this.cargarCompetenciasmateria();
+    
     this.dialogCompetencia = true;
-    this.detalleAsignaturaService
+    await this.detalleAsignaturaService
       .getcompetenciasEstudiante(dato.id, { asignaturaid: this.id })
       .subscribe((res) => {
         this.competenciaEstudiante = res;
@@ -217,6 +226,7 @@ export class DetalleAsignaturaComponent implements OnInit {
         }
         this.competenciaEstudiante = this.targetCompetenciaEstudiante;
       });
+      
   }
   targetCompetenciaEstudiante: any = [];
   competenciaEstudiante: any = [];
