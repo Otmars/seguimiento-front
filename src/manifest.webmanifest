@@ -1,8 +1,8 @@
 {
-  "name": "lib",
-  "short_name": "lib",
-  "theme_color": "#1976d2",
-  "background_color": "#fafafa",
+  "name": "SISEIN",
+  "short_name": "SISEIN",
+  "theme_color": "#2563eb",
+  "background_color": "#2563eb",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",
