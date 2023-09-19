@@ -128,4 +128,11 @@ newpass: string;
       })
       this.changepasswordModal=false
     }
+
+  randomimage(){
+    const imagenes= ['../../assets/images/doctors-animate.svg']
+    console.log(imagenes[0]);
+    
+    return imagenes[0].toString()
+  }
 }

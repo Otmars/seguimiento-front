@@ -3,6 +3,7 @@
 }
 h1{
     font-size: xx-large;
+    text-shadow: 1.5px 1.5px 3px rgb(104, 143, 173);
 }
 *{
     overflow: hidden;
