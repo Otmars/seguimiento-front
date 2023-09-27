@@ -77,6 +77,7 @@ import { SpeedDialModule } from 'primeng/speeddial';
 import { ReportesComponent } from './reportes/reportes.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { JwtInterceptorInterceptor } from './jwt-interceptor.interceptor';
+import { ScrollTopModule } from 'primeng/scrolltop';
 @NgModule({
   declarations: [
     AppComponent,
@@ -143,6 +144,7 @@ import { JwtInterceptorInterceptor } from './jwt-interceptor.interceptor';
     FullCalendarModule,
     PickListModule,
     TagModule,
+    ScrollTopModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
       // Register the ServiceWorker as soon as the application is stable
