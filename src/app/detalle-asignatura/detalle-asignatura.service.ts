@@ -18,7 +18,7 @@ export class DetalleAsignaturaService {
     return this.http.get<any[]>(this.url+"asignatura/inscritos/"+id)
   }
   cargarCompetenciasmateria(id:number):Observable<any[]>{
-    return this.http.get<any[]>(this.url+"asignatura/asicom/"+id)
+    return this.http.get<any[]>(this.url+"asignatura/asicomm/"+id)
   }
   cargarPracticas(id:number):Observable<any[]>{
     return this.http.get<any[]>(this.url+"calificacion/practicas/"+id)

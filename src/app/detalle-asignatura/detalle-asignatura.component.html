@@ -1,5 +1,6 @@
+<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button> 
 <div
-  class="card md:ml-8 m-4 scalein animation-ease-in-out animation-duration-500"
+  class="card md:ml-8 m-4 scalein animation-ease-in-out animation-duration-500 shadow-8"
 >
   <h2>{{ tituloAsignatura }}</h2>
   <h1>Lista Estudiantes</h1>
@@ -12,19 +13,86 @@
       label="Administrar Parciales"
       class="flex my-2 px-2"
       (click)="showParcialesDialog()"
-      styleClass="p-button-sm"
+      styleClass="p-button-sm p-button-rounded"
     ></p-button>
     <p-button
       label="Administrar Practicas"
-      class="flex my-2 md:mx-2 "
+      class="flex my-2 md:mx-2"
       (click)="showPracticasDialog()"
-      styleClass="p-button-sm"
+      styleClass="p-button-sm p-button-rounded"
     ></p-button>
   </div>
-  <p-dataView #dv [value]="estudiantes" >
+  <p-table
+    #dt1
+    [value]="estudiantes"
+    responsiveLayout="stack"
+    [breakpoint]="'767px'"
+    [tableStyle]="{ 'min-width': '10rem' }"
+    [globalFilterFields]="['estudiante.iduser.ci','estudiante.iduser.nombres','estudiante.iduser.apellidoPaterno','estudiante.iduser.apellidoMaterno']"
+  >
+    <ng-template pTemplate="caption">
+      <div class="flex">
+        <button
+          pButton
+          label=""
+          class="p-button-outlined "
+          icon="pi pi-filter-slash"
+          (click)="clear(dt1)"
+        ></button>
+        <span class="p-input-icon-left ml-auto">
+          <i class="pi pi-search"></i>
+          <input
+            pInputText
+            type="text"
+            (input)="dt1.filterGlobal(getEventValue($event), 'contains')"
+            placeholder="Buscar"
+          />
+        </span>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th>Nombre Completo</th>
+        <th>CI</th>
+        <th>Acciones</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-dato let-columns="columns">
+      <tr>
+        <td class="font-semibold">
+          <span class="p-column-title font-normal">Nombre </span
+          >{{ getnombrecompleto(dato.estudiante) }}
+        </td>
+        <td class="font-semibold">
+          <span class="p-column-title font-normal">CI</span
+          >{{ dato.estudiante.iduser.ci }}
+        </td>
+        <td class="flex flex align-content-center justify-content-between md:justify-content-start">
+          <span class="flex align-items-center mx-1">
+            <p-button
+              label="Calificar"
+              styleClass="p-button-sm p-button-rounded p-button-warning"
+              (onClick)="showCalificarDialog(dato.estudiante.id)"
+            ></p-button>
+          </span>
+          <span class="flex align-items-center">
+            <p-button
+              label="Dar Competencia"
+              (click)="showCompetenciaDialog(dato.estudiante)"
+              styleClass="p-button-sm shadow-2 p-button-rounded p-button-success"
+            ></p-button>
+          </span>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+  <!-- <p-dataView #dv [value]="estudiantes" class="hidden" >
     <ng-template pTemplate="header">
       <div class="flex flex-column  justify-content-end">
-        <div class="flex mb-2"><input type="text" pInputText formControlName="text" /></div>
+
+        <div class="flex flex-column md:flex-row md:justify-content-between">
+          <input type="text">
+          </div>
         <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
       </div>
     </ng-template>
@@ -83,14 +151,6 @@
             </span>
           </div>
           <div class="flex flex-column align-items-center gap-3 py-5">
-            <img
-              class="w-9 shadow-2 border-round"
-              [src]="
-                'https://primefaces.org/cdn/primeng/images/demo/product/' +
-                product.image
-              "
-              [alt]="product.name"
-            />
             <div class="text-2xl font-bold">
               {{
                 product.estudiante.iduser.nombres +
@@ -100,27 +160,12 @@
                   product.iduser.apellidoMaterno
               }}
             </div>
-            <p-rating
-              [ngModel]="product.rating"
-              [readonly]="true"
-              [cancel]="false"
-            ></p-rating>
-          </div>
-          <div class="flex align-items-center justify-content-between">
-            <span class="text-2xl font-semibold">{{
-              "$" + product.price
-            }}</span>
-            <button
-              pButton
-              icon="pi pi-check"
-              class="p-button-rounded"
-              [disabled]="product.inventoryStatus === 'OUTOFSTOCK'"
-            ></button>
           </div>
         </div>
       </div>
     </ng-template>
   </p-dataView>
+   -->
 </div>
 
 <p-dialog
@@ -153,7 +198,6 @@
         <div class="flex flex-wrap p-2 align-items-center gap-3">
           <div class="flex-1 flex flex-column gap-2">
             <span class="font-light">{{
-              
               competencia.competencia.descripcion
             }}</span>
             <div class="flex align-items-center gap-2">
@@ -290,8 +334,7 @@
 <p-dialog
   header="Header"
   [(visible)]="dialogParcial"
-  [style]="{ width: '90vw',height:'80vh' }"
-  
+  [style]="{ width: '90vw', height: '80vh' }"
 >
   <ng-template pTemplate="header">
     <span class="text-xl font-bold">Administrar Parciales</span>
@@ -396,7 +439,7 @@
 <p-dialog
   header="Header"
   [(visible)]="dialogCalificar"
-  [style]="{ width: '90vw',height:'80vh' }"
+  [style]="{ width: '90vw', height: '80vh' }"
 >
   <ng-template pTemplate="header">
     <span class="text-xl font-bold">Calificar Estudiante</span>

@@ -9,6 +9,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Table } from 'primeng/table';
 
 @Component({
   selector: 'app-detalle-asignatura',
@@ -275,4 +276,8 @@ export class DetalleAsignaturaComponent implements OnInit {
 
     return datos;
   }
+  clear(table: Table) {
+    table.clear();
+  }
+  
 }

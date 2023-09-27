@@ -1,7 +1,9 @@
 <p-toast></p-toast>
-    <p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
+<p-confirmDialog [style]="{ width: '50vw' }"></p-confirmDialog>
 
-<div class="card m-2 md:ml-8 md:m-4 scalein animation-ease-in-out animation-duration-500">
+<div
+  class="card m-2 md:ml-8 md:m-4 scalein animation-ease-in-out animation-duration-500"
+>
   <div class="flex align-content-end justify-content-end mb-1">
     <div class="mx-1">
       <p-button
@@ -34,7 +36,8 @@
     [tableStyle]="{ 'min-width': '18rem' }"
     [rows]="4"
     [paginator]="true"
-    responsiveLayout="stack" [breakpoint]="'420px'" 
+    responsiveLayout="stack"
+    [breakpoint]="'420px'"
     [scrollable]="false"
   >
     <ng-template pTemplate="header">
@@ -59,7 +62,7 @@
         <th pSortableColumn="iduser.ci">
           Carnet Identidad <p-sortIcon field="iduser.ci"></p-sortIcon>
         </th>
-        <th style="width:10%">Correo</th>
+        <th style="width: 10%">Correo</th>
         <th>Telefono</th>
         <th>Direccion</th>
         <th>Fecha de nacimiento</th>
@@ -162,7 +165,6 @@
         <th></th>
         <th></th>
         <th></th>
-        
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-docente>
@@ -171,7 +173,7 @@
           <p-tableCheckbox [value]="docente"></p-tableCheckbox>
         </td>
         <td pFrozenColumn>
-          <span class="p-column-title font-semibold" >Nombre Usuario</span>
+          <span class="p-column-title font-semibold">Nombre Usuario</span>
           {{ docente.iduser.username }}
         </td>
         <td>
@@ -192,9 +194,9 @@
         </td>
         <td class="text-sm">
           <span class="p-column-title font-semibold">Correo</span>
-          {{ serpararcorreo(docente.iduser.email)[0]+"@"  }}
-          <br>
-          {{ serpararcorreo(docente.iduser.email)[1]  }}
+          {{ serpararcorreo(docente.iduser.email)[0] + "@" }}
+          <br />
+          {{ serpararcorreo(docente.iduser.email)[1] }}
         </td>
         <td>
           <span class="p-column-title font-semibold">Telefono</span>
@@ -206,14 +208,13 @@
         </td>
         <td>
           <span class="p-column-title font-semibold">Fecha de nacimiento</span>
-          {{ docente.iduser.fnacimiento | date}}
+          {{ docente.iduser.fnacimiento | date }}
         </td>
         <td>
           <span class="p-column-title font-semibold">Fecha de Alta</span>
           {{ docente.iduser.createdAt | date }}
         </td>
         <td>
-          
           <p-button
             icon="pi pi-user-edit"
             styleClass="p-button-info"
@@ -384,11 +385,10 @@
           >Fecha de nacimiento is required.</small
         >
       </div>
-      <div>{{docenteForm.getError| json}}</div>
+      <div>{{ docenteForm.getError | json }}</div>
     </ng-template>
 
     <ng-template pTemplate="footer">
-      
       <button
         *ngIf="!editarbutton"
         [disabled]="!docenteForm.valid"
