@@ -135,7 +135,7 @@
     [ngClass]="{ hidden: menuLateral }"
   ></app-menu-lateral>
 </div>
-<div class="flex flex-column tracking-in-expand">
+<div class="flex flex-column tracking-in-expand overflow-hidden">
   <div class="fondo1">
     <div class="flex justify-content-between flex-wrap text-xl p-4">
       <div class="flex align-items-center m-2">
@@ -341,8 +341,10 @@
   </ng-template>
   <p-table
     #dt1
+    responsiveLayout="stack"
+    [breakpoint]="'960px'"
     [value]="calificacionesEstudiante"
-    [tableStyle]="{ 'min-width': '60rem' }"
+    [tableStyle]="{ 'min-width': '10rem' }"
     [globalFilterFields]="[
       'calificacion.asignatura.nombre',
       'calificacion.descripcion'
@@ -357,12 +359,13 @@
             type="text"
             (input)="dt1.filterGlobal(getEventValue($event), 'contains')"
             placeholder="Buscar"
+            class="w-9 md:w-full"
           />
         </span>
 
         <button
           pButton
-          label="Limpiar"
+          label=""
           class="p-button-outlined ml-auto"
           icon="pi pi-filter-slash"
           (click)="clear(dt1)"
@@ -383,9 +386,9 @@
     </ng-template>
     <ng-template pTemplate="body" let-product>
       <tr>
-        <td>{{ product.calificacion.asignatura.nombre }}</td>
-        <td>{{ product.calificacion.descripcion }}</td>
-        <td>
+         <td> <span class="p-column-title font-semibold">Asignatura</span>{{ product.calificacion.asignatura.nombre }}</td>
+        <td><span class="p-column-title font-semibold">Descripcion</span>{{ product.calificacion.descripcion }}</td>
+        <td><span class="p-column-title font-semibold">Calificacion</span>
           {{
             product.calificacionObtenida + "/" + product.calificacion.puntaje
           }}
@@ -417,8 +420,10 @@
   </ng-template>
   <p-table
     #dtCom
+    responsiveLayout="stack"
+    [breakpoint]="'960px'"
     [value]="dataCompetencias"
-    [tableStyle]="{ 'min-width': '60rem' }"
+    [tableStyle]="{ 'min-width': '10rem' }"
     [globalFilterFields]="['asi_nombre', 'c_descripcion']"
   >
     <ng-template pTemplate="caption">
@@ -435,7 +440,7 @@
 
         <button
           pButton
-          label="Limpiar"
+          label=""
           class="p-button-outlined ml-auto"
           icon="pi pi-filter-slash"
           (click)="clear(dtCom)"
@@ -458,10 +463,11 @@
     </ng-template>
     <ng-template pTemplate="body" let-product>
       <tr>
-        <td>{{ product.asi_nombre }}</td>
+        <td><span class="p-column-title font-semibold">Nombre</span>{{ product.asi_nombre }}</td>
+        <span class="md:hidden ml-3 font-semibold" >Descripcion</span>
         <td>{{ product.asicom_descripcion }}</td>
-        <td>{{ product.asicom_tipoCompetencia }}</td>
-        <td><p-tag severity="success" value="Adquirida"></p-tag></td>
+        <td><span class="p-column-title font-semibold">Tipo</span>{{ product.asicom_tipoCompetencia }}</td>
+        <td><span class="p-column-title font-semibold">Estado</span><p-tag severity="success" value="Adquirida"></p-tag></td>
         <!-- <td>{{ product.calificacion.descripcion }}</td> -->
         <!-- <td>
           {{
@@ -602,12 +608,9 @@
           >
         </p>
         <p class="font-semibold">
-          
           Correo:
           <a
-            href="mailto:{{
-              datosAsignatura(item).docente.iduser.email
-            }}"
+            href="mailto:{{ datosAsignatura(item).docente.iduser.email }}"
             target="_blank"
             ><span class="font-light">
               {{ datosAsignatura(item).docente.iduser.email }}</span
