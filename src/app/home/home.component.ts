@@ -62,13 +62,18 @@ newpass: string;
     this.user = this.getdatostoken();
 
     this.homeService.getMateriasInscritas(this.iduser).subscribe((res: any) => {
-      // this.materiasUser=res
+      this.materiasUser=res[0].inscripcion
 
-      for (let i = 0; i < res[0].inscripcion.length; i++) {
-        console.log(res[0].inscripcion[i].asignatura.nombre);
-        this.materiasUser.push(res[0].inscripcion[i].asignatura.nombre);
-      }
+      // for (let i = 0; i < res[0].inscripcion.length; i++) {
+      //   console.log(res[0].inscripcion[i].asignatura.nombre);
+      //   this.materiasUser.push(res[0].inscripcion[i].asignatura.nombre);
+      // }
     });
+    this.homeService.getMateriasInscritas(this.iduser).subscribe((res:any)=>{
+      this.materiasInscritasEstudiante = res[0].inscripcion
+      // console.log(res[0].inscripcion);
+
+    })
   }
 
   getiddocenteEstudiante() {
@@ -135,4 +140,36 @@ newpass: string;
     
     return imagenes[0].toString()
   }
+  modalAsignaturas:boolean = false
+  materiasInscritasEstudiante= []
+  showAsignaturas(){
+    this.modalAsignaturas =true
+    
+  }
+  datosAsignatura(dato: any){
+    return dato.asignatura
+  }
+  getnombreCompleto(dato:any){
+    if (dato == null) {
+      return "No hay docente Designado"
+    }
+    return dato.iduser.nombres+" "+dato.iduser.apellidoPaterno+" "+dato.iduser.apellidoMaterno
+  }
+  getDato(dato:any){
+    console.log(dato);
+    
+    if (dato==null) {
+      return"No hay Datos"
+      
+    }
+    return dato.docente
+
+  }
+
+  modalDocentes:boolean = false 
+  showModalDocentes()
+  {
+    this.modalDocentes =true
+  }
+
 }
