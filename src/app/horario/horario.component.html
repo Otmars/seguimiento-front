@@ -15,16 +15,15 @@
   position="top"
 >
   <div class="flex flex-column justify-content-center p-2" [formGroup]="form">
+    <label for="nombre">Descipcion</label>
+    <textarea
+      formControlName="title"
+      rows="2"
+      cols="30"
+      pInputTextarea
+    ></textarea>
 
-      <label for="nombre">Descipcion</label>
-      <textarea
-        formControlName="title"
-        rows="2"
-        cols="30"
-        pInputTextarea
-      ></textarea>
-
-      <label for="nombre">Inicio</label>
+    <label for="nombre">Inicio</label>
     <p-calendar
       formControlName="start"
       appendTo="body"
@@ -36,11 +35,41 @@
       appendTo="body"
       [showTime]="true"
     ></p-calendar>
-
-    
-
-<p-button [disabled]="!form.valid" label="Submit" class="pt-3"></p-button>
-
-
   </div>
+  <ng-template pTemplate="footer">
+    <p-button
+  (onClick)="guardarnuevo()"
+  [disabled]="!form.valid"
+  label="Enviar"
+  class="pt-3"
+></p-button>
+</ng-template>
+</p-dialog>
+
+<p-dialog
+  header="{{evento.title}}"
+  [(visible)]="dialogVer"
+  [breakpoints]="{ '960px': '75vw' }"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
+  [maximizable]="true"
+  position="top"
+  *ngIf="evento"
+>
+    <div class="flex">
+      <label for="nombre">Inicia</label>
+      <p >{{evento.start | date:'medium'}}</p><br>
+      <label *ngIf="evento.end" for="nombre">Termina</label>
+      <p *ngIf="evento.end">{{evento.end | date:'medium'}}</p>
+      
+    </div>
+    
+    <ng-template pTemplate="footer">
+        <p-button
+      (onClick)="eliminar()"
+      label="Eliminar"
+      class="pt-3"
+    ></p-button>
+    </ng-template>
 </p-dialog>

@@ -14,4 +14,12 @@ export class HorarioService {
   getMateriasInscritas(id:string):Observable<any[]>{
     return this.http.get<any[]>(this.url+"horarios/"+id)
   }
+
+  nuevo(body :any){
+    return this.http.post(this.url+"horarios",body)
+  }
+
+  eliminar ( id :number){
+    return this.http.delete(this.url+"horarios/"+id)
+  }
 }
