@@ -18,7 +18,7 @@ import { InscripcionComponent } from "./inscripcion/inscripcion.component";
 import { DashboardComponent } from "./admin/dashboard/dashboard.component";
 
 const routes: Routes=[
-    { path:'', redirectTo: '/login', pathMatch:'full'},
+    { path:'', redirectTo: '/home', pathMatch:'full'},
     {path:'home', component:HomeComponent,canActivate:[AuthGuard]},
     {path:'estudiante', component:EstudianteComponent,canActivate:[RoleGuard,AuthGuard], data:{expectedRole:'admin'}},
     {path:'asignatura', component:MateriaComponent,canActivate:[RoleGuard,AuthGuard], data:{expectedRole:'admin'}},

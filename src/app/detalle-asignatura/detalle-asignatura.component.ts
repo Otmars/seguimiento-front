@@ -18,14 +18,12 @@ import { Table } from 'primeng/table';
 })
 export class DetalleAsignaturaComponent implements OnInit {
   calificadoSubmit() {
-    console.log(this.calificado.value);
-    console.log('idCalificacion', this.idCalificacion);
+
     this.detalleAsignaturaService
       .calificado(this.idCalificacion, {
         calificacionObtenida: this.calificado.value,
       })
       .subscribe((res) => {
-        console.log(res);
         this.dialogCalificando = false;
       });
   }

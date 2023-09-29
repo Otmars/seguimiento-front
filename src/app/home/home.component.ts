@@ -56,9 +56,7 @@ newpass: string;
   ngOnInit() {
     this.roluser = this.rol();
     this.mostrarSaludo();
-    console.log(this.roluser);
     this.iduser = this.getdatostoken().id;
-    console.log(this.iduser);
     this.user = this.getdatostoken();
 
     this.homeService.getMateriasInscritas(this.iduser).subscribe((res: any) => {

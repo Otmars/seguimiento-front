@@ -1,3 +1,46 @@
-<div class="card md:ml-8 m-4 scalein animation-ease-in-out animation-duration-500">
-    <full-calendar [options]="calendarOptions"></full-calendar>
+<div
+  class="card md:ml-8 m-4 scalein animation-ease-in-out animation-duration-500"
+>
+  <full-calendar [options]="calendarOptions" class="max-h-full"></full-calendar>
 </div>
+
+<p-dialog
+  header="Agrega un nuevo evento"
+  [(visible)]="dialogcrear"
+  [breakpoints]="{ '960px': '75vw' }"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
+  [maximizable]="true"
+  position="top"
+>
+  <div class="flex flex-column justify-content-center p-2" [formGroup]="form">
+
+      <label for="nombre">Descipcion</label>
+      <textarea
+        formControlName="title"
+        rows="2"
+        cols="30"
+        pInputTextarea
+      ></textarea>
+
+      <label for="nombre">Inicio</label>
+    <p-calendar
+      formControlName="start"
+      appendTo="body"
+      [showTime]="true"
+    ></p-calendar>
+    <label for="nombre">Final</label>
+    <p-calendar
+      formControlName="end"
+      appendTo="body"
+      [showTime]="true"
+    ></p-calendar>
+
+    
+
+<p-button [disabled]="!form.valid" label="Submit" class="pt-3"></p-button>
+
+
+  </div>
+</p-dialog>
