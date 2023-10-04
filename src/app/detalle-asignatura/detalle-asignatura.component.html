@@ -1,4 +1,3 @@
-<p-scrollTop></p-scrollTop>
 <div
   class="card md:ml-8 m-4 scalein animation-ease-in-out animation-duration-500 shadow-8"
 >
@@ -173,6 +172,8 @@
     </ng-template>
   </p-dataView>
    -->
+<p-scrollTop target="parent" class="z-5" styleClass="custom-scrolltop" [threshold]="100" icon="pi pi-arrow-up"></p-scrollTop>
+
 </div>
 
 <p-dialog
@@ -345,7 +346,6 @@
   header="Header"
   [(visible)]="dialogParcial"
   [style]="{ width: '90vw', height: '80vh' }"
-  
 >
   <ng-template pTemplate="header">
     <span class="text-xl font-bold">Administrar Parciales</span>
@@ -353,7 +353,6 @@
 
   <p-table
     [value]="listaCalificacionesParciales"
-
     responsiveLayout="stack"
     [breakpoint]="'768px'"
     [tableStyle]="{ 'min-width': '20rem' }"
@@ -369,13 +368,19 @@
     <ng-template pTemplate="body" let-calificacion>
       <tr>
         <td class="sm:hidden hidden md:block">{{ calificacion.id }}</td>
-        <td><span class="p-column-title">Descripcion</span> {{ calificacion.descripcion }}</td>
-        <td><span class="p-column-title">Puntaje</span>{{ calificacion.puntaje }}</td>
-        <td class="sm:hidden hidden md:block">{{ calificacion.tipoCalificacion }}</td>
+        <td>
+          <span class="p-column-title">Descripcion</span>
+          {{ calificacion.descripcion }}
+        </td>
+        <td>
+          <span class="p-column-title">Puntaje</span>{{ calificacion.puntaje }}
+        </td>
+        <td class="sm:hidden hidden md:block">
+          {{ calificacion.tipoCalificacion }}
+        </td>
       </tr>
-      <tr class=" md:hidden">
-
-        <td ></td>
+      <tr class="md:hidden">
+        <td></td>
       </tr>
     </ng-template>
   </p-table>

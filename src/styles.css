@@ -34,7 +34,10 @@ body{
     padding: 1rem;
     border-radius: 10px;
     margin-bottom: 2rem;
-    overflow: hidden;
+    overflow: scroll;
+    overflow-x: auto;
+    overflow-y: auto;
+    height: 90vh;
     
 }
 .card2{
@@ -42,13 +45,19 @@ body{
 }
 
 body {
-	background: linear-gradient(-45deg, #52c2ee, #accfe8, #23a6d5, #23d5ab);
+	/* background: linear-gradient(-45deg, #52c2ee, #accfe8, #23a6d5, #23d5ab);
 	background-size: 400% 400%;
-	animation: gradient 15s ease infinite;
+	animation: gradient 15s ease infinite; */
+    background-image: radial-gradient(
+    circle farthest-corner at 10% 20%,
+    rgba(97, 186, 255, 1) 0%,
+    rgba(166, 239, 253, 1) 90.1%
+  );
 	height: 100vh;
+    overflow: hidden;
 }
 
-@keyframes gradient {
+/* @keyframes gradient {
 	0% {
 		background-position: 0% 50%;
 	}
@@ -58,7 +67,7 @@ body {
 	100% {
 		background-position: 0% 50%;
 	}
-}
+} */
 
 .tracking-in-expand{animation:tracking-in-expand 0.4s linear both} @keyframes tracking-in-expand{0%{letter-spacing:-.2em;opacity:0}40%{opacity:.6}100%{opacity:1}}
 .tracking-in-contract{animation:tracking-in-contract 0.4s linear both} @keyframes tracking-in-contract{0%{letter-spacing:.6em;opacity:0}40%{opacity:.6}100%{letter-spacing:normal;opacity:1}}
