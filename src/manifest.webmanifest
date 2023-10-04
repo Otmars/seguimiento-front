@@ -2,7 +2,7 @@
   "name": "SISEIN",
   "short_name": "SISEIN",
   "theme_color": "#2563eb",
-  "background_color": "#ffffff",
+  "background_color": "#fafafa",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",
