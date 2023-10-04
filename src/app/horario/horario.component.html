@@ -57,11 +57,11 @@
   position="top"
   *ngIf="evento"
 >
-    <div class="flex">
-      <label for="nombre">Inicia</label>
-      <p >{{evento.start | date:'medium'}}</p><br>
-      <label *ngIf="evento.end" for="nombre">Termina</label>
-      <p *ngIf="evento.end">{{evento.end | date:'medium'}}</p>
+    <div class="flex flex-column">
+      <label for="nombre">Inicia:</label>
+      <p class="font-semibold">{{evento.start | date:'medium'}}</p><br>
+      <label *ngIf="evento.end" for="nombre">Termina:</label>
+      <p *ngIf="evento.end" class="font-semibold" >{{evento.end | date:'medium'}}</p>
       
     </div>
     
