@@ -1,8 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { CompetenciasComponent } from '../competencias/competencias.component';
+
 import { RouterModule } from '@angular/router';
+import { AdminRoutingModule } from './admin-routing.module';
+
 
 
 @NgModule({
@@ -11,7 +13,8 @@ import { RouterModule } from '@angular/router';
   ],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    AdminRoutingModule
   ]
 })
 export class AdminModule { }

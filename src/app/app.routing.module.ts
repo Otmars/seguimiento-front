@@ -32,7 +32,9 @@ const routes: Routes=[
     {path: 'horario', component:HorarioComponent},
     // {path : 'asignatura-competencia', component:AsignaturaCompetenciaComponent},
     {path : 'inscripcion', component: InscripcionComponent,canActivate:[RoleGuard,AuthGuard], data:{expectedRole:'admin'}},
-    {path:'admin',component:DashboardComponent,canActivate:[RoleGuard,AuthGuard], data:{expectedRole:'admin'}},
+    // {path:'admin',component:DashboardComponent,canActivate:[RoleGuard,AuthGuard], data:{expectedRole:'admin'}},
+    {path:'admin', loadChildren: ()=> import('./admin/admin.module').then(m=> m.AdminModule),canActivate:[]}
+
 ]
 
 @NgModule({
