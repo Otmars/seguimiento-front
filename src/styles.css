@@ -7,9 +7,17 @@
 *{
     margin: 0;
     padding: 0;
-
+    /* overflow: auto; */
+    scrollbar-width: none;
+    /* font-size: 10px; */
 }
 
+*::-webkit-scrollbar {
+    display: none;
+  }
+  html{
+    font-size: 14px;
+  }
 body{
     font-family: var(--font-family);
     

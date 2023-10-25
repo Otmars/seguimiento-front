@@ -66,4 +66,8 @@ export class LoginComponent implements OnInit {
     });
   }
   cargarData() {}
+
+  clearMessages() {
+    this.messages = [];
+}
 }

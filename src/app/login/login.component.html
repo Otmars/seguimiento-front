@@ -2,14 +2,18 @@
   <p-messages
     [(value)]="messages1"
     [enableService]="false"
-    [closable]="false"
+    [closable]="true"
   ></p-messages>
 </div>
 
+<!-- <div class="flex flex-column card p-3 m-3 w-full md:w-5 ">
+  <h1>Lorem ipsum dolor sitssssssssssssssssssssssss amet consectetur adipisicing elit. Non aperiam adipisci, laboriosam vero necessitatibus quos praesentium eos minus perferendis fugiat, molestiae nemo! Quidem non, voluptatibus velit consequuntur voluptates nisi cum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem mollitia obcaecati, amet animi, aliquid sit dicta tempore similique molestiae ducimus eveniet voluptatibus velit minus! Fugiat nobis expedita maxime exercitationem sapiente. Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam dolore, reprehenderit deleniti odio ea, molestiae laudantium a quos suscipit alias officia quis nostrum incidunt dolorum est. Asperiores accusamus consectetur quidem?</h1> </div> -->
+
 <div class="flex align-items-center align-content-center justify-content-center m-3 max-w-screen scalein animation-duration-300">
   <div
-    class="flex flex-column surface-card shadow-2 border-round p-3 m-3 w-full md:w-5"
+    class="flex flex-column card shadow-2 border-round p-3 m-3 w-full md:w-5 overflow-auto"
   >
+    <h1></h1>
     <div class=" flex flex-column zoom text-center mb-3">
       <!-- <img
         src="../../assets/images/Happy student-rafiki.png"
@@ -58,11 +62,12 @@
           [ngClass]="{'ng-dirty':loginForm.get('username')?.touched && loginForm.get('username')?.errors?.['required']}"
         />
         <div
-          *ngIf="loginForm.get('username')?.touched && loginForm.get('username')?.errors?.['required']"
+          *ngIf="loginForm.get('username')?.touched && loginForm.get('username')?.errors?.['required'] "
         >
+        <!-- {{clearMessages()}} -->
           <p-messages
             [(value)]="messages"
-            [closable]="false"
+            [closable]="true"
             [showTransitionOptions]="'50ms'"
             [hideTransitionOptions]="'500ms'"
           ></p-messages>
@@ -86,12 +91,12 @@
         >
           <p-messages
             [(value)]="messages"
-            [closable]="false"
+            [closable]="true"
             [showTransitionOptions]="'50ms'"
             [hideTransitionOptions]="'500ms'"
           ></p-messages>
         </div>
-        <div class="flex align-items-center justify-content-between mb-6">
+        <!-- <div class="flex align-items-center justify-content-between mb-6">
           <div class="flex align-items-center">
             <p-checkbox
               id="rememberme1"
@@ -105,7 +110,7 @@
             class="font-medium no-underline ml-2 text-blue-500 text-right cursor-pointer"
             >¿Olvidaste tu contraseña?</a
           >
-        </div>
+        </div> -->
         <button
           pButton
           pRipple
