@@ -65,7 +65,6 @@ export class DetalleAsignaturaComponent implements OnInit {
   dialogParcial: boolean = false;
 
   showPracticasDialog() {
-    
     this.dialogPractica = true;
     this.cargarCalificaciones();
   }
@@ -82,6 +81,7 @@ export class DetalleAsignaturaComponent implements OnInit {
     this.detalleAsignaturaService.crearCalificacion(objeto).subscribe((res) => {
       console.log(res);
     });
+    this.messageService.add({ severity: 'success', summary: 'Accion exitosa', detail: 'Parcial Creado' });
     this.formCalificacionParciales.reset();
     this.dialogParcial = false;
   }
@@ -97,12 +97,13 @@ export class DetalleAsignaturaComponent implements OnInit {
     this.detalleAsignaturaService.crearCalificacion(objeto).subscribe((res) => {
       console.log(res);
     });
+    this.messageService.add({ severity: 'success', summary: 'Accion exitosa', detail: 'Practica Creada' });
     this.formCalificacionPractica.reset();
     this.dialogPractica = false;
   }
 
   cargarCalificaciones() {
-    this.sumaPracticas=0
+    this.sumaPracticas = 0;
     this.detalleAsignaturaService.cargarPracticas(this.id).subscribe((res) => {
       console.log(res);
       this.listaCalificaciones = res;
@@ -158,6 +159,7 @@ export class DetalleAsignaturaComponent implements OnInit {
       .getListaEstudiantes(this.id)
       .subscribe((res) => {
         this.estudiantes = res;
+        this.loading = false
       });
   }
   getEventValue($event: any): string {
@@ -200,6 +202,7 @@ export class DetalleAsignaturaComponent implements OnInit {
         });
       }
     }
+    this.messageService.add({ severity: 'success', summary: 'Accion exitosa', detail: 'Competencia Guardada' });
     this.dialogCompetencia = false;
   }
   cerrardialogCompetencias() {
@@ -286,4 +289,5 @@ export class DetalleAsignaturaComponent implements OnInit {
     this.datoFiltro = '';
     table.clear();
   }
+  loading: boolean = true;
 }
