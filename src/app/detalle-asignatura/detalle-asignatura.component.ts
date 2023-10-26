@@ -17,9 +17,8 @@ import { Table } from 'primeng/table';
   styleUrls: ['./detalle-asignatura.component.css'],
 })
 export class DetalleAsignaturaComponent implements OnInit {
-  datoFiltro : string;
+  datoFiltro: string;
   calificadoSubmit() {
-
     this.detalleAsignaturaService
       .calificado(this.idCalificacion, {
         calificacionObtenida: this.calificado.value,
@@ -66,8 +65,9 @@ export class DetalleAsignaturaComponent implements OnInit {
   dialogParcial: boolean = false;
 
   showPracticasDialog() {
+    
     this.dialogPractica = true;
-    console.log(this.sumaParciales);
+    this.cargarCalificaciones();
   }
   datosAsignatura: any = [];
 
@@ -82,7 +82,7 @@ export class DetalleAsignaturaComponent implements OnInit {
     this.detalleAsignaturaService.crearCalificacion(objeto).subscribe((res) => {
       console.log(res);
     });
-    // this.formCalificacionParciales.reset()
+    this.formCalificacionParciales.reset();
     this.dialogParcial = false;
   }
 
@@ -97,10 +97,12 @@ export class DetalleAsignaturaComponent implements OnInit {
     this.detalleAsignaturaService.crearCalificacion(objeto).subscribe((res) => {
       console.log(res);
     });
+    this.formCalificacionPractica.reset();
     this.dialogPractica = false;
   }
 
   cargarCalificaciones() {
+    this.sumaPracticas=0
     this.detalleAsignaturaService.cargarPracticas(this.id).subscribe((res) => {
       console.log(res);
       this.listaCalificaciones = res;
@@ -109,11 +111,13 @@ export class DetalleAsignaturaComponent implements OnInit {
           this.sumaPracticas + this.listaCalificaciones[i].puntaje;
       }
       this.formCalificacionPractica.controls.puntaje.setValidators([
+        Validators.required,
         Validators.max(35 - this.sumaPracticas),
       ]);
     });
   }
   cargarCalificacionesParciales() {
+    this.sumaParciales = 0;
     this.detalleAsignaturaService.cargarParciales(this.id).subscribe((res) => {
       console.log(res);
       this.listaCalificacionesParciales = res;
@@ -123,6 +127,7 @@ export class DetalleAsignaturaComponent implements OnInit {
       }
       console.log(this.sumaParciales);
       this.formCalificacionParciales.controls.puntaje.setValidators([
+        Validators.required,
         Validators.max(35 - this.sumaParciales),
       ]);
     });
@@ -138,7 +143,7 @@ export class DetalleAsignaturaComponent implements OnInit {
       { name: 'Parcial' },
       { name: 'Final' },
     ];
-    this.cargarCalificaciones();
+    // this.cargarCalificaciones();
   }
   constructor(
     private detalleAsignaturaService: DetalleAsignaturaService,
@@ -183,29 +188,31 @@ export class DetalleAsignaturaComponent implements OnInit {
         // console.log('true');
         this.detalleAsignaturaService
           .guardarComptenciaEstudiante({
-            competenciaAsignaturaCompetenciaId:this.competenciaEstudiante[i].asignaturaCompetenciaId,
+            competenciaAsignaturaCompetenciaId:
+              this.competenciaEstudiante[i].asignaturaCompetenciaId,
             estudianteId: this.idEstududiante,
           })
           .subscribe((res) => console.log(res));
-          console.log({competenciaAsignaturaCompetenciaId:this.competenciaEstudiante[i].competenciaId,
-            estudianteId: this.idEstududiante,});
-          
+        console.log({
+          competenciaAsignaturaCompetenciaId:
+            this.competenciaEstudiante[i].competenciaId,
+          estudianteId: this.idEstududiante,
+        });
       }
     }
-    this.dialogCompetencia= false
+    this.dialogCompetencia = false;
   }
-  cerrardialogCompetencias(){
-    this.dialogCompetencia=false
-    this.competenciaEstudiante=[]
-    this.competenciaAsignatura=[]
-    this.targetCompetenciaEstudiante=[]
+  cerrardialogCompetencias() {
+    this.dialogCompetencia = false;
+    this.competenciaEstudiante = [];
+    this.competenciaAsignatura = [];
+    this.targetCompetenciaEstudiante = [];
     this.cargarCompetenciasmateria();
   }
   idEstududiante: number;
   async showCompetenciaDialog(dato: any) {
-    
     this.idEstududiante = dato.id;
-    
+
     this.dialogCompetencia = true;
     await this.detalleAsignaturaService
       .getcompetenciasEstudiante(dato.id, { asignaturaid: this.id })
@@ -227,7 +234,6 @@ export class DetalleAsignaturaComponent implements OnInit {
         }
         this.competenciaEstudiante = this.targetCompetenciaEstudiante;
       });
-      
   }
   targetCompetenciaEstudiante: any = [];
   competenciaEstudiante: any = [];
@@ -256,7 +262,7 @@ export class DetalleAsignaturaComponent implements OnInit {
       Validators.required,
     ]),
     puntaje: new FormControl(null, [
-      Validators.max(35),
+      Validators.max(35 - this.sumaParciales),
       Validators.required,
     ]),
     tipoCalificacion: new FormControl(''),
@@ -277,8 +283,7 @@ export class DetalleAsignaturaComponent implements OnInit {
     return datos;
   }
   clear(table: Table) {
-    this.datoFiltro = ""
+    this.datoFiltro = '';
     table.clear();
   }
-  
 }
