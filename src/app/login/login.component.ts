@@ -10,23 +10,25 @@ import { LoginService } from './login.service';
 })
 export class LoginComponent implements OnInit {
   messages1!: Message[];
-  messages!: Message[];
+  messages_user!: Message[];
+  messages_pass!: Message[];
   loginForm!: FormGroup;
-  errorlogin!:any;
+  errorlogin!: any;
   data: any;
 
   constructor(
     private readonly fb: FormBuilder,
     private messageService: MessageService,
     private loginService: LoginService,
-    private router:Router
+    private router: Router
   ) {}
   ngOnInit() {
     this.loginForm = this.initForm();
-    this.messages = [{ severity: 'error', summary: 'Campo Obligatorio' }];
-    
+    this.messages_user = [{ severity: 'error', summary: 'Campo Obligatorio' }];
+    this.messages_pass = [{ severity: 'error', summary: 'Campo Obligatorio' }];
   }
   onSubmit() {
+    
     console.log(this.loginForm.value);
     const datos = this.loginForm.value;
     const remebercheck = datos.remember;
@@ -34,21 +36,27 @@ export class LoginComponent implements OnInit {
     delete datos.remember;
     this.loginService.login(datos).subscribe((respuesta: any) => {
       console.log(respuesta);
-      if ((respuesta.response == 'El usuario no existe' || respuesta.response == 'Contraseña incorrecta')) {
-        this.messages1 = [{ severity: 'error', summary: respuesta.response , detail: 'Verifique los datos ingresados' },];
-      }else{
-        if(respuesta.token){
+      if (
+        respuesta.response == 'El usuario no existe' ||
+        respuesta.response == 'Contraseña incorrecta'
+      ) {
+        this.clearMessages()
+        this.messageService.add({
+          severity: 'error',
+          summary: respuesta.response,
+          detail: 'Verifique los datos ingresados',
+        });
+      } else {
+        if (respuesta.token) {
           // console.log(remebercheck);
-          
-          if (remebercheck) {   
+
+          if (remebercheck) {
             localStorage.setItem('token', respuesta.token);
-            this.router.navigate(['home'])
+            this.router.navigate(['home']);
           }
-          this.router.navigate(['home'])
+          this.router.navigate(['home']);
         }
-        
       }
-      
     });
   }
   initForm(): FormGroup {
@@ -58,16 +66,9 @@ export class LoginComponent implements OnInit {
       remember: [true],
     });
   }
-  show() {
-    this.messageService.add({
-      severity: 'success',
-      summary: 'Success',
-      detail: 'Message Content',
-    });
-  }
-  cargarData() {}
-
   clearMessages() {
-    this.messages = [];
-}
+    this.messages_user = [];
+    this.messages_pass = [];
+  }
+
 }

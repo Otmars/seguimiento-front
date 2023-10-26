@@ -1,20 +1,15 @@
-<div>
-  <p-messages
-    [(value)]="messages1"
-    [enableService]="false"
-    [closable]="true"
-  ></p-messages>
-</div>
 
+<p-toast></p-toast>
 <!-- <div class="flex flex-column card p-3 m-3 w-full md:w-5 ">
   <h1>Lorem ipsum dolor sitssssssssssssssssssssssss amet consectetur adipisicing elit. Non aperiam adipisci, laboriosam vero necessitatibus quos praesentium eos minus perferendis fugiat, molestiae nemo! Quidem non, voluptatibus velit consequuntur voluptates nisi cum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem mollitia obcaecati, amet animi, aliquid sit dicta tempore similique molestiae ducimus eveniet voluptatibus velit minus! Fugiat nobis expedita maxime exercitationem sapiente. Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam dolore, reprehenderit deleniti odio ea, molestiae laudantium a quos suscipit alias officia quis nostrum incidunt dolorum est. Asperiores accusamus consectetur quidem?</h1> </div> -->
 
-<div class="flex align-items-center align-content-center justify-content-center m-3 max-w-screen scalein animation-duration-300">
+<div
+  class="flex align-items-center align-content-center justify-content-center m-3 max-w-screen scalein animation-duration-300"
+>
   <div
-    class="flex flex-column card shadow-2 border-round p-3 m-3 w-full md:w-5 overflow-auto"
+    class="flex flex-column card shadow-2 border-round justify-content-around w-full md:w-5 overflow-auto"
   >
-    <h1></h1>
-    <div class=" flex flex-column zoom text-center mb-3">
+    <div class="flex flex-column zoom text-center mb-3">
       <!-- <img
         src="../../assets/images/Happy student-rafiki.png"
         alt="Image"
@@ -22,7 +17,7 @@
         class=""
       /> -->
       <object
-        class="fondo2"
+        class="image_login"
         data="../../assets/images/happy-student-animate.svg"
         type=""
         height="200"
@@ -30,23 +25,25 @@
       <div class="text-900 text-3xl font-medium mb-1">Bienvenido</div>
       <!-- <span class="text-600 font-medium line-height-3"> ¿No tienes una cuenta?</span> -->
       <!-- <a class="font-medium no-underline ml-2 text-blue-500 cursor-pointer">Creala hoy!</a> -->
-      <div class="mb-1"><h1 class="text-900 text-3xl font-bold ">SISEIN</h1></div>
+      <div class="mb-1">
+        <h1 class="text-900 text-3xl font-bold">SISEIN</h1>
+      </div>
       <div class="text-900 text-l font-normal mb-1">
         SISTEMA DE SEGUIMIENTO INDIVIDUAL
       </div>
 
       <span class="text-600 font-medium line-height-3"
-        >No tienes una cuenta?</span
-      >
-      <a
-        href="https://forms.gle/URVZiPVBgjTsK5Ct7"
-        target="_blank"
-        class="font-medium no-underline ml-2 text-blue-500 cursor-pointer"
-        >Solicita una Ahora!</a
+        >No tienes una cuenta?
+        <a
+          href="https://forms.gle/URVZiPVBgjTsK5Ct7"
+          target="_blank"
+          class="font-medium no-underline ml-2 text-blue-500 cursor-pointer"
+          >Solicita una Ahora!</a
+        ></span
       >
     </div>
 
-    <div>
+    <div class="flex flex-column align-content-between justify-content-between">
       <form (ngSubmit)="onSubmit()" [formGroup]="loginForm" class="p-2">
         <label for="email1" class="block text-900 font-medium mb-2"
           >Nombre de Usuario</label
@@ -64,9 +61,9 @@
         <div
           *ngIf="loginForm.get('username')?.touched && loginForm.get('username')?.errors?.['required'] "
         >
-        <!-- {{clearMessages()}} -->
+          <!-- {{clearMessages()}} -->
           <p-messages
-            [(value)]="messages"
+          [value]="messages_user"
             [closable]="true"
             [showTransitionOptions]="'50ms'"
             [hideTransitionOptions]="'500ms'"
@@ -90,7 +87,7 @@
           *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.errors?.['required']"
         >
           <p-messages
-            [(value)]="messages"
+            [value]="messages_pass"
             [closable]="true"
             [showTransitionOptions]="'50ms'"
             [hideTransitionOptions]="'500ms'"

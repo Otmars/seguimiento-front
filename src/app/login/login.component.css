@@ -5,10 +5,17 @@ h1{
     font-size: xx-large;
     text-shadow: 1.5px 1.5px 3px rgb(104, 143, 173);
 }
-*{
+/* *{
     overflow: auto;
     scrollbar-width: none;
 }
 *::-webkit-scrollbar {
     display: none;
+  } */
+  .image_login{
+    margin-bottom: -40px;
+    margin-top: -20px;
+  }
+  .p-message{
+    max-height: 315px;
   }
