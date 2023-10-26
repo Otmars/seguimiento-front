@@ -190,7 +190,7 @@ export class MateriaComponent implements OnInit, OnDestroy {
     // }
     this.confirmationService.confirm({
       message:
-        '¿Está seguro de que desea eliminar las asignatura selecionadas seleccionados?',
+        '¿Está seguro de que desea eliminar las asignatura selecionadas?',
       header: 'Confirmar',
       icon: 'pi pi-exclamation-triangle text-orange-500',
       accept: () => {

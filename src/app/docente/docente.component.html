@@ -2,30 +2,44 @@
 <p-confirmDialog [style]="{ width: '50vw' }"></p-confirmDialog>
 
 <div
-  class="card m-2 md:ml-8 md:m-4 scalein animation-ease-in-out animation-duration-500"
+  class="card flex flex-column justify-content-start md:ml-8 m-4 scalein animation-ease-in-out animation-duration-500"
 >
-  <div class="flex align-content-end justify-content-end mb-1">
-    <div class="mx-1">
-      <p-button
-        icon="pi pi-filter"
-        styleClass="p-button-secondary"
-        (click)="mostrarfiltros()"
-      ></p-button>
-    </div>
-    <div class="mx-1">
-      <p-button
-        icon="pi pi-plus"
-        styleClass="p-button-success"
-        (click)="crearnuevo()"
-      ></p-button>
-    </div>
-    <div class="mx-1">
-      <p-button
-        icon="pi pi-trash"
-        styleClass="p-button-danger"
-        (click)="deleteSelectedDocente()"
-        [disabled]="!selectedDocentes || !selectedDocentes.length"
-      ></p-button>
+  <div
+    class="flex align-content-center align-items-center justify-content-between mb-3 flex-column md:flex-row"
+  >
+    <h1>Lista de <span class="text-primary">Docentes</span></h1>
+    <div class="flex flex-row grid">
+      <div class="col hidden md:inline-flex">
+        <p-button
+          icon="pi pi-filter"
+          label="Filtros"
+          styleClass="p-button-secondary"
+          (click)="mostrarfiltros()"
+          pTooltip="Visiviliza filtros de datos"
+          tooltipPosition="bottom"
+        ></p-button>
+      </div>
+      <div class="col">
+        <p-button
+          icon="pi pi-plus"
+          label="Nuevo"
+          styleClass="p-button-success"
+          (click)="crearnuevo()"
+          pTooltip="Crea un nuevo docente"
+          tooltipPosition="bottom"
+        ></p-button>
+      </div>
+      <div class="col">
+        <p-button
+          icon="pi pi-trash"
+          label="Eliminar"
+          styleClass="p-button-danger"
+          (click)="deleteSelectedDocente()"
+          [disabled]="!selectedDocentes || !selectedDocentes.length"
+          pTooltip="Elimina docente selecionado"
+          tooltipPosition="bottom"
+        ></p-button>
+      </div>
     </div>
   </div>
   <p-table
@@ -34,11 +48,15 @@
     [(selection)]="selectedDocentes"
     dataKey="id"
     [tableStyle]="{ 'min-width': '18rem' }"
-    [rows]="4"
+    [rows]="7"
     [paginator]="true"
     responsiveLayout="stack"
-    [breakpoint]="'420px'"
+    [breakpoint]="'900px'"
     [scrollable]="false"
+    [styleClass]="'p-datatable-sm'"
+    [showCurrentPageReport]="true"
+    currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} registros."
+    [rowsPerPageOptions]="[7, 25, 50]"
   >
     <ng-template pTemplate="header">
       <tr>
@@ -215,16 +233,22 @@
           {{ docente.iduser.createdAt | date }}
         </td>
         <td>
-          <p-button
-            icon="pi pi-user-edit"
-            styleClass="p-button-info"
-            (click)="editar(docente.iduser)"
-          ></p-button>
-          <p-button
-            icon="pi pi-key"
-            styleClass="p-button-warning"
-            (click)="resetPass()"
-          ></p-button>
+          <div class="flex gap-1">
+            <p-button
+              icon="pi pi-user-edit"
+              styleClass="p-button-info h-2rem w-2rem p-button-rounded"
+              (click)="editar(docente.iduser)"
+              pTooltip="Edita al usuario selecionado"
+              tooltipPosition="left"
+            ></p-button>
+            <p-button
+              icon="pi pi-key"
+              styleClass="p-button-warning h-2rem w-2rem p-button-rounded"
+              (click)="resetPass()"
+              pTooltip="Edita al usuario selecionado"
+              tooltipPosition="left"
+            ></p-button>
+          </div>
         </td>
       </tr>
     </ng-template>
