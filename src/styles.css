@@ -76,6 +76,10 @@ body {
 		background-position: 0% 50%;
 	}
 } */
-
+.p-datatable .p-datatable-header {
+    background-color: white !important;
+    border: none !important;
+    padding: 1rem 0 !important;
+}
 .tracking-in-expand{animation:tracking-in-expand 0.4s linear both} @keyframes tracking-in-expand{0%{letter-spacing:-.2em;opacity:0}40%{opacity:.6}100%{opacity:1}}
 .tracking-in-contract{animation:tracking-in-contract 0.4s linear both} @keyframes tracking-in-contract{0%{letter-spacing:.6em;opacity:0}40%{opacity:.6}100%{letter-spacing:normal;opacity:1}}

@@ -37,18 +37,13 @@
     ]"
     [loading]="loading"
   >
-    <ng-template pTemplate="caption">
-      <div class="flex">
-        <button
-          pButton
-          label=""
-          class="p-button-help"
-          icon="pi pi-filter-slash"
-          (click)="clear(dt1)"
-        ></button>
-        <span class="p-input-icon-left ml-auto">
+    <ng-template pTemplate="caption" class="tabla">
+      <div class="flex flex-row gap-1">
+        
+        <span class=" flex p-input-icon-left ml-auto ">
           <i class="pi pi-search"></i>
           <input
+          class="w-12  md:w-full"
             pInputText
             type="text"
             [(ngModel)]="datoFiltro"
@@ -56,6 +51,13 @@
             placeholder="Buscar"
           />
         </span>
+        <button
+          pButton
+          label=""
+          class=" flex p-button-help"
+          icon="pi pi-filter-slash"
+          (click)="clear(dt1)"
+        ></button>
       </div>
     </ng-template>
     <ng-template pTemplate="header" let-columns>
