@@ -17,6 +17,7 @@ import { Table } from 'primeng/table';
   styleUrls: ['./detalle-asignatura.component.css'],
 })
 export class DetalleAsignaturaComponent implements OnInit {
+  datoFiltro : string;
   calificadoSubmit() {
 
     this.detalleAsignaturaService
@@ -81,6 +82,7 @@ export class DetalleAsignaturaComponent implements OnInit {
     this.detalleAsignaturaService.crearCalificacion(objeto).subscribe((res) => {
       console.log(res);
     });
+    // this.formCalificacionParciales.reset()
     this.dialogParcial = false;
   }
 
@@ -254,7 +256,7 @@ export class DetalleAsignaturaComponent implements OnInit {
       Validators.required,
     ]),
     puntaje: new FormControl(null, [
-      Validators.max(35 - this.sumaParciales),
+      Validators.max(35),
       Validators.required,
     ]),
     tipoCalificacion: new FormControl(''),
@@ -275,6 +277,7 @@ export class DetalleAsignaturaComponent implements OnInit {
     return datos;
   }
   clear(table: Table) {
+    this.datoFiltro = ""
     table.clear();
   }
   
