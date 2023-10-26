@@ -105,6 +105,8 @@
   header="Header"
   [(visible)]="dialogCompetencia"
   [style]="{ width: '90vw' }"
+  [draggable]="false"
+  [modal]="true"
 >
   <ng-template pTemplate="header">
     <span class="text-xl font-bold">Asignar Competencias</span>
@@ -406,6 +408,10 @@
   header="Header"
   [(visible)]="dialogCalificar"
   [style]="{ width: '90vw', height: '80vh' }"
+  [draggable]="false"
+  position="top"
+  [modal]="true"
+  
 >
   <ng-template pTemplate="header">
     <span class="text-xl font-bold">Calificar Estudiante</span>
@@ -454,15 +460,15 @@
 </p-dialog>
 
 <p-dialog
-  header="Calificando estudiante"
+  header="Calificacion estudiante"
   [(visible)]="dialogCalificando"
-  [style]="{ width: '40vw' }"
+  [style]="{ width: '40vw' ,}"
   [breakpoints]="{ '960px': '75vw' }"
   [modal]="true"
 >
-  <div class="flex flex-row flex-wrap card-container blue-container">
+  <div class="flex md:flex-row flex-column align-items-start justify-content-center h-5rem">
     <!-- {{ calificado.valid }} -->
-    <div class="flex align-items-center justify-content-center m-2">
+    <div class="flex flex-column align-items-center justify-content-center m-2">
       <p-inputNumber
         [formControl]="calificado"
         mode="decimal"
@@ -471,9 +477,15 @@
         placeholder="Introduca la calificacion"
       >
       </p-inputNumber>
+      <small
+          class="p-error"
+          *ngIf="calificado.errors && calificado.value "
+          >Puntaje maximo es {{calificado.errors['max'].max|json}}</small
+        >
     </div>
     <div class="flex align-items-center justify-content-center m-2">
       <div class="mx-2">
+        <!-- <p>{{calificado.valid}}</p> -->
         <p-button
           [disabled]="!calificado.valid"
           label="Guardar"
