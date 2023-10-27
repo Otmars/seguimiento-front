@@ -19,6 +19,7 @@ export class DocenteComponent implements OnInit {
   docentes: Docente[];
   selectedDocentes: any;
   buttonfiltros: boolean = true;
+  loading: boolean = true;
   constructor(
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
@@ -157,6 +158,7 @@ export class DocenteComponent implements OnInit {
   cargarDocentes() {
     this.docenteService.getDocentes().subscribe((res) => {
       this.docentes = res;
+      this.loading = false
     });
   }
   getEventValue($event: any): string {

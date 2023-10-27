@@ -6,7 +6,7 @@
     header="Header"
     [(visible)]="perfilModal"
     [style]="{ width: '90vw' }"
-    [draggable]="true"
+    [draggable]="false"
     position="top"
     [modal]="true"
     [resizable]="false"
@@ -335,6 +335,7 @@
   [maximizable]="true"
   position="top"
   [modal]="true"
+  [draggable]="false"
 >
   <ng-template pTemplate="header">
     <span class="text-xl font-bold">Calificaciones</span>
@@ -413,6 +414,7 @@
   [maximizable]="true"
   position="top"
   [modal]="true"
+  [draggable]="false"
 >
   <ng-template pTemplate="header">
     <span class="text-xl font-bold">Competencias Adquiridas</span>
@@ -532,13 +534,14 @@
   [maximizable]="true"
   position="top"
   [modal]="true"
+  [draggable]="false"
 >
   <ng-template pTemplate="header">
     <span class="text-xl font-bold">Asignaturas Inscritas</span>
   </ng-template>
   <ul>
     <li
-      class="card shadow-5 m-4 font-bold"
+      class="card2 shadow-5 m-4 font-bold "
       *ngFor="let item of materiasInscritasEstudiante"
     >
       {{ datosAsignatura(item).nombre }}
@@ -581,13 +584,14 @@
   [maximizable]="true"
   position="top"
   [modal]="true"
+  [draggable]="false"
 >
   <ng-template pTemplate="header">
-    <span class="text-xl font-bold">Lista de Docentes de Estudiante</span>
+    <h1 class="font-bold">Lista de <span class="text-primary">Docentes</span> de Estudiante</h1>
   </ng-template>
   <ul>
     <li
-      class="card shadow-5 m-4 font-bold"
+      class="card2 shadow-5 m-4 font-bold"
       *ngFor="let item of materiasInscritasEstudiante"
     >
       {{ getnombreCompleto(datosAsignatura(item).docente) }}

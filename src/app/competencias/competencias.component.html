@@ -1,6 +1,6 @@
 
 
-<div class="card flex flex-column justify-content-start md:ml-8 m-4 scalein animation-ease-in-out animation-duration-500">
+<div class="card flex flex-column justify-content-start md:ml-8 m-4 scalein animation-ease-in-out animation-duration-500 shadow-8">
     <!-- <ul *ngFor="let item of competencias">
     <li> {{item.createdAt}}</li>
   </ul> -->
@@ -12,6 +12,14 @@
     [breakpoint]="'960px'"
     styleClass="p-datatable-sm p-datatable-striped"
     [(selection)]="selectedComeptencia"
+    [loading]="loading"
+    [rows]="7"
+    [paginator]="true"
+    [globalFilterFields]="['descripcion']"
+    [showCurrentPageReport]="true"
+    currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} registros."
+    [rowsPerPageOptions]="[7, 25, 50]"
+    [loading]="loading"
   >
     <ng-template pTemplate="caption">
       <div class="flex md:flex-row flex-column align-items-center justify-content-between">
@@ -89,7 +97,7 @@
           <span class="p-column-title">Fecha de creacion</span
           >{{ competencia.createdAt | date : "short" }}
         </td>
-        <td class="flex align-content-center justify-content-center">
+        <td class="">
           <p-button
             styleClass="p-button-outlined p-button-info m-1 py-1 "
             icon="pi pi-pencil"

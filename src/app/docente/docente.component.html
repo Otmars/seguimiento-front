@@ -2,7 +2,7 @@
 <p-confirmDialog [style]="{ width: '50vw' }"></p-confirmDialog>
 
 <div
-  class="card flex flex-column justify-content-start md:ml-8 m-4 scalein animation-ease-in-out animation-duration-500"
+  class="card flex flex-column justify-content-start md:ml-8 m-4 scalein animation-ease-in-out animation-duration-500 shadow-8"
 >
   <div
     class="flex align-content-center align-items-center justify-content-between mb-3 flex-column md:flex-row"
@@ -57,6 +57,7 @@
     [showCurrentPageReport]="true"
     currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} registros."
     [rowsPerPageOptions]="[7, 25, 50]"
+    [loading]="loading"
   >
     <ng-template pTemplate="header">
       <tr>

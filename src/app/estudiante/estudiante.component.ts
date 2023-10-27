@@ -18,6 +18,7 @@ export class EstudianteComponent implements OnInit {
     estudiantes: Estudiante[];
     selectedEstudiantes: any;
     buttonfiltros: boolean = true;
+  loading: boolean =true;
     constructor(
       private messageService: MessageService,
       private confirmationService: ConfirmationService,
@@ -162,6 +163,7 @@ export class EstudianteComponent implements OnInit {
     cargarEstudiantes() {
       this.estudianteService.getEstudiantes().subscribe((res) => {
         this.estudiantes = res;
+        this.loading = false
       });
     }
     getEventValue($event: any): string {

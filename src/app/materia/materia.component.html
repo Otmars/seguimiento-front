@@ -20,8 +20,8 @@
     [targetStyle]="{ height: '30rem', color: 'red' }"
     breakpoint="500px"
     filterBy="descripcion"
-    sourceFilterPlaceholder="Search by name"
-    targetFilterPlaceholder="Search by name"
+    sourceFilterPlaceholder="Buscar"
+    targetFilterPlaceholder="Buscar"
   >
     <ng-template let-competencia pTemplate="item">
       <div class="flex flex-wrap p-2 align-items-center gap-3">
@@ -263,7 +263,7 @@
 </p-confirmDialog>
 
 <div
-  class="card flex flex-column justify-content-start md:ml-8 m-4 scalein animation-ease-in-out animation-duration-500"
+  class="card flex flex-column justify-content-start md:ml-8 m-4 scalein animation-ease-in-out animation-duration-500 shadow-8"
 >
   <p-table
     #dtMateria

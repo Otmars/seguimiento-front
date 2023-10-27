@@ -29,6 +29,7 @@ export class CompetenciasComponent implements OnInit {
   editar:boolean = false
   subscription : Subscription
   datoFiltro: string;
+  loading: boolean = true;
   showDialog() {
     this.display = true;
   }
@@ -52,7 +53,7 @@ export class CompetenciasComponent implements OnInit {
   cargarCompetencia() {
     this.competenciaService.getCompetencias().subscribe((res) => {
       this.competencias = res;
-      console.log(this.competencias);
+      this.loading = false
     });
   }
 
