@@ -4,6 +4,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 
 import { RouterModule } from '@angular/router';
 import { AdminRoutingModule } from './admin-routing.module';
+import { ButtonModule } from 'primeng/button';
 
 
 
@@ -14,7 +15,8 @@ import { AdminRoutingModule } from './admin-routing.module';
   imports: [
     CommonModule,
     RouterModule,
-    AdminRoutingModule
+    AdminRoutingModule,
+    ButtonModule
   ]
 })
 export class AdminModule { }
