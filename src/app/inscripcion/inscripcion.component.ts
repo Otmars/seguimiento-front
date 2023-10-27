@@ -45,6 +45,7 @@ export class InscripcionComponent implements OnInit {
   targetAsignatura: any[];
   inscripcionDialog: any;
   subscription: Subscription;
+  datoFiltro: string;
   constructor(
     private inscripcionService: InscripcionService,
     private estudianteService: EstudianteService,
@@ -60,6 +61,7 @@ export class InscripcionComponent implements OnInit {
     this.inscripcionService.getDatos().subscribe((res) => {
       console.log(res);
       this.datos = res;
+      this.loading = false
     });
   }
   cargarEstudiantes() {
@@ -89,9 +91,12 @@ export class InscripcionComponent implements OnInit {
     return nombreCompleto;
   }
   clear(table: Table) {
+    this.datoFiltro = '';
     table.clear();
   }
   getEventValue($event: any): string {
     return $event.target.value;
   }
+  
+  loading: boolean = true;
 }

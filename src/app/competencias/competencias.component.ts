@@ -28,7 +28,7 @@ export class CompetenciasComponent implements OnInit {
   formCompetencia!: FormGroup;
   editar:boolean = false
   subscription : Subscription
-
+  datoFiltro: string;
   showDialog() {
     this.display = true;
   }
@@ -38,7 +38,9 @@ export class CompetenciasComponent implements OnInit {
     private competenciaService: CompetenciaService,
     private fb: FormBuilder
   ) {}
-
+  getEventValue($event: any): string {
+    return $event.target.value;
+  }
   ngOnInit() {
     this.formCompetencia = this.initForm();
     this.subscription = this.competenciaService.refresh$.subscribe(()=>{

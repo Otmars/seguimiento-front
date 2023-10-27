@@ -144,8 +144,14 @@ export class EstudianteComponent implements OnInit {
     mostrarfiltros() {
       this.buttonfiltros = !this.buttonfiltros;
     }
-  
+    row : number = 7
     ngOnInit(): void {
+      console.log(window.screen.availHeight);
+      if (window.screen.availHeight>900) {
+        console.log(window.screen.availHeight>768);
+        
+        this.row = 15
+      }
       this.cargarEstudiantes();
       this.estudianteForm = this.initForm();
       this.subscription = this.estudianteService.refresh$.subscribe(() => {
@@ -163,5 +169,10 @@ export class EstudianteComponent implements OnInit {
     }
     serpararcorreo(text : string){
       return text.split('@')
+    }
+    rows(){
+      let row = 7
+      
+      return row
     }
 }

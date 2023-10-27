@@ -187,7 +187,7 @@
   <div
     class="flex align-content-center align-items-center justify-content-between mb-3 flex-column md:flex-row"
   >
-    <h1>Lista de <span class="text-primary">Estudiantes</span></h1>
+    <h1>Gestion de <span class="text-primary">Estudiantes</span></h1>
     <div class="flex flex-row grid">
       <div class="col hidden md:inline-flex">
         <p-button
@@ -228,7 +228,7 @@
     [(selection)]="selectedEstudiantes"
     dataKey="id"
     [tableStyle]="{ 'min-width': '18rem' }"
-    [rows]="7"
+    [rows]="row"
     [paginator]="true"
     responsiveLayout="stack"
     [breakpoint]="'900px'"
@@ -236,7 +236,7 @@
     [styleClass]="'p-datatable-sm'"
     [showCurrentPageReport]="true"
     currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} registros."
-    [rowsPerPageOptions]="[7, 25, 50]"
+    [rowsPerPageOptions]="[row, 25, 50]"
   >
     <ng-template pTemplate="header">
       <tr>

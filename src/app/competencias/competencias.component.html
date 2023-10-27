@@ -1,10 +1,11 @@
 
 
-<div class="card md:ml-8 m-4">
+<div class="card flex flex-column justify-content-start md:ml-8 m-4 scalein animation-ease-in-out animation-duration-500">
     <!-- <ul *ngFor="let item of competencias">
     <li> {{item.createdAt}}</li>
   </ul> -->
   <p-table
+  #dtCompetencia
     [value]="competencias"
     [tableStyle]="{ 'min-width': '300px' }"
     responsiveLayout="stack"
@@ -13,8 +14,22 @@
     [(selection)]="selectedComeptencia"
   >
     <ng-template pTemplate="caption">
-      <div class="flex align-items-center justify-content-between">
-        Competencias
+      <div class="flex md:flex-row flex-column align-items-center justify-content-between">
+        <div>
+          <h1>Gestion de <span class="text-primary">Competencias</span></h1>
+        </div>
+        <div class="flex p-input-icon-left md:ml-auto my-1">
+          <i class="pi pi-search"></i>
+          <input
+            class="w-12 md:w-full"
+            pInputText
+            type="text"
+            [(ngModel)]="datoFiltro"
+            (input)="dtCompetencia.filterGlobal(getEventValue($event), 'contains')"
+            placeholder="Buscar"
+            pTooltip="Filtra los datos"
+          />
+        </div>
         <div class="flex">
         <button
         pTooltip="Crea un nueva competencia"
@@ -22,14 +37,16 @@
           pRipple
           label="Nuevo"
           icon="pi pi-plus"
-          class="p-button-success p-mr-2"
+          class="p-button-success mx-2"
           (click)="nuevaCompentecia()"
         ></button>
         <button
         pButton
         pRipple
         icon="pi pi-trash"
-        class="p-button-danger mx-3"
+        class="p-button-danger"
+        label="Eliminar"
+        pTooltip="Elimina competencia selecionada"
         (click)="deleteSelectedCompetencia()"
         [disabled]="!selectedComeptencia || !selectedComeptencia.length"
       ></button></div>
@@ -39,7 +56,7 @@
     <ng-template pTemplate="header" let-columns>
       <tr>
         <th style="width: 4rem">
-          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+          <!-- <p-tableHeaderCheckbox></p-tableHeaderCheckbox> -->
         </th>
         <th>Id</th>
         <th pSortableColumn="descripcion">

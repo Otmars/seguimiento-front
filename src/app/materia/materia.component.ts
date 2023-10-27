@@ -16,6 +16,7 @@ import { CompetenciaService } from '../competencias/competencia.service';
   providers: [MessageService, ConfirmationService],
 })
 export class MateriaComponent implements OnInit, OnDestroy {
+  loading: boolean = true;
   guardarRelacion($event: Event) {
     throw new Error('Method not implemented.');
   }
@@ -53,6 +54,7 @@ export class MateriaComponent implements OnInit, OnDestroy {
   sourceCompetencia!: any[];
 
   targetCompetencia!: any[];
+  datoFiltro: string;
   constructor(
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
@@ -63,6 +65,7 @@ export class MateriaComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
     console.log('suscripcion destuida');
+    
   }
 
   ngOnInit(): void {
@@ -75,6 +78,9 @@ export class MateriaComponent implements OnInit, OnDestroy {
     });
 
     this.targetCompetencia = [];
+  }
+  getEventValue($event: any): string {
+    return $event.target.value;
   }
   guardarRelacionCompetencia() {
     console.log(this.idAsignatura);
@@ -101,56 +107,6 @@ export class MateriaComponent implements OnInit, OnDestroy {
       this.targetCompetencia = res.competenciasAsignadas
       this.sourceCompetencia = res.competenciasNoAsignadas
     })
-    // var reCompetencias: any = [];
-    // var relacion: any = [];
-    // var competenciasrelacionadas: any = [];
-    // await this.competenciaService.getCompetencias().subscribe((res) => {
-    //   // console.log(res);
-
-    //   reCompetencias = res;
-
-    //   this.materiaService
-    //     .getRelacionMateriaCompetencia(this.idAsignatura)
-    //     .subscribe((ress) => {
-    //       // console.log(res);
-    //       relacion = ress;
-    //        res.forEach((element1: any) => {
-    //         relacion.forEach((element2: any) => {
-    //           if (element1.id == element2.competenciaId) {
-                
-    //             competenciasrelacionadas.push(element1);
-                
-    //             // reCompetencias.splice(index, 1);
-    //           }
-    //           if(element1.id != element2.competenciaId){
-    //             console.log(element1);
-    //             reCompetencias.push(element1)
-    //           }
-    //         });
-    //       });
-    //       // for (let i = 0; i < reCompetencias.length; i++) {
-    //       //   for (let j = 0; j < relacion.length; j++) {
-    //       //     // console.log(reCompetencias[i].id);
-
-    //       //     if (reCompetencias[i].id == relacion[j].competenciaId) {
-    //       //       console.log(true);
-
-    //       //       // console.log(reCompetencias[i].id, "------",relacion[j].competenciaId);
-    //       //       // console.log("hay");
-    //       //       competenciasrelacionadas.push(reCompetencias[i]);
-    //       //       reCompetencias.splice(i, 1);
-    //       //       // console.log("----------",competenciasrelacionadas);
-    //       //       // console.log("----------", reCompetencias);
-    //       //     }
-    //       //   }
-    //       // }
-    //       this.targetCompetencia = competenciasrelacionadas;
-    //       this.sourceCompetencia = reCompetencias;
-
-    //       console.log(this.targetCompetencia.length,this.sourceCompetencia.length);
-          
-    //     });
-    // });
   }
   initForm(): FormGroup {
     return this.fb.group({
@@ -166,7 +122,11 @@ export class MateriaComponent implements OnInit, OnDestroy {
   cargarDatos() {
     this.materiaService.getMarteria().subscribe((respuesta: Asingatura[]) => {
       this.datos = respuesta;
-      console.log('cargando tabla');
+      // console.log('cargando tabla');
+      // setTimeout(() => {
+        
+      // }, 5000);
+      this.loading = false
     });
   }
   nuevoAsignatura() {
