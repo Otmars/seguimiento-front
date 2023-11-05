@@ -104,6 +104,8 @@ export class MateriaComponent implements OnInit, OnDestroy {
   }
   async cargarCompetencias() {
     this.materiaService.getRelacionMateriaCompetencia(this.idAsignatura).subscribe((res:any)=>{
+      console.log(res);
+      
       this.targetCompetencia = res.competenciasAsignadas
       this.sourceCompetencia = res.competenciasNoAsignadas
     })

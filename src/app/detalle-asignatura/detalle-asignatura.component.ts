@@ -213,7 +213,11 @@ export class DetalleAsignaturaComponent implements OnInit {
     this.cargarCompetenciasmateria();
   }
   idEstududiante: number;
+  picklistResponsive : boolean = true
   async showCompetenciaDialog(dato: any) {
+    if (screen.width<1366) {
+      this.picklistResponsive = false
+    }
     this.idEstududiante = dato.id;
 
     this.dialogCompetencia = true;

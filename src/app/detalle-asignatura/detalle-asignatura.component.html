@@ -126,12 +126,12 @@
       [target]="competenciaEstudiante"
       sourceHeader="Todas"
       targetHeader="Selecionada"
-      [dragdrop]="true"
+      [dragdrop]="picklistResponsive"
       [responsive]="true"
       [sourceStyle]="{ height: '30rem' }"
       [targetStyle]="{ height: '30rem', color: 'red' }"
       breakpoint="500px"
-      filterBy="descripcion"
+      filterBy="competencia.descripcion"
       sourceFilterPlaceholder="Buscar por nombre"
       targetFilterPlaceholder="Buscar por nombre"
     >
@@ -423,30 +423,33 @@
   </ng-template>
   <p-table
     [value]="calificacionestudiante"
-    [tableStyle]="{ 'min-width': '15rem' }"
+    [tableStyle]="{ 'min-width': '10rem' }"
+    responsiveLayout="stack"
+    breakpoint="768px"
   >
     <ng-template pTemplate="header">
       <tr>
         <th>id</th>
         <th>descripcion</th>
         <th>Calificacion</th>
-        <th></th>
+        <th>Acciones</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-calificacion>
       <tr>
-        <td>{{ calificacion.id }}</td>
-        <td>{{ calificacion.calificacion.descripcion }}</td>
-        <td>
+        <td class="sm:hidden hidden md:block">{{ calificacion.id }}</td>
+        <td><span class="p-column-title font-bold">Calificacion</span>{{ calificacion.calificacion.descripcion }}</td>
+        <td><span class="p-column-title font-bold">Puntaje</span>
           {{
             calificacion.calificacionObtenida +
               "/" +
               calificacion.calificacion.puntaje
           }}
         </td>
-        <td>
+        <td class="md:p-0 md:m-0 ">
           <p-button
-            styleClass="p-button-rounded p-button-info m-1 py-1 "
+            styleClass="p-button-rounded p-button-info md:h-2rem  m-0"
+            label="Calificar"
             icon="pi pi-pencil"
             (click)="calificando(calificacion)"
           ></p-button>
@@ -458,7 +461,7 @@
     <p-button
       icon="pi pi-check"
       (click)="dialogCalificar = false"
-      label="Ok"
+      label="Cerrar"
       styleClass="p-button-rounded p-button-secondary"
     ></p-button>
   </ng-template>
@@ -471,7 +474,7 @@
   [breakpoints]="{ '960px': '75vw' }"
   [modal]="true"
 >
-  <div class="flex md:flex-row flex-column align-items-start justify-content-center h-5rem">
+  <div class="flex md:flex-row flex-column align-items-start justify-content-center h-7rem">
     <!-- {{ calificado.valid }} -->
     <div class="flex flex-column align-items-center justify-content-center m-2">
       <p-inputNumber
