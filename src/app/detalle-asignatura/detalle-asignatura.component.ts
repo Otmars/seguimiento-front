@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { EstudianteService } from '../estudiante/estudiante.service';
 import { DetalleAsignaturaService } from './detalle-asignatura.service';
 import { ActivatedRoute } from '@angular/router';
-import { MenuItem, MessageService } from 'primeng/api';
+import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import {
   FormBuilder,
   FormControl,
@@ -153,7 +153,8 @@ export class DetalleAsignaturaComponent implements OnInit {
     private detalleAsignaturaService: DetalleAsignaturaService,
     private route: ActivatedRoute,
     private messageService: MessageService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private confirmationService: ConfirmationService
   ) {}
   cargarDatos() {
     console.log(this.id);
@@ -302,20 +303,36 @@ export class DetalleAsignaturaComponent implements OnInit {
   }
   loading: boolean = true;
   eliminar(calificacion: any) {
-    console.log(calificacion);
-    this.dialogParcial = false;
-    this.dialogPractica = false;
-
-    
-    this.detalleAsignaturaService
-      .eliminarcalificacion(calificacion.id)
-      .subscribe((res: any) => {
-        if (res.response=="Calificacion Eliminada") {
-          this.messageService.add({ severity: 'success', summary: res.response, detail: 'Eliminado' });
-        }
-        if (res.response=="No se puede eliminar") {
-          this.messageService.add({ severity: 'warn', summary: res.response, detail: 'Hay estudiantes con la calificacion' });
-        }
-      });
+    this.confirmationService.confirm({
+      message:
+        '¿Está seguro de que desea eliminar la calificacion ' +
+        calificacion.descripcion +
+        '?',
+      header: 'Eliminar',
+      icon: 'pi pi-exclamation-triangle text-orange-500',
+      accept: () => {
+        this.detalleAsignaturaService
+          .eliminarcalificacion(calificacion.id)
+          .subscribe((res: any) => {
+            if (res.response == 'Calificacion Eliminada') {
+              this.messageService.add({
+                severity: 'success',
+                summary: res.response,
+                detail: 'Eliminado',
+              });
+              this.dialogParcial = false;
+              this.dialogPractica = false;
+            }
+            if (res.response == 'No se puede eliminar') {
+              this.messageService.add({
+                severity: 'warn',
+                summary: res.response,
+                detail: 'Hay estudiantes con la calificacion',
+              });
+            }
+          });
+      },
+      reject: () => {},
+    });
   }
 }

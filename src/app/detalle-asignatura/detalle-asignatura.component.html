@@ -1,5 +1,9 @@
 <p-toast></p-toast>
-<p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
+<p-confirmDialog [style]="{width: '40vw'}" [breakpoints]="{'960px':'70vw'}" #cd>
+  <ng-template pTemplate="footer">
+    <button type="button" pButton icon="pi pi-check" label="Si" (click)="cd.accept()"></button>
+</ng-template>
+</p-confirmDialog>
 <div
   class="card md:ml-8 m-4 scalein animation-ease-in-out animation-duration-500 shadow-8"
 >
