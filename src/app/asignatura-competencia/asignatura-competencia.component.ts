@@ -19,8 +19,6 @@ export class AsignaturaCompetenciaComponent {
 
   cargarCompetencias(){
     this.comptenciaService.getCompetencias().subscribe(res=>{
-      console.log(res);
-
       this.sourceCompetencia = res
     })
   }

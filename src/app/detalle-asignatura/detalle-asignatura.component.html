@@ -1,5 +1,5 @@
-
 <p-toast></p-toast>
+<p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
 <div
   class="card md:ml-8 m-4 scalein animation-ease-in-out animation-duration-500 shadow-8"
 >
@@ -39,11 +39,10 @@
   >
     <ng-template pTemplate="caption" class="tabla">
       <div class="flex flex-row gap-1">
-        
-        <span class=" flex p-input-icon-left ml-auto ">
+        <span class="flex p-input-icon-left ml-auto">
           <i class="pi pi-search"></i>
           <input
-          class="w-12  md:w-full"
+            class="w-12 md:w-full"
             pInputText
             type="text"
             [(ngModel)]="datoFiltro"
@@ -54,7 +53,7 @@
         <button
           pButton
           label=""
-          class=" flex p-button-help"
+          class="flex p-button-help"
           icon="pi pi-filter-slash"
           (click)="clear(dt1)"
         ></button>
@@ -219,9 +218,7 @@
         >
         <small
           class="p-error text-orange-500"
-          *ngIf="
-          !formCalificacionPractica.controls.puntaje.valid
-          "
+          *ngIf="!formCalificacionPractica.controls.puntaje.valid"
           ><p>
             El valor maximo que puede tener <br />
             este campo es : {{ 35 - sumaPracticas }}
@@ -254,6 +251,7 @@
         <th>Descripcion</th>
         <th>Puntaje</th>
         <th>Tipo de Calificacion</th>
+        <th>Acciones</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-calificacion>
@@ -269,6 +267,14 @@
         </td>
         <td class="sm:hidden hidden md:block">
           {{ calificacion.tipoCalificacion }}
+        </td>
+        <td class="md:p-0 md:m-0">
+          <span class="p-column-title font-bold">Acciones</span>
+          <p-button
+            styleClass="p-button-rounded p-button-danger md:h-2rem md:w-2rem m-0 md:mx-4"
+            icon="pi pi-trash"
+            (click)="eliminar(calificacion)"
+          ></p-button>
         </td>
       </tr>
     </ng-template>
@@ -376,6 +382,7 @@
         <th>Descripcion</th>
         <th>Puntaje</th>
         <th>Tipo de Calificacion</th>
+        <th>Acciones</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-calificacion>
@@ -392,10 +399,18 @@
         <td class="sm:hidden hidden md:block">
           {{ calificacion.tipoCalificacion }}
         </td>
+        <td class="md:p-0 md:m-0">
+          <span class="p-column-title font-bold">Acciones</span>
+          <p-button
+            styleClass="p-button-rounded p-button-danger md:h-2rem md:w-2rem m-0 md:mx-4"
+            icon="pi pi-trash"
+            (click)="eliminar(calificacion)"
+          ></p-button>
+        </td>
       </tr>
-      <tr class="md:hidden">
+      <!-- <tr class="md:hidden">
         <td></td>
-      </tr>
+      </tr> -->
     </ng-template>
   </p-table>
 
@@ -416,7 +431,6 @@
   [draggable]="false"
   position="top"
   [modal]="true"
-  
 >
   <ng-template pTemplate="header">
     <span class="text-xl font-bold">Calificar Estudiante</span>
@@ -438,15 +452,19 @@
     <ng-template pTemplate="body" let-calificacion>
       <tr>
         <td class="sm:hidden hidden md:block">{{ calificacion.id }}</td>
-        <td><span class="p-column-title font-bold">Calificacion</span>{{ calificacion.calificacion.descripcion }}</td>
-        <td><span class="p-column-title font-bold">Puntaje</span>
+        <td>
+          <span class="p-column-title font-bold">Calificacion</span
+          >{{ calificacion.calificacion.descripcion }}
+        </td>
+        <td>
+          <span class="p-column-title font-bold">Puntaje</span>
           {{
             calificacion.calificacionObtenida +
               "/" +
               calificacion.calificacion.puntaje
           }}
         </td>
-        <td class="md:p-0 md:m-0 ">
+        <td class="md:p-0 md:m-0">
           <p-button
             styleClass="p-button-rounded p-button-info md:h-2rem  m-0"
             label="Calificar"
@@ -474,7 +492,9 @@
   [breakpoints]="{ '960px': '75vw' }"
   [modal]="true"
 >
-  <div class="flex md:flex-row flex-column align-items-start justify-content-center h-7rem">
+  <div
+    class="flex md:flex-row flex-column align-items-start justify-content-center h-7rem"
+  >
     <!-- {{ calificado.valid }} -->
     <div class="flex flex-column align-items-center justify-content-center m-2">
       <p-inputNumber
@@ -485,11 +505,9 @@
         placeholder="Introduca la calificacion"
       >
       </p-inputNumber>
-      <small
-          class="p-error"
-          *ngIf="calificado.errors && calificado.value "
-          >Puntaje maximo es {{calificado.errors['max'].max|json}}</small
-        >
+      <small class="p-error" *ngIf="calificado.errors && calificado.value"
+        >Puntaje maximo es {{ calificado.errors["max"].max | json }}</small
+      >
     </div>
     <div class="flex align-items-center justify-content-center m-2">
       <div class="mx-2">

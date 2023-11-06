@@ -14,8 +14,6 @@ export class JwtInterceptorInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     const token: any = localStorage.getItem('token');
-    console.log("intece");
-    
     let req = request
     if (token) {
 

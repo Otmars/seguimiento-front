@@ -47,4 +47,7 @@ export class DetalleAsignaturaService {
   guardarComptenciaEstudiante(body:any){
     return this.http.post(this.url+"estudiante/competencia",body)
   }
+  eliminarcalificacion(id:number){
+    return this.http.delete(this.url+"calificacion/"+id)
+  }
 }

@@ -89,7 +89,6 @@ export class CompetenciasComponent implements OnInit {
 
         for (let i = 0; i < this.selectedComeptencia.length; i++) {
           this.competenciaService.deleteCompetencia(this.selectedComeptencia[i].id).subscribe(res=>{
-            console.log(res);
           })
           
         }
@@ -104,7 +103,6 @@ export class CompetenciasComponent implements OnInit {
     });
   }
   guardarEditarCompetencia() {
-    console.log(this.formCompetencia.value);
     const editarCompetencia= this.formCompetencia.value
     const idcompetencia = this.formCompetencia.value.id
     delete editarCompetencia.id

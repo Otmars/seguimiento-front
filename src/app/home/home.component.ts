@@ -3,6 +3,7 @@ import decode from 'jwt-decode';
 import { HomeService } from './home.service';
 import { Table } from 'primeng/table';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -36,7 +37,7 @@ newpass: string;
   getEventValue($event: any): string {
     return $event.target.value;
   }
-  constructor(private homeService: HomeService,private router:Router) {}
+  constructor(private homeService: HomeService,private router:Router,private messageService: MessageService) {}
   perfilModal: boolean;
   showmodalOtros() {}
   showModalPerfil() {
@@ -121,13 +122,23 @@ newpass: string;
     }
 
     changePass(){
+      console.log(this.oldpass);
+      if (this.oldpass==undefined || this.newpass==undefined) {
+        this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Rellene los campos' });
+      }
       this.homeService.cambiarContraseña({
         id: this.iduser,
         password: this.oldpass,
         newpassword:this.newpass
-      }).subscribe(res=>{
-        console.log(res);
-        
+      }).subscribe((res:any)=>{
+       
+        if (res.response=="Contraseña incorrecta") {
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Contraseña incorrecta' });
+        }
+        console.log(res.response);
+        if (res.response=="Contraseña cambiada") {
+          this.messageService.add({ severity: 'success', summary: 'Accion Realizada', detail: 'Contraseña cambiada' });
+        }
       })
       this.changepasswordModal=false
     }

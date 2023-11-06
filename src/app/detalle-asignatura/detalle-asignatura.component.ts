@@ -71,33 +71,39 @@ export class DetalleAsignaturaComponent implements OnInit {
   datosAsignatura: any = [];
 
   guardarParciales() {
-    console.log(this.formCalificacionParciales.value);
     const objeto = {
       descripcion: this.formCalificacionParciales.value.descripcion,
       puntaje: this.formCalificacionParciales.value.puntaje,
       asignaturaId: parseInt(this.id),
       tipoCalificacion: 'Parcial',
     };
-    this.detalleAsignaturaService.crearCalificacion(objeto).subscribe((res) => {
-      console.log(res);
+    this.detalleAsignaturaService
+      .crearCalificacion(objeto)
+      .subscribe((res) => {});
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Accion exitosa',
+      detail: 'Parcial Creado',
     });
-    this.messageService.add({ severity: 'success', summary: 'Accion exitosa', detail: 'Parcial Creado' });
     this.formCalificacionParciales.reset();
     this.dialogParcial = false;
   }
 
   guardarPracticas() {
-    console.log(this.formCalificacionPractica.value);
     const objeto = {
       descripcion: this.formCalificacionPractica.value.descripcion,
       puntaje: this.formCalificacionPractica.value.puntaje,
       asignaturaId: parseInt(this.id),
       tipoCalificacion: 'Practica',
     };
-    this.detalleAsignaturaService.crearCalificacion(objeto).subscribe((res) => {
-      console.log(res);
+    this.detalleAsignaturaService
+      .crearCalificacion(objeto)
+      .subscribe((res) => {});
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Accion exitosa',
+      detail: 'Practica Creada',
     });
-    this.messageService.add({ severity: 'success', summary: 'Accion exitosa', detail: 'Practica Creada' });
     this.formCalificacionPractica.reset();
     this.dialogPractica = false;
   }
@@ -105,7 +111,6 @@ export class DetalleAsignaturaComponent implements OnInit {
   cargarCalificaciones() {
     this.sumaPracticas = 0;
     this.detalleAsignaturaService.cargarPracticas(this.id).subscribe((res) => {
-      console.log(res);
       this.listaCalificaciones = res;
       for (let i = 0; i < this.listaCalificaciones.length; i++) {
         this.sumaPracticas =
@@ -120,13 +125,11 @@ export class DetalleAsignaturaComponent implements OnInit {
   cargarCalificacionesParciales() {
     this.sumaParciales = 0;
     this.detalleAsignaturaService.cargarParciales(this.id).subscribe((res) => {
-      console.log(res);
       this.listaCalificacionesParciales = res;
       for (let i = 0; i < this.listaCalificacionesParciales.length; i++) {
         this.sumaParciales =
           this.sumaParciales + this.listaCalificacionesParciales[i].puntaje;
       }
-      console.log(this.sumaParciales);
       this.formCalificacionParciales.controls.puntaje.setValidators([
         Validators.required,
         Validators.max(35 - this.sumaParciales),
@@ -159,7 +162,7 @@ export class DetalleAsignaturaComponent implements OnInit {
       .getListaEstudiantes(this.id)
       .subscribe((res) => {
         this.estudiantes = res;
-        this.loading = false
+        this.loading = false;
       });
   }
   getEventValue($event: any): string {
@@ -202,7 +205,11 @@ export class DetalleAsignaturaComponent implements OnInit {
         });
       }
     }
-    this.messageService.add({ severity: 'success', summary: 'Accion exitosa', detail: 'Competencia Guardada' });
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Accion exitosa',
+      detail: 'Competencia Guardada',
+    });
     this.dialogCompetencia = false;
   }
   cerrardialogCompetencias() {
@@ -213,10 +220,10 @@ export class DetalleAsignaturaComponent implements OnInit {
     this.cargarCompetenciasmateria();
   }
   idEstududiante: number;
-  picklistResponsive : boolean = true
+  picklistResponsive: boolean = true;
   async showCompetenciaDialog(dato: any) {
-    if (screen.width<1366) {
-      this.picklistResponsive = false
+    if (screen.width < 1366) {
+      this.picklistResponsive = false;
     }
     this.idEstududiante = dato.id;
 
@@ -294,4 +301,21 @@ export class DetalleAsignaturaComponent implements OnInit {
     table.clear();
   }
   loading: boolean = true;
+  eliminar(calificacion: any) {
+    console.log(calificacion);
+    this.dialogParcial = false;
+    this.dialogPractica = false;
+
+    
+    this.detalleAsignaturaService
+      .eliminarcalificacion(calificacion.id)
+      .subscribe((res: any) => {
+        if (res.response=="Calificacion Eliminada") {
+          this.messageService.add({ severity: 'success', summary: res.response, detail: 'Eliminado' });
+        }
+        if (res.response=="No se puede eliminar") {
+          this.messageService.add({ severity: 'warn', summary: res.response, detail: 'Hay estudiantes con la calificacion' });
+        }
+      });
+  }
 }

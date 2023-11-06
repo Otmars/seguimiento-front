@@ -9,7 +9,6 @@ import { Router } from '@angular/router';
 export class DashboardComponent {
   constructor(private router:Router){}
  click(ruta:string){
-  console.log("click");
   this.router.navigate(['/'+ruta])
  }
 }
