@@ -25,6 +25,8 @@ export class DetalleAsignaturaComponent implements OnInit {
       })
       .subscribe((res) => {
         this.dialogCalificando = false;
+        this.dialogCalificar = false
+        this.showCalificarDialog(this.estudianteactual)
       });
   }
   dialogCalificando: boolean = false;
@@ -282,8 +284,9 @@ export class DetalleAsignaturaComponent implements OnInit {
     ]),
     tipoCalificacion: new FormControl(''),
   });
-
+  estudianteactual: any
   showCalificarDialog(idEstudiante: number) {
+    this.estudianteactual = idEstudiante
     this.dialogCalificar = true;
     this.detalleAsignaturaService
       .cargarCalificacionesEstudiante(idEstudiante, { asignaturaId: this.id })
@@ -334,5 +337,12 @@ export class DetalleAsignaturaComponent implements OnInit {
       },
       reject: () => {},
     });
+  }
+  totalCalificacion(){
+    let total = 0
+    this.calificacionestudiante.forEach((element:any) => {
+      total = element.calificacionObtenida+ total
+    });
+    return total
   }
 }

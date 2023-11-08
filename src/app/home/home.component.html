@@ -141,7 +141,7 @@
     <div class="flex justify-content-between flex-wrap text-xl p-4">
       <div class="flex align-items-center m-2">
         <i
-          class="pi pi-user text-xl cursor-pointer text-blue-50 "
+          class="pi pi-user text-xl cursor-pointer text-blue-50"
           (click)="showModalPerfil()"
         ></i>
       </div>
@@ -351,6 +351,10 @@
       'calificacion.asignatura.nombre',
       'calificacion.descripcion'
     ]"
+    sortMode="single"
+    dataKey="calificacion.asignatura.nombre"
+    rowGroupMode="subheader"
+    groupRowsBy="calificacion.asignatura.nombre"
   >
     <ng-template pTemplate="caption">
       <div class="flex">
@@ -374,29 +378,64 @@
         ></button>
       </div>
     </ng-template>
-    <ng-template pTemplate="header">
-      <tr>
-        <th pSortableColumn="calificacion.asignatura.nombre" style="width: 20%">
-          Asignatura
-          <p-sortIcon field="calificacion.asignatura.nombre"></p-sortIcon>
-        </th>
-        <th pSortableColumn="calificacion.descripcion" style="width: 20%">
-          Descripcion <p-sortIcon field="calificacion.descripcion"></p-sortIcon>
-        </th>
-        <th style="width: 20%">Calificacion</th>
+
+    <ng-template
+      pTemplate="groupheader"
+      let-product
+      let-rowIndex="rowIndex"
+      let-expanded="expanded"
+    >
+      <tr >
+        <td class="border-0 flex align-items-center">
+          <button type="button" pButton pRipple [pRowToggler]="product" class="p-button-text p-button-rounded p-button-plain mr-2" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+          <span class="font-bold ml-2 align-content-center align-items-center">{{product.calificacion.asignatura.nombre}}</span>
+        </td>
+        
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-product>
+    <ng-template pTemplate="groupfooter" let-product>
+      
+      <tr class="p-rowgroup-footer">
+          <td colspan="4" style="text-align: right">Total acumulado</td>
+          <td class="font-bold ">{{calculateTotal(product.calificacion.asignatura.nombre)}}</td>
+      </tr>
+  </ng-template>
+    <ng-template pTemplate="rowexpansion" let-product>
       <tr>
-         <td> <span class="p-column-title font-semibold">Asignatura</span>{{ product.calificacion.asignatura.nombre }}</td>
-        <td><span class="p-column-title font-semibold">Descripcion</span>{{ product.calificacion.descripcion }}</td>
-        <td><span class="p-column-title font-semibold">Calificacion</span>
+        <td>
+          <span class="p-column-title font-semibold">Asignatura</span
+          >{{ product.calificacion.asignatura.nombre }}
+        </td>
+        <td>
+          <span class="p-column-title font-semibold">Descripcion</span
+          >{{ product.calificacion.descripcion }}
+        </td>
+        <td>
+          <span class="p-column-title font-semibold">Calificacion</span>
+          {{
+            product.calificacionObtenida + "/" + product.calificacion.puntaje
+          }}
+        </td>
+      </tr>
+  </ng-template>
+    <!-- <ng-template pTemplate="body" let-product>
+      <tr>
+        <td>
+          <span class="p-column-title font-semibold">Asignatura</span
+          >{{ product.calificacion.asignatura.nombre }}
+        </td>
+        <td>
+          <span class="p-column-title font-semibold">Descripcion</span
+          >{{ product.calificacion.descripcion }}
+        </td>
+        <td>
+          <span class="p-column-title font-semibold">Calificacion</span>
           {{
             product.calificacionObtenida + "/" + product.calificacion.puntaje
           }}
         </td>
       </tr></ng-template
-    >
+    > -->
   </p-table>
   <ng-template pTemplate="footer">
     <p-button
@@ -467,11 +506,20 @@
     </ng-template>
     <ng-template pTemplate="body" let-product>
       <tr>
-        <td><span class="p-column-title font-semibold">Nombre</span>{{ product.asi_nombre }}</td>
-        <span class="md:hidden ml-3 font-semibold" >Descripcion</span>
+        <td>
+          <span class="p-column-title font-semibold">Nombre</span
+          >{{ product.asi_nombre }}
+        </td>
+        <span class="md:hidden ml-3 font-semibold">Descripcion</span>
         <td>{{ product.asicom_descripcion }}</td>
-        <td><span class="p-column-title font-semibold">Tipo</span>{{ product.asicom_tipoCompetencia }}</td>
-        <td><span class="p-column-title font-semibold">Estado</span><p-tag severity="success" value="Adquirida"></p-tag></td>
+        <td>
+          <span class="p-column-title font-semibold">Tipo</span
+          >{{ product.asicom_tipoCompetencia }}
+        </td>
+        <td>
+          <span class="p-column-title font-semibold">Estado</span
+          ><p-tag severity="success" value="Adquirida"></p-tag>
+        </td>
         <!-- <td>{{ product.calificacion.descripcion }}</td> -->
         <!-- <td>
           {{
@@ -542,7 +590,7 @@
   </ng-template>
   <ul>
     <li
-      class="card2 shadow-5 m-4 font-bold "
+      class="card2 shadow-5 m-4 font-bold"
       *ngFor="let item of materiasInscritasEstudiante"
     >
       {{ datosAsignatura(item).nombre }}
@@ -588,7 +636,9 @@
   [draggable]="false"
 >
   <ng-template pTemplate="header">
-    <h1 class="font-bold">Lista de <span class="text-primary">Docentes</span> de Estudiante</h1>
+    <h1 class="font-bold">
+      Lista de <span class="text-primary">Docentes</span> de Estudiante
+    </h1>
   </ng-template>
   <ul>
     <li

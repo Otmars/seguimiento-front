@@ -180,5 +180,17 @@ newpass: string;
   {
     this.modalDocentes =true
   }
-
+  calculateTotal(asignatura:any){
+    let total= 0
+    let calficacionesAsignatura=[]
+    this.calificacionesEstudiante.forEach((element:any) => {
+      
+      if (asignatura == element.calificacion.asignatura.nombre) {
+        // console.log(element.calificacionObtenida);
+        total = element.calificacionObtenida +total
+      }
+    });
+    console.log(total);
+    return total
+  }
 }

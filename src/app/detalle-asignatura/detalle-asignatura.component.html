@@ -444,6 +444,8 @@
     [tableStyle]="{ 'min-width': '10rem' }"
     responsiveLayout="stack"
     breakpoint="768px"
+    [scrollable]="true"
+
   >
     <ng-template pTemplate="header">
       <tr>
@@ -478,6 +480,12 @@
         </td>
       </tr>
     </ng-template>
+    <ng-template pTemplate="footer">
+      <tr>
+          <td colspan="3" class="text-right">Totals</td>
+          <td>{{totalCalificacion()}}</td>
+      </tr>
+  </ng-template>
   </p-table>
   <ng-template pTemplate="footer">
     <p-button
