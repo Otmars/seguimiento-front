@@ -3,6 +3,9 @@ import { Docente, User } from './docente-inteface';
 import { DocenteService } from './docente.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import jsPDF from 'jspdf';
+import { Table } from 'primeng/table';
+import autoTable from 'jspdf-autotable';
 
 @Component({
   selector: 'app-docente',
@@ -167,5 +170,64 @@ export class DocenteComponent implements OnInit {
   serpararcorreo(text : string){
     
     return text.split('@')
+  }
+  generarPdf(tabla: Table) {
+    var done: any = [];
+    if (tabla.filteredValue) {
+      tabla.filteredValue.forEach(function (object) {
+        done.push([
+          object.id,
+          object.iduser.nombres,
+          object.iduser.apellidoPaterno,
+          object.iduser.apellidoMaterno,
+          object.iduser.ci,
+          object.iduser.email,
+          object.iduser.createdAt
+        ]);
+      });
+    } else {
+      tabla.value.forEach(function (object) {
+        done.push([
+          object.id,
+          object.iduser.nombres,
+          object.iduser.apellidoPaterno,
+          object.iduser.apellidoMaterno,
+          object.iduser.ci,
+          object.iduser.email,
+          object.iduser.createdAt
+        ]);
+      });
+    }
+
+    const doc = new jsPDF({
+      format: 'letter',
+    });
+    doc.addImage('../../assets/images/encabezado.png', 'PNG', 0, -10, 210, 55);
+    doc.setFont('helvetica', 'bold');
+    doc.text('REPORTE DOCENTES', 70, 35);
+    // doc.autoPrint({ variant: 'non-conform' });
+
+    autoTable(doc, {
+      theme: 'grid',
+      headStyles: { fillColor: [0, 0, 0], font: 'helvetica', fontSize: 8 ,halign:'center'},
+      bodyStyles: { font: 'helvetica', fontSize: 8 },
+      startY: 45,
+      tableWidth: 'auto',
+      head: [
+        [
+          'id',
+          'Nombres',
+          'Apellido Paterno',
+          'Apellido Materno',
+          'C.I.',
+          'Correo',
+          'Telefono',
+          'Direccion',
+        ],
+      ],
+      body: done,
+    });
+    doc.output('pdfobjectnewwindow');
+    // doc.save()
   }
 }

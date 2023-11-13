@@ -1,22 +1,37 @@
 import { Component } from '@angular/core';
-import jsPDF from 'jspdf'
-import autoTable from 'jspdf-autotable'
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 @Component({
   selector: 'app-reportes',
   templateUrl: './reportes.component.html',
-  styleUrls: ['./reportes.component.css']
+  styleUrls: ['./reportes.component.css'],
 })
 export class ReportesComponent {
-
-  generarPdf(){
+  
+  generarPdf() {
     const doc = new jsPDF({
-      format:'letter',
-
+      format: 'letter',
     });
-    doc.addImage("../../assets/images/encabezado.png", "PNG", 0, -10, 210, 55);
-    doc.setFont("helvetica", "bold");
-    doc.text("REPORTE DE MATERIA INSCRITAS", 70, 35,);
-    doc.autoPrint({variant: 'non-conform'});
-doc.output("pdfobjectnewwindow")
+    doc.addImage('../../assets/images/encabezado.png', 'PNG', 0, -10, 210, 55);
+    doc.setFont('helvetica', 'bold');
+    doc.text('REPORTE DE MATERIA INSCRITAS', 70, 35);
+    doc.text('REPORTE DE MATERIA INSCRITAS', 70, 35);
+    // doc.autoPrint({ variant: 'non-conform' });
+    
+    autoTable(doc, {
+      theme:'grid',
+      headStyles:{fillColor:[0, 0, 0]},
+      bodyStyles:{font:'helvetica'},
+      startY:40,
+      tableWidth:'wrap',
+      head: [['Name', 'Email', 'Country']],
+      body: [
+        ['David', 'david@example.com', 'Sweden'],
+        ['Castille', 'castille@example.com', 'Spain'],
+        // ...
+      ],
+    });
+    doc.output('pdfobjectnewwindow');
+    // doc.save()
   }
 }

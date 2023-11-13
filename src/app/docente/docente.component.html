@@ -27,6 +27,16 @@
           tooltipPosition="bottom"
         ></p-button>
       </div>
+      <div class="col hidden md:inline-flex">
+        <p-button
+          icon="pi pi-file-pdf"
+          label="Reporte"
+          styleClass="p-button-help"
+          pTooltip="Crea un nuevo estudiante"
+          tooltipPosition="bottom"
+          (click)="generarPdf(dt1)"
+        ></p-button>
+      </div>
       <div class="col">
         <p-button
           icon="pi pi-plus"

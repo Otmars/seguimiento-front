@@ -6,6 +6,9 @@ import { Competencia } from './interface-competencia';
 import { CompetenciaService } from './competencia.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
+import { Table } from 'primeng/table';
 
 @Component({
   selector: 'app-competencias',
@@ -14,20 +17,24 @@ import { Subscription } from 'rxjs';
   providers: [MessageService, ConfirmationService],
 })
 export class CompetenciasComponent implements OnInit {
+modalGraficos() {
+  this.dialogGraficos = true
   
+}
   tipoCompetencia = [
     { nombre: 'Macro Competencia' },
-    { nombre: 'Competencia Generica'},
-    { nombre: 'Competencia Especifica'}
+    { nombre: 'Competencia Generica' },
+    { nombre: 'Competencia Especifica' },
   ];
+  dialogGraficos : boolean
   competemciaDialog!: boolean;
   competencias!: Competencia[];
   competencia!: Competencia;
-  selectedComeptencia!: any
+  selectedComeptencia!: any;
   display: boolean = false;
   formCompetencia!: FormGroup;
-  editar:boolean = false
-  subscription : Subscription
+  editar: boolean = false;
+  subscription: Subscription;
   datoFiltro: string;
   loading: boolean = true;
   showDialog() {
@@ -44,16 +51,16 @@ export class CompetenciasComponent implements OnInit {
   }
   ngOnInit() {
     this.formCompetencia = this.initForm();
-    this.subscription = this.competenciaService.refresh$.subscribe(()=>{
+    this.subscription = this.competenciaService.refresh$.subscribe(() => {
       this.cargarCompetencia();
-     })
+    });
     this.cargarCompetencia();
   }
 
   cargarCompetencia() {
     this.competenciaService.getCompetencias().subscribe((res) => {
       this.competencias = res;
-      this.loading = false
+      this.loading = false;
     });
   }
 
@@ -63,21 +70,20 @@ export class CompetenciasComponent implements OnInit {
   initForm(): FormGroup {
     return this.fb.group({
       id: [''],
-      descripcion: ['',[Validators.required]],
-      tipoCompetencia: ['',[Validators.required]],
+      descripcion: ['', [Validators.required]],
+      tipoCompetencia: ['', [Validators.required]],
     });
   }
   editCompetencia(competencia: Competencia) {
-    this.tituloModal="Editar Competencia"
-    this.editar=true
-    this.competemciaDialog = true
+    this.tituloModal = 'Editar Competencia';
+    this.editar = true;
+    this.competemciaDialog = true;
 
-    
     this.formCompetencia.setValue({
-      id:competencia.id,
-      descripcion: competencia.descripcion ,
+      id: competencia.id,
+      descripcion: competencia.descripcion,
       tipoCompetencia: competencia.tipoCompetencia,
-    })
+    });
   }
   deleteSelectedCompetencia() {
     this.confirmationService.confirm({
@@ -86,11 +92,10 @@ export class CompetenciasComponent implements OnInit {
       header: 'Confirmar',
       icon: 'pi pi-exclamation-triangle text-orange-500',
       accept: () => {
-
         for (let i = 0; i < this.selectedComeptencia.length; i++) {
-          this.competenciaService.deleteCompetencia(this.selectedComeptencia[i].id).subscribe(res=>{
-          })
-          
+          this.competenciaService
+            .deleteCompetencia(this.selectedComeptencia[i].id)
+            .subscribe((res) => {});
         }
         // this.selectedProducts = null;
         this.messageService.add({
@@ -103,21 +108,23 @@ export class CompetenciasComponent implements OnInit {
     });
   }
   guardarEditarCompetencia() {
-    const editarCompetencia= this.formCompetencia.value
-    const idcompetencia = this.formCompetencia.value.id
-    delete editarCompetencia.id
-    this.competenciaService.editarCompetencia(idcompetencia,editarCompetencia).subscribe(res =>{
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Operacion Realizada',
-        detail: 'Editado con exito',
-        life: 3000,
-      })
-      this.hideDialog()
-    })
+    const editarCompetencia = this.formCompetencia.value;
+    const idcompetencia = this.formCompetencia.value.id;
+    delete editarCompetencia.id;
+    this.competenciaService
+      .editarCompetencia(idcompetencia, editarCompetencia)
+      .subscribe((res) => {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Operacion Realizada',
+          detail: 'Editado con exito',
+          life: 3000,
+        });
+        this.hideDialog();
+      });
   }
   nuevaCompentecia() {
-    this.formCompetencia.reset()
+    this.formCompetencia.reset();
     this.tituloModal = 'Crear Competencia';
     this.competencia = {};
     this.competemciaDialog = true;
@@ -125,16 +132,67 @@ export class CompetenciasComponent implements OnInit {
   tituloModal: string;
 
   guardarCompetencia() {
-    const nuevaCompetencia = this.formCompetencia.value
-    delete nuevaCompetencia.id
-    this.competenciaService.postCompetencia(nuevaCompetencia).subscribe(res =>{
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Operacion Realizada',
-        detail: 'Creado con exito',
-        life: 3000,
-      })
-      this.hideDialog()
-    })
+    const nuevaCompetencia = this.formCompetencia.value;
+    delete nuevaCompetencia.id;
+    this.competenciaService
+      .postCompetencia(nuevaCompetencia)
+      .subscribe((res) => {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Operacion Realizada',
+          detail: 'Creado con exito',
+          life: 3000,
+        });
+        this.hideDialog();
+      });
+  }
+  fecha(fecha :Date){
+    return fecha.toLocaleDateString('es-MX')
+  }
+  generarPdf(tabla: Table) {
+    console.table(tabla.value);
+    var done: any = [];
+    if (tabla.filteredValue) {
+      tabla.filteredValue.forEach(function (object) {
+        done.push([object.id, object.descripcion, object.tipoCompetencia ,object.createdAt]);
+      });
+    } else {
+      tabla.value.forEach(function (object) {
+
+        done.push([object.id, object.descripcion, object.tipoCompetencia,object.createdAt]);
+      });
+    }
+
+    const doc = new jsPDF({
+      format: 'letter',
+    });
+    doc.addImage('../../assets/images/encabezado.png', 'PNG', 0, -10, 210, 55);
+    doc.setFont('helvetica', 'bold');
+    doc.text('REPORTE DOCENTES', 70, 35);
+    // doc.autoPrint({ variant: 'non-conform' });
+
+    autoTable(doc, {
+      theme: 'grid',
+      headStyles: {
+        fillColor: [0, 0, 0],
+        font: 'helvetica',
+        fontSize: 8,
+        halign: 'center',
+      },
+      bodyStyles: { font: 'helvetica', fontSize: 8 },
+      startY: 45,
+      tableWidth: 'auto',
+      head: [
+        [
+          'id',
+          'Descripcion',
+          'Tipo de competencia',
+          'Fecha Creacion'
+        ],
+      ],
+      body: done,
+    });
+    doc.output('pdfobjectnewwindow');
+    // doc.save()
   }
 }

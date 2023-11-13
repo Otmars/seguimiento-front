@@ -26,7 +26,6 @@
           autofocus
           [ngClass]="{'ng-dirty':estudianteForm.get('nombres')?.touched && estudianteForm.get('nombres')?.errors?.['required']}"
           onkeypress="return ' áéíóúabcdefghijklmnñopqrstuvwxyzÁÉÍÓÚABCDEFGHIJKLMNÑOPQRSTUVWXYZ'.includes(event.key)"
-          
         />
         <small
           class="p-error"
@@ -44,7 +43,7 @@
           autofocus
           [ngClass]="{'ng-dirty':estudianteForm.get('apellidoPaterno')?.touched && estudianteForm.get('apellidoPaterno')?.errors?.['required']}"
           onkeypress="return ' áéíóúabcdefghijklmnñopqrstuvwxyzÁÉÍÓÚABCDEFGHIJKLMNÑOPQRSTUVWXYZ'.includes(event.key)&& event.charCode != 32"
-          />
+        />
         <small
           class="p-error"
           *ngIf="estudianteForm.get('apellidoPaterno')?.touched && estudianteForm.get('apellidoPaterno')?.errors?.['required']"
@@ -61,7 +60,7 @@
           autofocus
           [ngClass]="{'ng-dirty':estudianteForm.get('apellidoMaterno')?.touched && estudianteForm.get('apellidoMaterno')?.errors?.['required']}"
           onkeypress="return ' áéíóúabcdefghijklmnñopqrstuvwxyzÁÉÍÓÚABCDEFGHIJKLMNÑOPQRSTUVWXYZ'.includes(event.key)&& event.charCode != 32"
-          />
+        />
         <small
           class="p-error"
           *ngIf="estudianteForm.get('apellidoMaterno')?.touched && estudianteForm.get('apellidoMaterno')?.errors?.['required']"
@@ -210,6 +209,16 @@
           (click)="mostrarfiltros()"
           pTooltip="Visiviliza filtros de datos"
           tooltipPosition="bottom"
+        ></p-button>
+      </div>
+      <div class="col hidden md:inline-flex">
+        <p-button
+          icon="pi pi-file-pdf"
+          label="Reporte"
+          styleClass="p-button-help"
+          pTooltip="Crea un nuevo estudiante"
+          tooltipPosition="bottom"
+          (click)="generarPdf(dt1)"
         ></p-button>
       </div>
       <div class="col">
