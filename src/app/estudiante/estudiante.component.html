@@ -1,6 +1,9 @@
 <div class="fixed mx-2 hidden md:inline">
-
-<p-button  onclick="history.back()" icon="pi pi-arrow-left" styleClass="p-button-raised p-button-secondary"></p-button>
+  <p-button
+    onclick="history.back()"
+    icon="pi pi-arrow-left"
+    styleClass="p-button-raised p-button-secondary"
+  ></p-button>
 </div>
 
 <form (ngSubmit)="guardarEstudiante()" [formGroup]="estudianteForm">
@@ -16,16 +19,19 @@
         <label for="nombres">Nombres</label>
         <input
           type="text"
+          autocapitalize="words"
           pInputText
           id="nombres"
           formControlName="nombres"
           autofocus
           [ngClass]="{'ng-dirty':estudianteForm.get('nombres')?.touched && estudianteForm.get('nombres')?.errors?.['required']}"
+          onkeypress="return ' áéíóúabcdefghijklmnñopqrstuvwxyzÁÉÍÓÚABCDEFGHIJKLMNÑOPQRSTUVWXYZ'.includes(event.key)"
+          
         />
         <small
           class="p-error"
           *ngIf="estudianteForm.get('nombres')?.touched && estudianteForm.get('nombres')?.errors?.['required']"
-          >Nombre is required.</small
+          >Nombre es requerido</small
         >
       </div>
       <div class="field">
@@ -37,11 +43,12 @@
           formControlName="apellidoPaterno"
           autofocus
           [ngClass]="{'ng-dirty':estudianteForm.get('apellidoPaterno')?.touched && estudianteForm.get('apellidoPaterno')?.errors?.['required']}"
-        />
+          onkeypress="return ' áéíóúabcdefghijklmnñopqrstuvwxyzÁÉÍÓÚABCDEFGHIJKLMNÑOPQRSTUVWXYZ'.includes(event.key)&& event.charCode != 32"
+          />
         <small
           class="p-error"
           *ngIf="estudianteForm.get('apellidoPaterno')?.touched && estudianteForm.get('apellidoPaterno')?.errors?.['required']"
-          >Apellido Paterno is required.</small
+          >Apellido Paterno es requerido</small
         >
       </div>
       <div class="field">
@@ -53,11 +60,12 @@
           formControlName="apellidoMaterno"
           autofocus
           [ngClass]="{'ng-dirty':estudianteForm.get('apellidoMaterno')?.touched && estudianteForm.get('apellidoMaterno')?.errors?.['required']}"
-        />
+          onkeypress="return ' áéíóúabcdefghijklmnñopqrstuvwxyzÁÉÍÓÚABCDEFGHIJKLMNÑOPQRSTUVWXYZ'.includes(event.key)&& event.charCode != 32"
+          />
         <small
           class="p-error"
           *ngIf="estudianteForm.get('apellidoMaterno')?.touched && estudianteForm.get('apellidoMaterno')?.errors?.['required']"
-          >Apellido Materno is required.</small
+          >Apellido Materno es requerido</small
         >
       </div>
       <div class="field">
@@ -76,7 +84,7 @@
         <small
           class="p-error"
           *ngIf="estudianteForm.get('ci')?.touched && estudianteForm.get('ci')?.errors?.['required']"
-          >Telefono is required.</small
+          >Telefono es requerido</small
         >
       </div>
       <div class="field">
@@ -92,7 +100,7 @@
         <small
           class="p-error"
           *ngIf="estudianteForm.get('email')?.touched && estudianteForm.get('email')?.errors?.['required']"
-          >Correo is required.</small
+          >Correo es requerido</small
         >
         <small
           class="p-error"
@@ -114,7 +122,7 @@
         <small
           class="p-error"
           *ngIf="estudianteForm.get('telefono')?.touched && estudianteForm.get('telefono')?.errors?.['required']"
-          >Telefono is required.</small
+          >Telefono es requerido</small
         >
       </div>
       <div class="field">
@@ -130,7 +138,7 @@
         <small
           class="p-error"
           *ngIf="estudianteForm.get('direccion')?.touched && estudianteForm.get('direccion')?.errors?.['required']"
-          >Direccion is required.</small
+          >Direccion es requerido</small
         >
       </div>
 
@@ -149,7 +157,7 @@
         <small
           class="p-error"
           *ngIf="estudianteForm.get('fnacimiento')?.touched && estudianteForm.get('fnacimiento')?.errors?.['required']"
-          >Fecha de nacimiento is required.</small
+          >Fecha de nacimiento es requerido</small
         >
       </div>
       <div>{{ estudianteForm.getError | json }}</div>

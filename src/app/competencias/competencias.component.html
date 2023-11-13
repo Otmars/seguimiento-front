@@ -1,15 +1,19 @@
 <div class="fixed mx-2 hidden md:inline">
+  <p-button
+    onclick="history.back()"
+    icon="pi pi-arrow-left"
+    styleClass="p-button-raised p-button-secondary"
+  ></p-button>
+</div>
 
-  <p-button  onclick="history.back()" icon="pi pi-arrow-left" styleClass="p-button-raised p-button-secondary"></p-button>
-  </div>
-  
-
-<div class="card flex flex-column justify-content-start md:ml-8 m-4 scalein animation-ease-in-out animation-duration-500 shadow-8">
-    <!-- <ul *ngFor="let item of competencias">
+<div
+  class="card flex flex-column justify-content-start md:ml-8 m-4 scalein animation-ease-in-out animation-duration-500 shadow-8"
+>
+  <!-- <ul *ngFor="let item of competencias">
     <li> {{item.createdAt}}</li>
   </ul> -->
   <p-table
-  #dtCompetencia
+    #dtCompetencia
     [value]="competencias"
     [tableStyle]="{ 'min-width': '300px' }"
     responsiveLayout="stack"
@@ -26,7 +30,9 @@
     [loading]="loading"
   >
     <ng-template pTemplate="caption">
-      <div class="flex md:flex-row flex-column align-items-center justify-content-between">
+      <div
+        class="flex md:flex-row flex-column align-items-center justify-content-between"
+      >
         <div>
           <h1>Gestion de <span class="text-primary">Competencias</span></h1>
         </div>
@@ -37,32 +43,34 @@
             pInputText
             type="text"
             [(ngModel)]="datoFiltro"
-            (input)="dtCompetencia.filterGlobal(getEventValue($event), 'contains')"
+            (input)="
+              dtCompetencia.filterGlobal(getEventValue($event), 'contains')
+            "
             placeholder="Buscar"
             pTooltip="Filtra los datos"
           />
         </div>
         <div class="flex">
-        <button
-        pTooltip="Crea un nueva competencia"
-          pButton
-          pRipple
-          label="Nuevo"
-          icon="pi pi-plus"
-          class="p-button-success mx-2"
-          (click)="nuevaCompentecia()"
-        ></button>
-        <button
-        pButton
-        pRipple
-        icon="pi pi-trash"
-        class="p-button-danger"
-        label="Eliminar"
-        pTooltip="Elimina competencia selecionada"
-        (click)="deleteSelectedCompetencia()"
-        [disabled]="!selectedComeptencia || !selectedComeptencia.length"
-      ></button></div>
-        
+          <button
+            pTooltip="Crea un nueva competencia"
+            pButton
+            pRipple
+            label="Nuevo"
+            icon="pi pi-plus"
+            class="p-button-success mx-2"
+            (click)="nuevaCompentecia()"
+          ></button>
+          <button
+            pButton
+            pRipple
+            icon="pi pi-trash"
+            class="p-button-danger"
+            label="Eliminar"
+            pTooltip="Elimina competencia selecionada"
+            (click)="deleteSelectedCompetencia()"
+            [disabled]="!selectedComeptencia || !selectedComeptencia.length"
+          ></button>
+        </div>
       </div>
     </ng-template>
     <ng-template pTemplate="header" let-columns>
@@ -89,14 +97,17 @@
           <p-tableCheckbox [value]="competencia"></p-tableCheckbox>
         </td>
         <td>
-          {{competencia.id}}
+          {{ competencia.id }}
         </td>
-        <td><span class="p-column-title">Nombre</span>{{ competencia.descripcion }}</td>
         <td>
-          <span class="p-column-title">Tipo de Competencia</span> {{
-            competencia.tipoCompetencia}}
+          <span class="p-column-title">Nombre</span
+          >{{ competencia.descripcion }}
         </td>
-       
+        <td>
+          <span class="p-column-title">Tipo de Competencia</span>
+          {{ competencia.tipoCompetencia }}
+        </td>
+
         <td>
           <span class="p-column-title">Fecha de creacion</span
           >{{ competencia.createdAt | date : "short" }}
@@ -113,7 +124,6 @@
   </p-table>
 </div>
 
-
 <form (ngSubmit)="guardarCompetencia()" [formGroup]="formCompetencia">
   <p-dialog
     [(visible)]="competemciaDialog"
@@ -126,20 +136,20 @@
       <div class="field">
         <label for="nombre">Descipcion</label>
 
-          <textarea
-            id="float-input"
-            rows="2"
-            cols="30"
-            formControlName="descripcion"
-            pInputTextarea
-            [autoResize]="true"
-            [ngClass]="{'ng-dirty':formCompetencia.get('descripcion')?.touched && formCompetencia.get('descripcion')?.errors?.['required']}"
-          ></textarea>
+        <textarea
+          id="float-input"
+          rows="2"
+          cols="30"
+          formControlName="descripcion"
+          pInputTextarea
+          [autoResize]="true"
+          [ngClass]="{'ng-dirty':formCompetencia.get('descripcion')?.touched && formCompetencia.get('descripcion')?.errors?.['required']}"
+        ></textarea>
 
         <small
           class="p-error"
           *ngIf="formCompetencia.get('descripcion')?.touched && formCompetencia.get('descripcion')?.errors?.['required']"
-          >Nombre is required.</small
+          >Nombre es requerido</small
         >
       </div>
 
@@ -174,18 +184,17 @@
         class="p-button-text"
       ></button>
 
-        <button
+      <button
         *ngIf="editar"
-          [disabled]="!formCompetencia.valid"
-          pButton
-          type="button"
-          pRipple
-          label="Editar"
-          icon="pi pi-check"
-          class="p-button-text"
-          (click)="guardarEditarCompetencia()"
-        ></button>
-
+        [disabled]="!formCompetencia.valid"
+        pButton
+        type="button"
+        pRipple
+        label="Editar"
+        icon="pi pi-check"
+        class="p-button-text"
+        (click)="guardarEditarCompetencia()"
+      ></button>
     </ng-template>
   </p-dialog>
 </form>

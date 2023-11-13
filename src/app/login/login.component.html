@@ -57,6 +57,7 @@
           formControlName="username"
           required
           [ngClass]="{'ng-dirty':loginForm.get('username')?.touched && loginForm.get('username')?.errors?.['required']}"
+          onkeypress="return event.charCode != 32"
         />
         <div
           *ngIf="loginForm.get('username')?.touched && loginForm.get('username')?.errors?.['required'] "
@@ -82,6 +83,7 @@
           formControlName="password"
           required
           [ngClass]="{'ng-dirty':loginForm.get('password')?.touched && loginForm.get('password')?.errors?.['required']}"
+          onkeypress="return event.charCode != 32"
         />
         <div
           *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.errors?.['required']"

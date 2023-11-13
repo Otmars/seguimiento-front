@@ -1,9 +1,12 @@
 <p-toast></p-toast>
 <div class="fixed mx-2 hidden md:inline">
+  <p-button
+    onclick="history.back()"
+    icon="pi pi-arrow-left"
+    styleClass="p-button-raised p-button-secondary"
+  ></p-button>
+</div>
 
-  <p-button  onclick="history.back()" icon="pi pi-arrow-left" styleClass="p-button-raised p-button-secondary"></p-button>
-  </div>
-  
 <p-confirmDialog [style]="{ width: '50vw' }"></p-confirmDialog>
 
 <div
@@ -284,11 +287,12 @@
           formControlName="nombres"
           autofocus
           [ngClass]="{'ng-dirty':docenteForm.get('nombres')?.touched && docenteForm.get('nombres')?.errors?.['required']}"
-        />
+          onkeypress="return ' áéíóúabcdefghijklmnñopqrstuvwxyzÁÉÍÓÚABCDEFGHIJKLMNÑOPQRSTUVWXYZ'.includes(event.key)"
+          />
         <small
           class="p-error"
           *ngIf="docenteForm.get('nombres')?.touched && docenteForm.get('nombres')?.errors?.['required']"
-          >Nombre is required.</small
+          >Nombre es requerido</small
         >
       </div>
       <div class="field">
@@ -300,11 +304,12 @@
           formControlName="apellidoPaterno"
           autofocus
           [ngClass]="{'ng-dirty':docenteForm.get('apellidoPaterno')?.touched && docenteForm.get('apellidoPaterno')?.errors?.['required']}"
-        />
+          onkeypress="return ' áéíóúabcdefghijklmnñopqrstuvwxyzÁÉÍÓÚABCDEFGHIJKLMNÑOPQRSTUVWXYZ'.includes(event.key)&& event.charCode != 32"
+          />
         <small
           class="p-error"
           *ngIf="docenteForm.get('apellidoPaterno')?.touched && docenteForm.get('apellidoPaterno')?.errors?.['required']"
-          >Apellido Paterno is required.</small
+          >Apellido Paterno es requerido</small
         >
       </div>
       <div class="field">
@@ -316,11 +321,12 @@
           formControlName="apellidoMaterno"
           autofocus
           [ngClass]="{'ng-dirty':docenteForm.get('apellidoMaterno')?.touched && docenteForm.get('apellidoMaterno')?.errors?.['required']}"
-        />
+          onkeypress="return ' áéíóúabcdefghijklmnñopqrstuvwxyzÁÉÍÓÚABCDEFGHIJKLMNÑOPQRSTUVWXYZ'.includes(event.key)&& event.charCode != 32"
+          />
         <small
           class="p-error"
           *ngIf="docenteForm.get('apellidoMaterno')?.touched && docenteForm.get('apellidoMaterno')?.errors?.['required']"
-          >Apellido Materno is required.</small
+          >Apellido Materno es requerido</small
         >
       </div>
       <div class="field">
@@ -339,7 +345,7 @@
         <small
           class="p-error"
           *ngIf="docenteForm.get('ci')?.touched && docenteForm.get('ci')?.errors?.['required']"
-          >Telefono is required.</small
+          >Telefono es requerido</small
         >
       </div>
       <div class="field">
@@ -355,7 +361,7 @@
         <small
           class="p-error"
           *ngIf="docenteForm.get('email')?.touched && docenteForm.get('email')?.errors?.['required']"
-          >Correo is required.</small
+          >Correo es requerido</small
         >
         <small
           class="p-error"
@@ -377,7 +383,7 @@
         <small
           class="p-error"
           *ngIf="docenteForm.get('telefono')?.touched && docenteForm.get('telefono')?.errors?.['required']"
-          >Telefono is required.</small
+          >Telefono es requerido</small
         >
       </div>
       <div class="field">
@@ -393,7 +399,7 @@
         <small
           class="p-error"
           *ngIf="docenteForm.get('direccion')?.touched && docenteForm.get('direccion')?.errors?.['required']"
-          >Direccion is required.</small
+          >Direccion es requerido</small
         >
       </div>
 
@@ -412,7 +418,7 @@
         <small
           class="p-error"
           *ngIf="docenteForm.get('fnacimiento')?.touched && docenteForm.get('fnacimiento')?.errors?.['required']"
-          >Fecha de nacimiento is required.</small
+          >Fecha de nacimiento es requerido</small
         >
       </div>
       <div>{{ docenteForm.getError | json }}</div>

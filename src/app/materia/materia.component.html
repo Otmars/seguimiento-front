@@ -1,8 +1,10 @@
 <div class="fixed mx-2 hidden md:inline">
-
-  <p-button  onclick="history.back()" icon="pi pi-arrow-left" styleClass="p-button-raised p-button-secondary"></p-button>
-  </div>
-  
+  <p-button
+    onclick="history.back()"
+    icon="pi pi-arrow-left"
+    styleClass="p-button-raised p-button-secondary"
+  ></p-button>
+</div>
 
 <p-dialog
   header="Header"
@@ -73,7 +75,7 @@
         <small
           class="p-error"
           *ngIf="asignaturaForm.get('nombre')?.touched && asignaturaForm.get('nombre')?.errors?.['required']"
-          >Nombre is required.</small
+          >Nombre es requerido</small
         >
       </div>
       <!-- <div class="field">
@@ -86,7 +88,7 @@
         >
         </p-inputNumber>
         <small class="p-error" *ngIf="submitted && !product.name"
-          >Ciclo is required.</small
+          >Ciclo es requerido</small
         >
       </div> -->
       <div class="field">
@@ -104,7 +106,7 @@
         <small
           class="p-error"
           *ngIf=":asignaturaForm.get('siglaCodigo')?.touched && asignaturaForm.get('siglaCodigo')?.errors?.['required']"
-          >Sigla-Codigo is required.</small
+          >Sigla-Codigo es requerido</small
         >
       </div>
       <div class="field">
@@ -121,7 +123,7 @@
         <small
           class="p-error"
           *ngIf="asignaturaForm.get('cargaHoraria')?.touched && asignaturaForm.get('cargaHoraria')?.errors?.['required']"
-          >Carga Horariao is required.</small
+          >Carga Horariao es requerido</small
         >
       </div>
       <div class="field">
@@ -138,7 +140,7 @@
         <small
           class="p-error"
           *ngIf="asignaturaForm.get('nMeses')?.touched && asignaturaForm.get('nMeses')?.errors?.['required']"
-          >N° Meses is required.</small
+          >N° Meses es requerido</small
         >
       </div>
       <!-- <div class="field">
@@ -146,7 +148,7 @@
       <p-multiSelect [options]="listadocentes" [(ngModel)]="selectedPrerequisitos" optionLabel="nombre"></p-multiSelect>
 
       <small class="p-error" *ngIf="submitted && !product.name"
-        >N° Meses is required.</small
+        >N° Meses es requerido</small
       >
     </div> -->
       <div class="field">
@@ -170,7 +172,7 @@
         <small
           class="p-error"
           *ngIf="asignaturaForm.get('paralelo')?.touched && asignaturaForm.get('paralelo')?.errors?.['required']"
-          >Paralelo is required.</small
+          >Paralelo es requerido</small
         >
       </div>
 
@@ -281,7 +283,7 @@
     [(selection)]="selectedProducts"
     [rows]="7"
     [paginator]="true"
-    [globalFilterFields]="['nombre', 'siglaCodigo','docente.iduser.nombres']"
+    [globalFilterFields]="['nombre', 'siglaCodigo', 'docente.iduser.nombres']"
     [showCurrentPageReport]="true"
     currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} registros."
     [rowsPerPageOptions]="[7, 25, 50]"
