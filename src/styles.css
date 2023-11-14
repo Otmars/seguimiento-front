@@ -89,7 +89,7 @@ body {
     padding: 0 !important;
     margin: 0 !important;
 } */
-@media (min-width: 820px) and (max-width: 1366px) {
+@media  (max-width: 1400px) {
     html {
       font-size: 14px;
     }

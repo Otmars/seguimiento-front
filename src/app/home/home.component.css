@@ -23,7 +23,7 @@
 }
 .fondo3{
   height: 65vh;
-  overflow: hidden;
+  overflow: scroll;
 }
 
 /* ----------------------------------------------
