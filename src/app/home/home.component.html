@@ -312,7 +312,20 @@
         <div class="text-900 text-xl mb-2 font-medium">Generar reportes</div>
         <span class="text-700 line-height-">Descargar tus reportes</span>
       </div>
-
+      <div
+      class="col-6 md:col-3 mb-4 px-3 cursor-pointer"
+      routerLink="/horario"
+      *ngIf="roluser == 'estudiante' || roluser == 'docente'"
+    >
+      <span
+        class="p-3 shadow-2 mb-3 inline-block surface-card"
+        style="border-radius: 10px"
+      >
+        <i class="pi pi-question-circle text-4xl text-blue-500"></i>
+      </span>
+      <div class="text-900 text-xl mb-3 font-medium">Ayuda</div>
+      <span class="text-700 line-height-3">Revisa los Manuales de usuario</span>
+    </div>
       <div
         class="col-6 md:col-3 mb-4 px-3 cursor-pointer"
         (click)="cerrarSesion()"
