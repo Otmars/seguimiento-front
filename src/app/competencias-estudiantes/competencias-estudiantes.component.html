@@ -1,0 +1,124 @@
+<p>competencias-estudiantes works!</p>
+<div class="card overflow-y-scroll">
+  <p-table
+    #dt2
+    [value]="datos.datos"
+    dataKey="id"
+    [showCurrentPageReport]="true"
+    [globalFilterFields]="[
+      'estudiante.id',
+      'country.name',
+      'representative.name',
+      'status'
+    ]"
+    [tableStyle]="{ 'min-width': '75rem' }"
+  >
+    <ng-template pTemplate="caption">
+      <div class="flex">
+        <span class="p-input-icon-left ml-auto">
+          <i class="pi pi-search"></i>
+          <input
+            pInputText
+            type="text"
+            (input)="dt2.filterGlobal(getEventValue($event), 'contains')"
+            placeholder="Search keyword"
+          />
+        </span>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 11%" class="text-center">ID</th>
+        <th  style="width: 11%"  >Nombre</th>
+        <th style="width: 11%">Apellido Paterno</th>
+        <th >Apellido Materno</th>
+        <th style="width: 20%">Competencia</th>
+        <th >Acciones</th>
+      </tr>
+      <tr>
+        <th>
+          <p-columnFilter type="text" field="estudiante.id"></p-columnFilter>
+        </th>
+        <!-- <th>
+          <p-columnFilter type="text" field="estudiante.iduser.nombres"></p-columnFilter>
+        </th> -->
+        <th colspan="3">
+          <p-columnFilter field="estudiante" matchMode="in" [showMenu]="false">
+            <ng-template
+              pTemplate="filter"
+              let-value
+              let-filter="filterCallback"
+            >
+              <p-multiSelect
+                [ngModel]="value"
+                [options]="datos.estudiante"
+                placeholder="Buscar"
+                (onChange)="filter($event.value)"
+                optionLabel="iduser.nombres,iduser.apellidoPaterno,iduser.apellidoMaterno"
+                [resetFilterOnHide]="true"
+                appendTo="body"
+                display="chip"
+              >
+                <ng-template let-option pTemplate="item">
+                  <div class="inline-block vertical-align-middle">
+                    <span class="ml-1 mt-1">{{
+                      option.iduser.nombres +
+                        " " +
+                        option.iduser.apellidoPaterno +
+                        " " +
+                        option.iduser.apellidoMaterno
+                    }}</span>
+                  </div>
+                </ng-template>
+              </p-multiSelect>
+            </ng-template>
+          </p-columnFilter>
+        </th>
+        <th>
+            <p-columnFilter field="competencia.competencia" matchMode="in" [showMenu]="false">
+                <ng-template
+                  pTemplate="filter"
+                  let-value
+                  let-filter="filterCallback"
+                >
+                  <p-multiSelect
+                    [ngModel]="value"
+                    [options]="datos.competencia"
+                    placeholder="Buscar"
+                    (onChange)="filter($event.value)"
+                    optionLabel="descripcion"
+                    [resetFilterOnHide]="true"
+                    appendTo="body"
+                    display="chip"
+                  >
+                    <ng-template let-option pTemplate="item">
+                      <div class="inline-block vertical-align-middle w-2rem ">
+                        <span class="ml-1 mt-1" >{{
+                          option.descripcion
+                        }}</span>
+                      </div>
+                    </ng-template>
+                  </p-multiSelect>
+                </ng-template>
+              </p-columnFilter>
+        </th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-customer>
+      <tr>
+        <td>{{ customer.estudiante.id }}</td>
+        <td>{{ customer.estudiante.iduser.nombres }}</td>
+        <td>{{ customer.estudiante.iduser.apellidoPaterno }}</td>
+        <td>{{ customer.estudiante.iduser.apellidoMaterno }}</td>
+        <td class="text-sm">{{ customer.competencia.competencia.descripcion }}</td>
+        <td>Acciones</td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="5">No customers found.</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

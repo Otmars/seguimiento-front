@@ -2,22 +2,30 @@
   class="card flex flex-column justify-content-start md:ml-8 m-4 scalein animation-ease-in-out animation-duration-500"
 ></div> -->
 <div class="fixed mx-2 hidden md:inline">
+  <p-button
+    onclick="history.back()"
+    icon="pi pi-arrow-left"
+    styleClass="p-button-raised p-button-secondary"
+  ></p-button>
+</div>
 
-  <p-button  onclick="history.back()" icon="pi pi-arrow-left" styleClass="p-button-raised p-button-secondary"></p-button>
-  </div>
-  
-<div class="card flex flex-column justify-content-start md:ml-8 m-4 scalein animation-ease-in-out animation-duration-500 shadow-8">
+<div
+  class="card flex flex-column justify-content-start md:ml-8 m-4 scalein animation-ease-in-out animation-duration-500 shadow-8"
+>
   <div>
     <h1
       class="flex align-content-center justify-content-center scalein animation-ease-in-out animation-duration-300 mb-7"
     >
-      Panel  de <span class="text-primary pl-2"> Administracion</span>
+      Panel de <span class="text-primary pl-2"> Administracion</span>
     </h1>
   </div>
   <div
     class="grid text-center scalein animation-ease-in-out animation-duration-500"
   >
-    <div class="col-6 md:col-3 mb-4 px-3 cursor-pointer" (click)="click('estudiante')">
+    <div
+      class="col-6 md:col-3 mb-4 px-3 cursor-pointer"
+      (click)="click('estudiante')"
+    >
       <span
         class="p-3 shadow-2 mb-3 inline-block surface-card"
         style="border-radius: 10px"
@@ -25,9 +33,14 @@
         <i class="pi pi-users text-4xl text-blue-500"></i>
       </span>
       <div class="text-900 text-xl mb-2 font-medium">Estudiantes</div>
-      <span class="text-700 line-height-">Crea Edita y elimina Estudiantes</span>
+      <span class="text-700 line-height-"
+        >Crea Edita y elimina Estudiantes</span
+      >
     </div>
-    <div class="col-6 md:col-3 mb-4 px-3 cursor-pointer" (click)="click('docente')">
+    <div
+      class="col-6 md:col-3 mb-4 px-3 cursor-pointer"
+      (click)="click('docente')"
+    >
       <span
         class="p-3 shadow-2 mb-3 inline-block surface-card"
         style="border-radius: 10px"
@@ -37,7 +50,7 @@
       <div class="text-900 text-xl mb-2 font-medium">Docentes</div>
       <span class="text-700 line-height-">Crea Edita y elimina Docentes</span>
     </div>
-    <div class="col-6 md:col-3 mb-4 px-3"  (click)="click('asignatura')">
+    <div class="col-6 md:col-3 mb-4 px-3" (click)="click('asignatura')">
       <span
         class="p-3 shadow-2 mb-3 inline-block surface-card"
         style="border-radius: 10px"
@@ -47,7 +60,7 @@
       <div class="text-900 text-xl mb-2 font-medium">Asignatura</div>
       <span class="text-700 line-height-">Administra las asignaturas</span>
     </div>
-    <div class="col-6 md:col-3 mb-4 px-3"  (click)="click('competencia')">
+    <div class="col-6 md:col-3 mb-4 px-3" (click)="click('competencia')">
       <span
         class="p-3 shadow-2 mb-3 inline-block surface-card"
         style="border-radius: 10px"
@@ -57,7 +70,7 @@
       <div class="text-900 text-xl mb-2 font-medium">Competencia</div>
       <span class="text-700 line-height-">Administra las Competencias</span>
     </div>
-    <div class="col-6 md:col-3 mb-4 px-3"  (click)="click('inscripcion')">
+    <div class="col-6 md:col-3 mb-4 px-3" (click)="click('inscripcion')">
       <span
         class="p-3 shadow-2 mb-3 inline-block surface-card"
         style="border-radius: 10px"
@@ -67,6 +80,5 @@
       <div class="text-900 text-xl mb-2 font-medium">Inscripciones</div>
       <span class="text-700 line-height-">Administra las Inscripciones</span>
     </div>
-    
   </div>
 </div>

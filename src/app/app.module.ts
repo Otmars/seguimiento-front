@@ -78,6 +78,7 @@ import { ReportesComponent } from './reportes/reportes.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { JwtInterceptorInterceptor } from './jwt-interceptor.interceptor';
 import { ScrollTopModule } from 'primeng/scrolltop';
+import { CompetenciasEstudiantesComponent } from './competencias-estudiantes/competencias-estudiantes.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -98,6 +99,7 @@ import { ScrollTopModule } from 'primeng/scrolltop';
     AsignaturaCompetenciaComponent,
     InscripcionComponent,
     ReportesComponent,
+    CompetenciasEstudiantesComponent,
   ],
   imports: [
     MessagesModule,

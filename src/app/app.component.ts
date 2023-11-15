@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { PrimeNGConfig } from 'primeng/api';
 
 @Component({
   selector: 'app-root',
@@ -8,5 +9,16 @@ import { Component } from '@angular/core';
 
 export class AppComponent {
   title = 'lib';
- 
+  constructor(private config: PrimeNGConfig) {}
+
+    ngOnInit() {
+        this.config.setTranslation({
+            matchAny:'Uno',
+            matchAll:'Todos',
+            clear:'Limpiar',
+            apply:'Aplicar',
+            addRule:'Añadir'
+            //translations
+        });
+    }
 }
