@@ -1,5 +1,6 @@
-<p>competencias-estudiantes works!</p>
-<div class="card overflow-y-scroll">
+<div
+  class="card flex flex-column justify-content-start md:ml-8 m-4 scalein animation-ease-in-out animation-duration-500 shadow-8"
+>
   <p-table
     #dt2
     [value]="datos.datos"
@@ -7,41 +8,83 @@
     [showCurrentPageReport]="true"
     [globalFilterFields]="[
       'estudiante.id',
-      'country.name',
-      'representative.name',
-      'status'
+      'estudiante.iduser.nombres',
+      'estudiante.iduser.apellidoPaterno',
+      'estudiante.iduser.apellidoPaterno',
+      'estudiante.iduser.ci',
+      'estudiante.iduser.ci',
+      'competencia.asignatura.nombre',
+      'competencia.asignatura.siglaCodigo'
     ]"
     [tableStyle]="{ 'min-width': '75rem' }"
+    rowGroupMode="subheader"
+    groupRowsBy="estudiante.iduser.nombres"
+    [scrollable]="true"
+    scrollHeight="90vh"
   >
     <ng-template pTemplate="caption">
-      <div class="flex">
-        <span class="p-input-icon-left ml-auto">
-          <i class="pi pi-search"></i>
-          <input
-            pInputText
-            type="text"
-            (input)="dt2.filterGlobal(getEventValue($event), 'contains')"
-            placeholder="Search keyword"
-          />
-        </span>
+      <div
+      class="flex md:flex-row flex-column align-items-center justify-content-between"
+    >
+      <div>
+        <h1>Seguimiento de <span class="text-primary">Competencias de estudiantes</span></h1>
       </div>
+      <div class="flex p-input-icon-left md:ml-auto my-1">
+        <i class="pi pi-search"></i>
+        <input
+          class="w-12 md:w-full"
+          pInputText
+          type="text"
+          [(ngModel)]="datoFiltro"
+          (input)="
+            dt2.filterGlobal(getEventValue($event), 'contains')
+          "
+          placeholder="Buscar"
+          pTooltip="Filtra los datos"
+        />
+      </div>
+
+      <div class="flex">
+        <div class="hidden md:inline-flex pl-2">
+          <p-button
+            icon="pi pi-file-pdf"
+            styleClass="p-button-help"
+            pTooltip="Descarga reporte PDF"
+            tooltipPosition="bottom"
+            (click)="generarPdf(dt2)"
+          ></p-button>
+        </div>
+        <!-- <button
+          pTooltip="Crea un nueva competencia"
+          pButton
+          pRipple
+          label="Graficos"
+          icon="pi pi-chart-pie"
+          class="p-button-help mx-2"
+          (click)="modalGraficos()"
+        ></button> -->
+      </div>
+    </div>
     </ng-template>
     <ng-template pTemplate="header">
       <tr>
-        <th style="width: 11%" class="text-center">ID</th>
-        <th  style="width: 11%"  >Nombre</th>
-        <th style="width: 11%">Apellido Paterno</th>
-        <th >Apellido Materno</th>
-        <th style="width: 20%">Competencia</th>
-        <th >Acciones</th>
+        <th>ID</th>
+        <th style="width: 5%">Nombre</th>
+        <th style="width: 5%">Apellido Paterno</th>
+        <th style="width: 5%">Apellido Materno</th>
+        <th style="width: 15%">Carnet Identidad</th>
+        <th style="width: 25%">Competencia</th>
+        <th>Tipo de <br />Competencia</th>
+        <th style="width: 15%">Asignatura</th>
+        <th style="width: 15%">Docente</th>
+        <th style="width: 15%">Fecha</th>
+
+        <th>Acciones</th>
       </tr>
       <tr>
         <th>
-          <p-columnFilter type="text" field="estudiante.id"></p-columnFilter>
+          <!-- <p-columnFilter type="text" field="estudiante.id"></p-columnFilter> -->
         </th>
-        <!-- <th>
-          <p-columnFilter type="text" field="estudiante.iduser.nombres"></p-columnFilter>
-        </th> -->
         <th colspan="3">
           <p-columnFilter field="estudiante" matchMode="in" [showMenu]="false">
             <ng-template
@@ -75,44 +118,118 @@
           </p-columnFilter>
         </th>
         <th>
-            <p-columnFilter field="competencia.competencia" matchMode="in" [showMenu]="false">
-                <ng-template
-                  pTemplate="filter"
-                  let-value
-                  let-filter="filterCallback"
-                >
-                  <p-multiSelect
-                    [ngModel]="value"
-                    [options]="datos.competencia"
-                    placeholder="Buscar"
-                    (onChange)="filter($event.value)"
-                    optionLabel="descripcion"
-                    [resetFilterOnHide]="true"
-                    appendTo="body"
-                    display="chip"
-                  >
-                    <ng-template let-option pTemplate="item">
-                      <div class="inline-block vertical-align-middle w-2rem ">
-                        <span class="ml-1 mt-1" >{{
-                          option.descripcion
-                        }}</span>
-                      </div>
-                    </ng-template>
-                  </p-multiSelect>
+          <p-columnFilter
+            type="text"
+            field="estudiante.iduser.ci"
+          ></p-columnFilter>
+        </th>
+        <th>
+          <p-columnFilter
+            field="competencia.competencia"
+            matchMode="in"
+            [showMenu]="false"
+          >
+            <ng-template
+              pTemplate="filter"
+              let-value
+              let-filter="filterCallback"
+            >
+              <p-multiSelect
+                [ngModel]="value"
+                [options]="datos.competencia"
+                placeholder="Buscar"
+                (onChange)="filter($event.value)"
+                optionLabel="descripcion"
+                [resetFilterOnHide]="true"
+                appendTo="body"
+                display="chip"
+              >
+                <ng-template let-option pTemplate="item">
+                  <div class="inline-block vertical-align-middle w-2rem">
+                    <span class="ml-1 mt-1">{{
+                      option.descripcion.substr(0, 38) + "..."
+                    }}</span>
+                  </div>
                 </ng-template>
-              </p-columnFilter>
+              </p-multiSelect>
+            </ng-template>
+          </p-columnFilter>
+        </th>
+
+        <th></th>
+        <th>
+          <p-columnFilter type="text" field="competencia.asignatura.nombre"></p-columnFilter>
+        </th>
+        <th>
+          <p-columnFilter type="text" field="competencia.asignatura.docente.iduser.apellidoPaterno"></p-columnFilter>
+
         </th>
         <th></th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="groupheader" let-customer>
+      <tr pRowGroupHeader>
+        <td colspan="10">
+          <span class="font-bold ml-2">{{
+            customer.estudiante.iduser.nombres +
+              " " +
+              customer.estudiante.iduser.apellidoPaterno +
+              " " +
+              customer.estudiante.iduser.apellidoMaterno
+          }}</span>
+        </td>
+        <td>
+          <p-button
+            styleClass="p-button-outlined p-button-info m-1 py-1 "
+            icon="pi pi-chart-bar"
+            (click)="modalGraficos(customer.estudiante.id)"
+          ></p-button>
+        </td>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-customer>
       <tr>
-        <td>{{ customer.estudiante.id }}</td>
-        <td>{{ customer.estudiante.iduser.nombres }}</td>
-        <td>{{ customer.estudiante.iduser.apellidoPaterno }}</td>
-        <td>{{ customer.estudiante.iduser.apellidoMaterno }}</td>
-        <td class="text-sm">{{ customer.competencia.competencia.descripcion }}</td>
-        <td>Acciones</td>
+        <td class="text-center">{{ customer.id }}</td>
+        <td class="text-center">{{ customer.estudiante.iduser.nombres }}</td>
+        <td class="text-center">
+          {{ customer.estudiante.iduser.apellidoPaterno }}
+        </td>
+        <td class="text-center">
+          {{ customer.estudiante.iduser.apellidoMaterno }}
+        </td>
+        <td class="text-center">{{ customer.estudiante.iduser.ci }}</td>
+        <td class="text-sm">
+          {{ customer.competencia.competencia.descripcion }}
+        </td>
+        <td>{{ customer.competencia.competencia.tipoCompetencia }}</td>
+        <td>
+          {{
+            customer.competencia.asignatura.nombre +
+              "-" +
+              customer.competencia.asignatura.paralelo +
+              "-" +
+              customer.competencia.asignatura.siglaCodigo
+          }}
+        </td>
+        <td>
+          {{
+            customer.competencia.asignatura.docente.iduser.nombres +
+              " " +
+              customer.competencia.asignatura.docente.iduser.apellidoPaterno +
+              " " +
+              customer.competencia.asignatura.docente.iduser.apellidoMaterno
+          }}
+        </td>
+
+        <td>{{ customer.createdAt|date  }}</td>
+        <td>
+          <!-- <p-button
+            styleClass="p-button-outlined p-button-danger m-1 py-1 "
+            icon="pi pi-trash"
+            (click)="detalle_estudiante()"
+          ></p-button> -->
+        </td>
       </tr>
     </ng-template>
     <ng-template pTemplate="emptymessage">
@@ -122,3 +239,26 @@
     </ng-template>
   </p-table>
 </div>
+<p-dialog
+  header="Header"
+  [(visible)]="dialogGraficos"
+  [style]="{ width: '50vw' }"
+  [modal]="true"
+>
+  <ng-template pTemplate="header">
+    <span class="text-xl font-bold">Graficos de Competencias</span>
+  </ng-template>
+
+
+  
+    <p-chart type="pie" [data]="data" [options]="options"></p-chart>
+
+  <ng-template pTemplate="footer">
+    <p-button
+      icon="pi pi-check"
+      (click)="dialogGraficos = false"
+      label="Ok"
+      styleClass="p-button-text"
+    ></p-button>
+  </ng-template>
+</p-dialog>

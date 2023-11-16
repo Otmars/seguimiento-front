@@ -19,4 +19,7 @@ export class ComestService {
     return this.http.get<any[]>(this.url+'estudiante/competencias');
   }
 
+  getCompeteciasNoObtenidas(id:number):Observable<any[]>{
+    return this.http.get<any[]>(this.url+'estudiante/nocompetencias/'+id);
+  }
 }
