@@ -1,2 +1,18 @@
 
-<p-button label="reporte" (onClick)="generarPdf()" ></p-button>
+
+<div class="mb-6 text-center">
+    <h1><span class="text-primary">Asignaturas</span></h1>
+  </div>
+  <div  class="grid text-center">
+    <div  *ngFor="let item of materias" class="col-6 md:col-3 mb-4 px-3" >
+      <span
+        class="p-3 shadow-2 mb-3 inline-block surface-card cursor-pointer"
+        style="border-radius: 10px"
+        (click)="generarPdf(item.id)"
+      
+      >
+        <i class="pi pi-folder text-4xl text-blue-500"></i>
+      </span>
+      <div class="text-900 text-xl mb-2 font-medium"> {{item.nombre}} </div>
+    </div>
+  </div>
