@@ -10,6 +10,106 @@ import autoTable from 'jspdf-autotable';
   styleUrls: ['./competencias-estudiantes.component.css'],
 })
 export class CompetenciasEstudiantesComponent implements OnInit {
+  graficodialog: boolean;
+  graficototal() {
+    let c=0
+    let d = 0
+    this.competenciasOBtenidas.length
+    this.competenciasOBtenidas.forEach((element1: any) => {
+      let x=0
+      element1.asignatura.asignaturaCompetencia.forEach((element2: any) => {
+        x++
+      });
+      c=c+x
+    });
+
+    this.cuenta.forEach(element => {
+      
+      d=d+element
+    });
+    console.log(d);
+    const documentStyle = getComputedStyle(document.documentElement);
+    const textColor = documentStyle.getPropertyValue('--text-color');
+    this.data = {
+      labels: ['Competencias adquiridas', 'Competencias no Adquiridas'],
+      datasets: [
+        {
+          data: [d, c],
+          backgroundColor: [
+            documentStyle.getPropertyValue('--blue-500'),
+            documentStyle.getPropertyValue('--yellow-500'),
+          ],
+          hoverBackgroundColor: [
+            documentStyle.getPropertyValue('--blue-400'),
+            documentStyle.getPropertyValue('--yellow-400'),
+          ],
+        },
+      ],
+    };
+    this.options = {
+      plugins: {
+        legend: {
+          labels: {
+            usePointStyle: true,
+            color: textColor,
+          },
+        },
+      },
+    };
+    this.graficodialog = true;
+  }
+  modalGraf(arg0: any, arg1: any) {
+    const documentStyle = getComputedStyle(document.documentElement);
+    const textColor = documentStyle.getPropertyValue('--text-color');
+    this.data = {
+      labels: ['Competencias adquiridas', 'Competencias no Adquiridas'],
+      datasets: [
+        {
+          data: [arg0, arg1 - arg0],
+          backgroundColor: [
+            documentStyle.getPropertyValue('--blue-500'),
+            documentStyle.getPropertyValue('--yellow-500'),
+          ],
+          hoverBackgroundColor: [
+            documentStyle.getPropertyValue('--blue-400'),
+            documentStyle.getPropertyValue('--yellow-400'),
+          ],
+        },
+      ],
+    };
+    this.options = {
+      plugins: {
+        legend: {
+          labels: {
+            usePointStyle: true,
+            color: textColor,
+          },
+        },
+      },
+    };
+    this.graficodialog = true;
+  }
+
+  conteo2(_t123: number, total: any) {
+
+    return total - this.cuenta[_t123];
+  }
+  conteo(_t122: any) {
+    return this.cuenta[_t122];
+  }
+  mostrartabla() {
+    this.tabla = true;
+  }
+  nobnetindas: number;
+  nNoObtenidas: number;
+  tabla: boolean = false;
+  estado(arg0: any) {
+    if (arg0) {
+      return { message: 'Obtenido', severity: 'success' };
+    }
+    return { message: 'No Obtenido', severity: 'danger' };
+  }
+
   datoFiltro: any;
   dialogGraficos: boolean;
   data: {
@@ -24,8 +124,6 @@ export class CompetenciasEstudiantesComponent implements OnInit {
     plugins: { legend: { labels: { usePointStyle: boolean; color: string } } };
   };
   generarPdf(tabla: Table) {
-    console.log(tabla.value);
-
     var done: any = [];
     if (tabla.filteredValue) {
       tabla.filteredValue.forEach(function (object) {
@@ -141,45 +239,71 @@ export class CompetenciasEstudiantesComponent implements OnInit {
   constructor(private comestService: ComestService) {}
   ngOnInit(): void {
     this.cargarDatos();
-    this.representatives = [
-      { name: 'Amy Elsner', image: 'amyelsner.png' },
-      { name: 'Anna Fali', image: 'annafali.png' },
-      { name: 'Asiya Javayant', image: 'asiyajavayant.png' },
-      { name: 'Bernardo Dominic', image: 'bernardodominic.png' },
-      { name: 'Elwin Sharvill', image: 'elwinsharvill.png' },
-      { name: 'Ioni Bowcher', image: 'ionibowcher.png' },
-      { name: 'Ivan Magalhaes', image: 'ivanmagalhaes.png' },
-      { name: 'Onyama Limba', image: 'onyamalimba.png' },
-      { name: 'Stephen Shaw', image: 'stephenshaw.png' },
-      { name: 'Xuxue Feng', image: 'xuxuefeng.png' },
-    ];
   }
   datos: any = {};
   cargarDatos() {
     this.comestService.getCompetencias().subscribe((res) => {
-      console.log(res);
       this.datos = res;
-      console.log(this.datos.estudiantes[0]);
     });
   }
   getEventValue($event: any): string {
     return $event.target.value;
   }
-  competenciasOBtenidas:[]
-  modalGraficos(id: any) {
-    
-    this.comestService.getCompeteciasNoObtenidas(id).subscribe((res:any) => {
-      // console.log(res);
+  competenciasOBtenidas: any = [];
+  competenciasNoOBtenidas: any = [];
+  cuenta: any[] = [];
 
-      res.forEach((element: any) => {
-        console.log(element);
-        
+  modalGraficos(datos: any) {
+    const id = datos.estudiante.id;
+    this.competenciasOBtenidas = [];
+    this.competenciasNoOBtenidas = [];
+    this.comestService.getCompeteciasNoObtenidas(id).subscribe((res: any) => {
+      res.todas.forEach((element1: any) => {
+        element1.asignatura.asignaturaCompetencia.forEach((element2: any) => {
+          res.obtenidas.forEach((element3: any) => {
+            if (
+              element2.asignaturaCompetenciaId ==
+              element3.competencia.asignaturaCompetenciaId
+            ) {
+              element2.obtenido = true;
+            }
+          });
+        });
+        this.competenciasOBtenidas.push(element1);
       });
 
+      // res.todas.forEach((element1: any) => {
+      //   element1.asignatura.asignaturaCompetencia.forEach((element2: any) => {
+      //     res.obtenidas.forEach((element3: any) => {
+      //       if (
+      //         element2.asignaturaCompetenciaId ==
+      //         element3.competencia.asignaturaCompetenciaId
+      //       ) {
+
+      //         this.competenciasOBtenidas.push(element1);
+      //       } else {
+
+      //         this.competenciasNoOBtenidas.push(element1);
+      //       }
+      //     });
+      //   });
+      // });
       // res[0].estudiante.competencia.forEach((element: any) => {
       //   console.log(element);
-        
+
       // });
+
+      this.cuenta = [];
+      this.competenciasOBtenidas.forEach((element: any, index: number) => {
+        let c = 0;
+        element.asignatura.asignaturaCompetencia.forEach((element2: any) => {
+          if (!!element2.obtenido) {
+            c++;
+          }
+          this.cuenta[index] = c;
+        });
+      });
+      console.log("->>>>",this.cuenta);
     });
 
     this.dialogGraficos = true;

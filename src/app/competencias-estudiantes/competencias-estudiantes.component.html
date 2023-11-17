@@ -24,37 +24,38 @@
   >
     <ng-template pTemplate="caption">
       <div
-      class="flex md:flex-row flex-column align-items-center justify-content-between"
-    >
-      <div>
-        <h1>Seguimiento de <span class="text-primary">Competencias de estudiantes</span></h1>
-      </div>
-      <div class="flex p-input-icon-left md:ml-auto my-1">
-        <i class="pi pi-search"></i>
-        <input
-          class="w-12 md:w-full"
-          pInputText
-          type="text"
-          [(ngModel)]="datoFiltro"
-          (input)="
-            dt2.filterGlobal(getEventValue($event), 'contains')
-          "
-          placeholder="Buscar"
-          pTooltip="Filtra los datos"
-        />
-      </div>
-
-      <div class="flex">
-        <div class="hidden md:inline-flex pl-2">
-          <p-button
-            icon="pi pi-file-pdf"
-            styleClass="p-button-help"
-            pTooltip="Descarga reporte PDF"
-            tooltipPosition="bottom"
-            (click)="generarPdf(dt2)"
-          ></p-button>
+        class="flex md:flex-row flex-column align-items-center justify-content-between"
+      >
+        <div>
+          <h1>
+            Seguimiento de
+            <span class="text-primary">Competencias de estudiantes</span>
+          </h1>
         </div>
-        <!-- <button
+        <div class="flex p-input-icon-left md:ml-auto my-1">
+          <i class="pi pi-search"></i>
+          <input
+            class="w-12 md:w-full"
+            pInputText
+            type="text"
+            [(ngModel)]="datoFiltro"
+            (input)="dt2.filterGlobal(getEventValue($event), 'contains')"
+            placeholder="Buscar"
+            pTooltip="Filtra los datos"
+          />
+        </div>
+
+        <div class="flex">
+          <div class="hidden md:inline-flex pl-2">
+            <p-button
+              icon="pi pi-file-pdf"
+              styleClass="p-button-help"
+              pTooltip="Descarga reporte PDF"
+              tooltipPosition="bottom"
+              (click)="generarPdf(dt2)"
+            ></p-button>
+          </div>
+          <!-- <button
           pTooltip="Crea un nueva competencia"
           pButton
           pRipple
@@ -63,8 +64,8 @@
           class="p-button-help mx-2"
           (click)="modalGraficos()"
         ></button> -->
+        </div>
       </div>
-    </div>
     </ng-template>
     <ng-template pTemplate="header">
       <tr>
@@ -158,11 +159,16 @@
 
         <th></th>
         <th>
-          <p-columnFilter type="text" field="competencia.asignatura.nombre"></p-columnFilter>
+          <p-columnFilter
+            type="text"
+            field="competencia.asignatura.nombre"
+          ></p-columnFilter>
         </th>
         <th>
-          <p-columnFilter type="text" field="competencia.asignatura.docente.iduser.apellidoPaterno"></p-columnFilter>
-
+          <p-columnFilter
+            type="text"
+            field="competencia.asignatura.docente.iduser.apellidoPaterno"
+          ></p-columnFilter>
         </th>
         <th></th>
         <th></th>
@@ -183,7 +189,7 @@
           <p-button
             styleClass="p-button-outlined p-button-info m-1 py-1 "
             icon="pi pi-chart-bar"
-            (click)="modalGraficos(customer.estudiante.id)"
+            (click)="modalGraficos(customer)"
           ></p-button>
         </td>
       </tr>
@@ -222,7 +228,7 @@
           }}
         </td>
 
-        <td>{{ customer.createdAt|date  }}</td>
+        <td>{{ customer.createdAt | date }}</td>
         <td>
           <!-- <p-button
             styleClass="p-button-outlined p-button-danger m-1 py-1 "
@@ -242,23 +248,132 @@
 <p-dialog
   header="Header"
   [(visible)]="dialogGraficos"
-  [style]="{ width: '50vw' }"
+  [style]="{ width: '90vw' }"
   [modal]="true"
 >
   <ng-template pTemplate="header">
-    <span class="text-xl font-bold">Graficos de Competencias</span>
+    <span class="text-xl font-bold">Verificación de perfil profesional por competencias</span>
   </ng-template>
+  <button
+  pTooltip="Crea un nueva competencia"
+  pButton
+  pRipple
+  label="Graficos"
+  icon="pi pi-chart-pie"
+  class="p-button-help mx-2"
+  (click)="
+    graficototal(
+    )
+  "
+></button>
+  <!-- <div *ngFor="let item of competenciasOBtenidas">
+    <div class="flex cardasig">{{item|json}}</div>
+  </div> -->
+  <ul>
+    <li
+      class="card2 shadow-5 m-4 font-bold"
+      *ngFor="let item of competenciasOBtenidas; index as i"
+    >
+      <p-table
+        [value]="item.asignatura.asignaturaCompetencia"
+        [tableStyle]="{ 'min-width': '50rem' }"
+        styleClass="p-datatable-sm"
+        [scrollable]="true"
+        scrollHeight="350px"
+      >
+        <ng-template pTemplate="caption">
+          <div
+            class="flex md:flex-row flex-column align-items-center justify-content-between"
+          >
+            <div>
+              <h1>
+                Competencias de
+                <span class="text-primary">{{ item.asignatura.nombre }} </span>
+              </h1>
+            </div>
+            <button
+              pTooltip="Crea un nueva competencia"
+              pButton
+              pRipple
+              label="Graficos"
+              icon="pi pi-chart-pie"
+              class="p-button-help mx-2"
+              (click)="
+                modalGraf(
+                  conteo(i),
+                  item.asignatura.asignaturaCompetencia.length
+                )
+              "
+            ></button>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Id</th>
+            <th style="width: 65%">Descripcion</th>
+            <th>Tipo</th>
+            <th pSortableColumn="obtenido">
+              Estado<p-sortIcon field="obtenido"></p-sortIcon>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product>
+          <tr>
+            <td>{{ product.asignaturaCompetenciaId }}</td>
+            <td>{{ product.competencia.descripcion }}</td>
+            <td>{{ product.competencia.tipoCompetencia }}</td>
+            <td>
+              <p-tag
+                [value]="estado(product.obtenido).message"
+                [severity]="estado(product.obtenido).severity"
+              ></p-tag>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          <div
+            class="flex flex-column align-items-end justify-content-end pr-7"
+          >
+            <div>
+              Competencias en total:
+              {{
+                item.asignatura.asignaturaCompetencia
+                  ? item.asignatura.asignaturaCompetencia.length
+                  : 0
+              }}
+            </div>
+            <div>
+              {{ " Competencias obtenidas: " + conteo(i) }}
+            </div>
+            <div>
+              {{
+                " Competencias no obtenidas: " +
+                  conteo2(i, item.asignatura.asignaturaCompetencia.length)
+              }}
+            </div>
+          </div>
+        </ng-template>
+      </p-table>
+    </li>
+  </ul>
 
-
-  
-    <p-chart type="pie" [data]="data" [options]="options"></p-chart>
-
-  <ng-template pTemplate="footer">
+  <!-- <ng-template pTemplate="footer">
     <p-button
       icon="pi pi-check"
       (click)="dialogGraficos = false"
       label="Ok"
       styleClass="p-button-text"
     ></p-button>
-  </ng-template>
+  </ng-template> -->
+</p-dialog>
+<p-dialog
+  
+  [(visible)]="graficodialog"
+  [style]="{ width: '45vw' }"
+>
+  <div>
+    <div class="grafico">
+      <p-chart type="doughnut" [data]="data" [options]="options"></p-chart>
+    </div>
+  </div>
 </p-dialog>
