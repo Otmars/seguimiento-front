@@ -56,5 +56,7 @@ export class MateriaService {
   getRelacionMateriaCompetencia(id:number){
     return this.http.get(this.url+"asignatura/asicom/"+id)
   }
-
+  calificacionasignatura(id:number){
+    return this.http.get(this.url+"calificacion/"+id)
+  }
 }

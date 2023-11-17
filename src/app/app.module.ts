@@ -79,6 +79,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { JwtInterceptorInterceptor } from './jwt-interceptor.interceptor';
 import { ScrollTopModule } from 'primeng/scrolltop';
 import { CompetenciasEstudiantesComponent } from './competencias-estudiantes/competencias-estudiantes.component';
+import { CalificacionesEstudiantesComponent } from './calificaciones-estudiantes/calificaciones-estudiantes.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -100,6 +101,7 @@ import { CompetenciasEstudiantesComponent } from './competencias-estudiantes/com
     InscripcionComponent,
     ReportesComponent,
     CompetenciasEstudiantesComponent,
+    CalificacionesEstudiantesComponent,
   ],
   imports: [
     MessagesModule,

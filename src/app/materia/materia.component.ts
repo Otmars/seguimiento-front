@@ -9,6 +9,8 @@ import { Asingatura, relacionCompetencia } from './inteface-materia';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { CompetenciaService } from '../competencias/competencia.service';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 @Component({
   selector: 'app-materia',
   templateUrl: './materia.component.html',
@@ -16,6 +18,71 @@ import { CompetenciaService } from '../competencias/competencia.service';
   providers: [MessageService, ConfirmationService],
 })
 export class MateriaComponent implements OnInit, OnDestroy {
+reporteCalificaciones(_t232: any) {
+  console.log(_t232);
+  
+    var done: any = [];
+
+    _t232.calificacion.forEach(function (object:any) {
+        done.push([
+          object.id,
+          object.estudiante.iduser.nombres,
+          object.estudiante.iduser.apellidoPaterno,
+          object.estudiante.iduser.apellidoMaterno,
+          object.estudiante.iduser.ci ,
+          object.calificacionObtenida,
+          new Date(object.createdAt).toLocaleDateString()
+        ]);
+      });
+    
+
+    const doc = new jsPDF({
+      format: 'letter',
+    });
+    doc.addImage('../../assets/images/encabezado.png', 'PNG', 0, -10, 210, 55);
+    doc.setFont('helvetica', 'bold');
+    doc.text('REPORTE DE CALIFICACION', 70, 35);
+    // doc.autoPrint({ variant: 'non-conform' });
+
+    autoTable(doc, {
+      theme: 'grid',
+      headStyles: { fillColor: [0, 0, 0], font: 'helvetica', fontSize: 8 ,halign:'center'},
+      bodyStyles: { font: 'helvetica', fontSize: 8 },
+      startY: 45,
+      tableWidth: 'auto',
+      head: [
+        [
+          'id',
+          'Nombres',
+          'Apellido Paterno',
+          'Apellido Materno',
+          'C.I.',
+          'Calificacion',
+          'Fecha',
+        ],
+      ],
+      body: done,
+    });
+    doc.output('pdfobjectnewwindow');
+    // doc.save()
+  
+}
+mayorpuntaje(_t230: any) {
+console.log(_t230);
+this.mayor = _t230.puntaje
+}
+  dialogCalificaciones: boolean;
+  calificacion :any = []
+  mayor:number = 0
+modalCalificaciones(dato : any) {
+ this.dialogCalificaciones = true
+ 
+ console.log(dato.id);
+ this.materiaService.calificacionasignatura(dato.id).subscribe(res=>{
+  console.log(res);
+  this.calificacion=res
+ })
+}
   loading: boolean = true;
   guardarRelacion($event: Event) {
     throw new Error('Method not implemented.');

@@ -17,6 +17,7 @@ import { AsignaturaCompetenciaComponent } from './asignatura-competencia/asignat
 import { InscripcionComponent } from './inscripcion/inscripcion.component';
 import { DashboardComponent } from './admin/dashboard/dashboard.component';
 import { CompetenciasEstudiantesComponent } from './competencias-estudiantes/competencias-estudiantes.component';
+import { CalificacionesEstudiantesComponent } from './calificaciones-estudiantes/calificaciones-estudiantes.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -71,6 +72,12 @@ const routes: Routes = [
   {
     path: 'comest',
     component: CompetenciasEstudiantesComponent,
+    canActivate: [RoleGuard, AuthGuard],
+    data: { expectedRole: 'admin' },
+  },
+  {
+    path: 'calificacion',
+    component: CalificacionesEstudiantesComponent,
     canActivate: [RoleGuard, AuthGuard],
     data: { expectedRole: 'admin' },
   },

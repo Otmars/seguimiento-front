@@ -1,8 +1,11 @@
 <div class="fixed mx-2 hidden md:inline">
+  <p-button
+    onclick="history.back()"
+    icon="pi pi-arrow-left"
+    styleClass="p-button-raised p-button-secondary"
+  ></p-button>
+</div>
 
-  <p-button  onclick="history.back()" icon="pi pi-arrow-left" styleClass="p-button-raised p-button-secondary"></p-button>
-  </div>
-  
 <div
   class="card flex flex-column justify-content-start md:ml-8 m-4 scalein animation-ease-in-out animation-duration-500 shadow-8"
 >
@@ -36,7 +39,6 @@
               label=""
               class="p-button-outlined"
               icon="pi pi-filter-slash"
-              
               (click)="clear(dtinscripcion)"
             ></button>
             <span class="p-input-icon-left mx-2">
@@ -74,7 +76,7 @@
               pButton
               pRipple
               [pRowToggler]="estudiante"
-              class="p-button-text p-button-rounded "
+              class="p-button-text p-button-rounded"
               [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
             ></button>
           </td>
@@ -122,9 +124,7 @@
                 </ng-template>
                 <ng-template pTemplate="emptymessage">
                   <tr>
-                    <td colspan="6">
-                      No hay datos
-                    </td>
+                    <td colspan="6">No hay datos</td>
                   </tr>
                 </ng-template>
               </p-table>
