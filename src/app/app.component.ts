@@ -17,7 +17,14 @@ export class AppComponent {
             matchAll:'Todos',
             clear:'Limpiar',
             apply:'Aplicar',
-            addRule:'Añadir'
+            addRule:'Añadir',
+            startsWith:'Inicia con',
+            contains:'Contiene',
+            notContains:'No contiene',
+            endsWith:'Termina con',
+            equals:'Igual',
+            notEquals:'No igual',
+            noFilter:'No filtrar'
             //translations
         });
     }

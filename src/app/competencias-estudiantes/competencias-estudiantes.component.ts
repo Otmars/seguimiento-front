@@ -10,28 +10,44 @@ import autoTable from 'jspdf-autotable';
   styleUrls: ['./competencias-estudiantes.component.css'],
 })
 export class CompetenciasEstudiantesComponent implements OnInit {
+  titulo(arg0: any): string | undefined {
+    return this.tituloGraficos;
+  }
+  tituloGraficos: string;
+  nombre(arg0: any): string | undefined {
+    if (arg0 > []) {
+      return (
+        arg0.estudiante.iduser.nombres +
+        ' ' +
+        arg0.estudiante.iduser.apellidoPaterno +
+        ' ' +
+        arg0.estudiante.iduser.apellidoMaterno
+      );
+    }
+    return 'no hay nombre';
+  }
   graficodialog: boolean;
   graficototal() {
-    let c=0
-    let d = 0
-    this.competenciasOBtenidas.length
+    this.tituloGraficos="Grafico General de Competencias"
+    let c = 0;
+    let d = 0;
+    this.competenciasOBtenidas.length;
     this.competenciasOBtenidas.forEach((element1: any) => {
-      let x=0
+      let x = 0;
       element1.asignatura.asignaturaCompetencia.forEach((element2: any) => {
-        x++
+        x++;
       });
-      c=c+x
+      c = c + x;
     });
 
-    this.cuenta.forEach(element => {
-      
-      d=d+element
+    this.cuenta.forEach((element) => {
+      d = d + element;
     });
     console.log(d);
     const documentStyle = getComputedStyle(document.documentElement);
     const textColor = documentStyle.getPropertyValue('--text-color');
     this.data = {
-      labels: ['Competencias adquiridas', 'Competencias no Adquiridas'],
+      labels: ['Competencias adquiridas: '+d, 'Competencias no Adquiridas:'+c],
       datasets: [
         {
           data: [d, c],
@@ -58,11 +74,14 @@ export class CompetenciasEstudiantesComponent implements OnInit {
     };
     this.graficodialog = true;
   }
-  modalGraf(arg0: any, arg1: any) {
+  modalGraf(arg0: any, arg1: any , asignatura:any) {
+    console.log(asignatura);
+    
+    this.tituloGraficos= "Grafico de asignatura " + asignatura.nombre
     const documentStyle = getComputedStyle(document.documentElement);
     const textColor = documentStyle.getPropertyValue('--text-color');
     this.data = {
-      labels: ['Competencias adquiridas', 'Competencias no Adquiridas'],
+      labels: ['Competencias adquiridas : '+arg0, 'Competencias no Adquiridas: '+(arg1 - arg0)],
       datasets: [
         {
           data: [arg0, arg1 - arg0],
@@ -91,7 +110,6 @@ export class CompetenciasEstudiantesComponent implements OnInit {
   }
 
   conteo2(_t123: number, total: any) {
-
     return total - this.cuenta[_t123];
   }
   conteo(_t122: any) {
@@ -252,8 +270,9 @@ export class CompetenciasEstudiantesComponent implements OnInit {
   competenciasOBtenidas: any = [];
   competenciasNoOBtenidas: any = [];
   cuenta: any[] = [];
-
+  datosEstudiante: any = [];
   modalGraficos(datos: any) {
+    this.datosEstudiante = datos;
     const id = datos.estudiante.id;
     this.competenciasOBtenidas = [];
     this.competenciasNoOBtenidas = [];
@@ -303,7 +322,7 @@ export class CompetenciasEstudiantesComponent implements OnInit {
           this.cuenta[index] = c;
         });
       });
-      console.log("->>>>",this.cuenta);
+      console.log('->>>>', this.cuenta);
     });
 
     this.dialogGraficos = true;
