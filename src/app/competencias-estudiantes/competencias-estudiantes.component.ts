@@ -247,7 +247,7 @@ export class CompetenciasEstudiantesComponent implements OnInit {
       ],
       body: done,
     });
-    doc.output('pdfobjectnewwindow');
+    window.open(doc.output('bloburi'),'_blank')
     // doc.save()
   }
   detalle_estudiante() {

@@ -219,7 +219,7 @@ modalGraficos() {
       ],
       body: done,
     });
-    doc.output('pdfobjectnewwindow');
+    window.open(doc.output('bloburi'),'_blank')
     // doc.save()
   }
 }
