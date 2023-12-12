@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   errorlogin!: any;
   data: any;
+visible: boolean;
 
   constructor(
     private readonly fb: FormBuilder,

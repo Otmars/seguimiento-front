@@ -19,3 +19,8 @@ h1{
   .p-message{
     max-height: 315px;
   }
+.btn-ayuda{
+  position: fixed;
+  right: 0;
+  bottom: 0;
+}

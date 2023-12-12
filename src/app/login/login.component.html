@@ -52,6 +52,9 @@
           id="username"
           type="text"
           placeholder="Nombre de usuario"
+          pTooltip="PrimerNombre_CI"
+          tooltipEvent="focus"
+          tooltipPosition="top"
           pInputText
           class="w-full mb-3"
           formControlName="username"
@@ -77,6 +80,9 @@
         <input
           id="password"
           type="password"
+          pTooltip="Numero de CI"
+          tooltipEvent="focus"
+          tooltipPosition="top"
           placeholder="Contraseña"
           pInputText
           class="w-full mb-3"
@@ -122,3 +128,18 @@
     </div>
   </div>
 </div>
+
+<div class="btn-ayuda cursor-pointer" (click)="visible =true">
+  <span class="p-3 shadow-2 inline-block surface-card flex flex-column align-items-center m-5" style="border-radius: 10px">
+    <i class="pi pi-question-circle text-4xl text-blue-500"></i>
+    <div class="text-primary text-xl font-medium hidden md:block">Ayuda</div>
+</span>
+</div>
+
+<p-dialog header="Ayuda" [(visible)]="visible" [style]="{width: '300px'}">
+  <h2 class="text-primary text-center">Manuales de usuario</h2>
+  <div class="flex flex-row justify-content-between mt-5">
+    <p-button label="Estudiante" icon="pi pi-file-pdf" iconPos="top" onclick="window.open('https://drive.google.com/file/d/1Zvu5ht2q_dU1jHkzPyHPega8bxyjVdkb/view?usp=sharing')"></p-button>
+    <p-button label="Docente" icon="pi pi-file-pdf" iconPos="top" onclick="window.open('https://drive.google.com/file/d/1eQeHzLTrvTcmJjD_8d2rVlCLJO6fZX6N/view?usp=sharing')"></p-button>
+  </div>
+</p-dialog>
