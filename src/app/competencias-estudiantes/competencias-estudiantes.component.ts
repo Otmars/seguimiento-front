@@ -10,6 +10,7 @@ import autoTable from 'jspdf-autotable';
   styleUrls: ['./competencias-estudiantes.component.css'],
 })
 export class CompetenciasEstudiantesComponent implements OnInit {
+loading: boolean=true;
   titulo(arg0: any): string | undefined {
     return this.tituloGraficos;
   }
@@ -262,6 +263,7 @@ export class CompetenciasEstudiantesComponent implements OnInit {
   cargarDatos() {
     this.comestService.getCompetencias().subscribe((res) => {
       this.datos = res;
+      this.loading = false;
     });
   }
   getEventValue($event: any): string {
