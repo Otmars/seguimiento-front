@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  url:"https://seguimiento-back-production.up.railway.app/"
+  url:import.meta.env.NG_APP_BACKEND
   // url: 'https://back-seg.onrender.com/',
 };
